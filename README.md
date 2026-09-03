@@ -1,113 +1,228 @@
-# 🚀 RazorGuard AI — Merchant–Customer Collusion Detection Engine (Phase 1)
+# 🚀 RazorGuard AI — Merchant Risk Engine & Fraud Investigation API (Phase 2)
 
-**RazorGuard AI** is a defense-only fraud prevention engine built for the Razorpay AI Buildathon 2026. It detects suspicious **merchant–customer collusion rings** by analyzing multi-entity identity overlaps and anomalous refund transaction behavior.
-
----
-
-## 1. What is RazorGuard AI?
-
-In payment platforms, merchant-customer fraud often involves a single bad actor operating both a fraudulent merchant account and multiple synthetic customer accounts. By cycling transactions and rapid refunds through these connected accounts, collusive rings exploit payout mechanisms, refund abuse, and promotional incentives.
-
-RazorGuard AI builds an **identity graph** across shared device fingerprints, IP addresses, payment credentials, address similarities, and refund velocity metrics to uncover hidden collusion structures.
+**RazorGuard AI** is an explainable, defense-only fraud detection and investigation backend built for the Razorpay AI Buildathon 2026. It detects merchant–customer collusion rings by combining multi-entity identity resolution, refund velocity analysis, network graph visualization, structured evidence generation, and local SQLite case management.
 
 ---
 
-## 2. The Problem: Merchant–Customer Collusion
+## 1. Overview & Objectives
 
-A traditional payment platform sees independent customer transactions:
+In payment platforms, merchant-customer fraud often involves a bad actor operating a fraudulent merchant account alongside multiple synthetic customer accounts. By cycling transactions and rapid refunds through these connected entities, collusion rings exploit payout mechanisms and promotional incentives.
 
-```text
-Merchant M001
-    ↓
-Customer C001
-Customer C002
-Customer C003
-```
+Phase 2 upgrades RazorGuard from a raw fraud detection script into a full **Explainable Fraud Investigation Engine & Case Management API**.
 
-However, a fraudulent merchant secretly controls multiple customer accounts:
-
-```text
-             Same Fraudulent Actor
-            /         |         \
-     Merchant      Customer  Customer
-       M001          C001      C002
-                               C003
-```
+An investigator can:
+1. Trigger automated fraud detection runs.
+2. View suspicious merchant-customer collusion cases.
+3. Open investigation cases with deterministic IDs (e.g. `CASE-0001`).
+4. Review **WHY** a case was flagged with structured human-readable explanations.
+5. Inspect complete **Risk Score Breakdowns** showing exact point contributions per signal.
+6. Analyze **Connected Entities** (customer counts, shared hardware, payment destinations, addresses).
+7. Inspect contributing **Transaction Evidence** with suspicious indicator flags.
+8. Query an interactive **Network Graph** of nodes and edges (merchants, customers, devices, payment identity, addresses, transactions).
+9. Track case status (`NEW`, `UNDER_REVIEW`, `CONFIRMED_FRAUD`, `FALSE_POSITIVE`, `CLOSED`).
+10. Add time-stamped **Investigator Notes**.
+11. View high-level metrics via the **Dashboard Summary API**.
 
 ---
 
-## 3. Signal Overlap Example
+## 2. System Architecture
 
 ```text
-Merchant M023
-   ↓
-Customer C102
-Customer C184
-Customer C221
-
-All connected through:
-Device Fingerprint + IP Address + Payout Identity + Rapid Refund Pattern
-```
-
-> **Key Rule**: One suspicious signal does NOT equal fraud. Legitimate customers can share cities, IP ranges, or neighborhoods. Risk increases when multiple independent identity overlaps combine with anomalous transaction behavior.
-
----
-
-## 4. System Architecture
-
-```text
-Synthetic Transactions
-        ↓
-Identity Resolution
-        ↓
-Overlap Detection Engine (11 Detection Signals)
-        ↓
-Transparent Risk Scoring Engine (Configurable Weights & Thresholds)
-        ↓
-NetworkX Identity Graph & Cluster Analysis
-        ↓
-Suspicious Collusion Ring Flagging & Evidence Synthesis
+Synthetic Transactions Data (Generator)
+               │
+               ▼
+Overlap Detector (Identity & Behavior Analysis)
+               │
+               ▼
+Risk Scorer (Weighted Config & Synergy Bonus)
+               │
+               ▼
+Evidence Engine (Human-readable Evidence & Score Breakdown)
+               │
+               ▼
+Investigation Service & Network Graph Builder
+               │
+               ▼
+Case Store (SQLite Persistence: razorguard.db)
+               │
+               ▼
+FastAPI Application & REST Endpoints (/docs)
 ```
 
 ---
 
-## 5. Why Deterministic Detection?
+## 3. Case Management & SQLite Persistence
 
-Detection in Phase 1 relies strictly on deterministic Python logic, statistical similarity algorithms, refund velocity ratios, and graph topology. Deterministic engines provide:
-- **Measurable & Reproducible Results**: Fixed seed runs yield 100% consistent audit trails.
-- **Explainable Evidence**: Every risk score is backed by exact matching signals and metrics.
-- **Zero Hallucinations**: Fraud risk classification is objective and rule-bounded.
+Cases are stored locally using SQLite (`razorguard.db`), requiring zero external database setup.
 
----
-
-## 6. Why AI / LLM Later?
-
-In Phase 2 & 3, LLM capabilities will be added strictly as an **investigation and explainability layer** (summarizing complex graph evidence into natural language reports for fraud analysts) rather than replacing the core deterministic classifier.
-
----
-
-## 7. Evaluation & False-Positive Cost Model
-
-RazorGuard AI evaluates detector performance against hidden synthetic ground-truth labels using `scikit-learn`:
-- **Precision**: % of flagged pairs that are true collusion rings.
-- **Recall**: % of actual collusion rings correctly detected.
-- **F1 Score**: Harmonic mean of precision and recall.
-- **False-Positive Cost Model**: Evaluates investigation costs vs avoided fraud losses based on configurable financial assumptions.
+- **Deterministic Case IDs**: Derived consistently from merchant identifiers (e.g. `CASE-0001`), ensuring idempotent detection runs without duplicate record creation.
+- **Investigation Statuses**:
+  - `NEW`
+  - `UNDER_REVIEW`
+  - `CONFIRMED_FRAUD`
+  - `FALSE_POSITIVE`
+  - `CLOSED`
+- **Investigator Notes**: Time-stamped notes attached directly to cases.
 
 ---
 
-## 8. Defense-Only & Synthetic Data Statement
+## 4. Explainable Evidence Engine
 
-> **IMPORTANT**: RazorGuard AI is strictly a defense-only system. All datasets are synthetically generated using fixed random seeds. The project contains zero real customer data, zero real UPI IDs, zero real bank accounts, zero real KYC details, and zero real credentials.
+Raw boolean signals and numeric ratios are converted into human-readable explanations:
+
+| Signal Name | Severity | Value / Threshold | Generated Explanation |
+| :--- | :--- | :--- | :--- |
+| `shared_payment_identity` | `CRITICAL` | `true` | "Merchant M089 and customer C002 share the same payment/payout identity." |
+| `shared_device` | `HIGH` | `true` | "Merchant M089 and customer C002 share the same device fingerprint." |
+| `shared_ip` | `MEDIUM` | `true` | "Merchant M089 and customer C002 operate from the same IP address." |
+| `address_similarity` | `HIGH` | `93% / 80%` | "The merchant and customer addresses are 93% similar." |
+| `abnormal_refund_velocity` | `HIGH` | `1513.3x / 8.0x` | "Refund activity is approximately 1513x higher than the expected baseline." |
+| `multi_signal_synergy` | `CRITICAL` | `2 / 2` | "Multi-signal collusion cluster confirmed with 2 independent identity overlaps." |
 
 ---
 
-## 9. Running Locally
+## 5. Risk Score Breakdown
 
-### 1. Prerequisites
-- Python 3.11+
+Every case includes a point contribution breakdown explaining how the final score was computed:
 
-### 2. Installation
+```json
+{
+  "risk_score": 100.0,
+  "risk_level": "CRITICAL",
+  "score_breakdown": [
+    {
+      "signal": "shared_payment_identity",
+      "weight": 30.0,
+      "contribution": 30.0
+    },
+    {
+      "signal": "shared_device",
+      "weight": 25.0,
+      "contribution": 25.0
+    },
+    {
+      "signal": "address_similarity",
+      "weight": 15.0,
+      "contribution": 15.0
+    },
+    {
+      "signal": "abnormal_refund_velocity",
+      "weight": 20.0,
+      "contribution": 20.0
+    },
+    {
+      "signal": "multi_signal_synergy",
+      "weight": 10.0,
+      "contribution": 10.0
+    }
+  ]
+}
+```
+
+---
+
+## 6. API Endpoints Reference
+
+FastAPI automatically serves interactive OpenAPI documentation at `/docs`.
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/health` | Server health check |
+| `POST` | `/api/dataset/generate` | Generate reproducible synthetic dataset |
+| `POST` | `/api/detect` | Execute collusion detection (Phase 1 compatibility) |
+| `POST` | `/api/detection/run` | Run detection engine and persist/update cases |
+| `GET` | `/api/cases` | List cases (Query filters: `status`, `risk_level`, `limit`) |
+| `GET` | `/api/cases/{case_id}` | Fetch full investigation case details |
+| `POST` | `/api/cases/{case_id}/status` | Update investigation status |
+| `POST` | `/api/cases/{case_id}/notes` | Append investigator note |
+| `GET` | `/api/cases/{case_id}/graph` | Fetch case network graph JSON (nodes & edges) |
+| `GET` | `/api/dashboard/summary` | Fetch investigation dashboard metrics |
+| `GET` | `/api/evaluation` | Fetch precision, recall, and cost metrics |
+
+---
+
+## 7. Example API Requests & Responses
+
+### `GET /api/cases/CASE-0001`
+```json
+{
+  "case_id": "CASE-0001",
+  "merchant_id": "M089",
+  "merchant_name": "Zenith Store 89",
+  "customer_ids": ["C002", "C028", "C079", "C185", "C252"],
+  "risk_score": 100.0,
+  "risk_level": "CRITICAL",
+  "status": "NEW",
+  "created_at": "2026-09-03T18:50:00.000000+00:00",
+  "updated_at": "2026-09-03T18:50:00.000000+00:00",
+  "evidence": [
+    {
+      "signal": "shared_payment_identity",
+      "severity": "CRITICAL",
+      "value": true,
+      "threshold": true,
+      "explanation": "Merchant M089 and customer C002 share the same payment/payout identity."
+    }
+  ],
+  "score_breakdown": [
+    {"signal": "shared_payment_identity", "weight": 30.0, "contribution": 30.0}
+  ],
+  "connected_entities": {
+    "connected_customers_count": 5,
+    "connected_customer_ids": ["C002", "C028", "C079", "C185", "C252"],
+    "shared_devices_count": 1,
+    "shared_payment_identities_count": 1,
+    "shared_addresses_count": 1,
+    "suspicious_transactions_count": 79,
+    "detected_signals_count": 5
+  },
+  "investigator_notes": []
+}
+```
+
+### `POST /api/cases/CASE-0001/status`
+**Request Body**:
+```json
+{
+  "status": "UNDER_REVIEW"
+}
+```
+
+### `GET /api/cases/CASE-0001/graph`
+```json
+{
+  "nodes": [
+    {"id": "M089", "type": "merchant", "label": "Zenith Store 89"},
+    {"id": "C002", "type": "customer", "label": "Customer C002"}
+  ],
+  "edges": [
+    {"source": "M089", "target": "C002", "relationship": "SHARES_DEVICE"}
+  ]
+}
+```
+
+### Error Responses
+**404 Not Found**:
+```json
+{
+  "error": "CASE_NOT_FOUND",
+  "message": "Case CASE-9999 was not found."
+}
+```
+
+**400 Bad Request**:
+```json
+{
+  "error": "INVALID_STATUS",
+  "message": "Unsupported investigation status."
+}
+```
+
+---
+
+## 8. Installation & Testing
+
+### 1. Installation
 ```bash
 # Navigate to backend directory
 cd backend
@@ -116,24 +231,24 @@ cd backend
 pip install -r requirements.txt
 ```
 
-### 3. Run Automated Tests
+### 2. Run Automated Tests
 ```bash
-pytest tests
+python -m pytest tests
 ```
 
-### 4. Execute Interactive CLI Demo
+### 3. Run Interactive CLI Demo
 ```bash
 python run_demo.py
 ```
 
-### 5. Launch FastAPI Service
+### 4. Launch FastAPI Server
 ```bash
 uvicorn app.main:app --reload
 ```
+Access Swagger UI at `http://127.0.0.1:8000/docs`.
 
-### 6. API Endpoints
-- `GET http://127.0.0.1:8000/health`: Health check
-- `POST http://127.0.0.1:8000/api/dataset/generate`: Generate reproducible synthetic dataset
-- `POST http://127.0.0.1:8000/api/detect`: Run detection and risk scoring
-- `GET http://127.0.0.1:8000/api/cases`: Fetch flagged suspicious cases & evidence
-- `GET http://127.0.0.1:8000/api/evaluation`: Fetch model precision, recall, and cost metrics
+---
+
+## 9. Defense-Only Statement
+
+> **NOTICE**: RazorGuard AI is strictly a defense-only model evaluation system. All datasets are synthetically generated using fixed random seeds. The project contains zero real customer data, zero real UPI IDs, and zero real credentials.
