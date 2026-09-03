@@ -15,12 +15,18 @@ from app.scoring.risk_scorer import RiskScorer
 from app.graph.graph_builder import IdentityGraphBuilder
 from app.scoring.evaluator import ModelEvaluator
 from app.cases.case_service import CaseService
+from app.network.network_service import NetworkService
+from app.services.firestore_store import FirestoreStore
+from app.network.network_models import (
+    NetworkNode, NetworkEdge, CollusionPattern, NetworkCluster,
+    EntityNetworkDetail, NetworkOverview, ShortestPathResponse
+)
 
 
 app = FastAPI(
-    title="RazorGuard AI — Merchant Risk Engine & Fraud Investigation API",
-    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, identity graph analysis, and case management.",
-    version="2.0.0"
+    title="RazorGuard AI — Merchant Risk Engine & Fraud Network Intelligence API",
+    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, network intelligence graph analysis, case management, and Cloud Firestore persistence.",
+    version="3.1.0"
 )
 
 # Global state for dataset objects in memory
@@ -34,6 +40,8 @@ STATE: Dict[str, Any] = {
 }
 
 case_service = CaseService()
+network_service = NetworkService()
+firestore_store = FirestoreStore()
 
 
 @app.exception_handler(HTTPException)
@@ -56,7 +64,12 @@ async def generic_exception_handler(request: Request, exc: Exception):
 
 @app.get("/health", summary="Health Check")
 def health_check():
-    return {"status": "ok", "engine": "RazorGuard AI Phase 2"}
+    firebase_status = firestore_store.firebase.get_status_message()
+    return {
+        "status": "ok",
+        "engine": "RazorGuard AI Phase 3 — Network Intelligence & Firestore",
+        "firebase": firebase_status
+    }
 
 
 @app.post("/api/dataset/generate", response_model=DatasetSummary, summary="Generate Synthetic Dataset")
@@ -81,7 +94,7 @@ def generate_dataset(seed: int = Query(SEED, description="Random seed for reprod
     )
 
 
-@app.post("/api/detect", summary="Run Collusion Detection Engine (Phase 1 Compatibility)")
+@app.post("/api/detect", summary="Run Collusion Detection Engine")
 def run_detection():
     if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
         generate_dataset(seed=SEED)
@@ -112,8 +125,11 @@ def run_detection():
 
     STATE["suspicious_cases"] = suspicious_cases
 
-    # Process and persist Phase 2 investigation cases
+    # Process Phase 2 Cases
     case_service.process_detection_results(merchants, customers, transactions, risk_results)
+
+    # Process Phase 3 Network Analysis
+    network_service.analyze_network(merchants, customers, transactions, risk_results)
 
     flagged_high_critical = [r for r in risk_results if r.risk_level in ["HIGH", "CRITICAL"]]
 
@@ -125,7 +141,7 @@ def run_detection():
     }
 
 
-@app.post("/api/detection/run", response_model=DetectionRunResponse, summary="Run Full Detection & Update Cases")
+@app.post("/api/detection/run", response_model=DetectionRunResponse, summary="Run Full Detection & Network Analysis")
 def run_full_detection():
     if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
         generate_dataset(seed=SEED)
@@ -151,6 +167,7 @@ def run_full_detection():
     STATE["risk_results"] = risk_results
 
     res = case_service.process_detection_results(merchants, customers, transactions, risk_results)
+    network_service.analyze_network(merchants, customers, transactions, risk_results)
 
     return DetectionRunResponse(
         status="success",
@@ -270,3 +287,195 @@ def get_evaluation():
         "evaluation_metrics": eval_res.model_dump(),
         "false_positive_cost_model": cost_res.model_dump()
     }
+
+
+# ==========================================
+# PHASE 3 NETWORK INTELLIGENCE ENDPOINTS
+# ==========================================
+
+@app.get("/api/network/overview", response_model=NetworkOverview, summary="Get Network Intelligence Overview Metrics")
+def get_network_overview():
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    return network_service.get_overview()
+
+
+@app.get("/api/network/nodes", response_model=List[NetworkNode], summary="List Network Nodes")
+def get_network_nodes(
+    entity_type: Optional[str] = Query(None, description="Filter by entity type (MERCHANT, CUSTOMER, DEVICE, PAYMENT_FINGERPRINT, IP)"),
+    min_risk_score: Optional[float] = Query(None, description="Minimum risk score filter")
+):
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    return network_service.get_nodes(entity_type=entity_type, min_risk_score=min_risk_score)
+
+
+@app.get("/api/network/edges", response_model=List[NetworkEdge], summary="List Network Edges")
+def get_network_edges(
+    relationship: Optional[str] = Query(None, description="Filter by relationship (TRANSACTED_WITH, SHARES_DEVICE, SHARES_PAYMENT, SHARES_IP)"),
+    min_risk_score: Optional[float] = Query(None, description="Minimum edge risk score filter")
+):
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    return network_service.get_edges(relationship=relationship, min_risk_score=min_risk_score)
+
+
+@app.get("/api/network/clusters", response_model=List[NetworkCluster], summary="List Detected Fraud Collusion Clusters")
+def get_network_clusters():
+    if not network_service.cached_clusters:
+        run_detection()
+    return network_service.get_clusters()
+
+
+@app.get("/api/network/risky-relationships", response_model=List[NetworkEdge], summary="List Suspicious Risky Relationships")
+def get_risky_relationships():
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    return network_service.get_risky_relationships()
+
+
+@app.get("/api/network/entity/{entity_id}", response_model=EntityNetworkDetail, summary="Inspect Entity Network Intelligence")
+def get_entity_network_detail(entity_id: str):
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    
+    detail = network_service.get_entity_detail(entity_id)
+    if not detail:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "ENTITY_NOT_FOUND", "message": f"Entity {entity_id} was not found in the network graph."}
+        )
+    return detail
+
+
+@app.get("/api/network/entity/{entity_id}/connections", summary="Get 1-Hop Entity Connections Subgraph")
+def get_entity_connections(entity_id: str):
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    
+    conn = network_service.get_entity_connections(entity_id)
+    if not conn["nodes"]:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "ENTITY_NOT_FOUND", "message": f"Entity {entity_id} was not found in the network graph."}
+        )
+    return conn
+
+
+@app.get("/api/network/path/{source_id}/{target_id}", response_model=ShortestPathResponse, summary="Find Shortest Path Between Entities")
+def get_network_shortest_path(source_id: str, target_id: str):
+    if not network_service.graph_service.graph.nodes():
+        run_detection()
+    
+    path_res = network_service.get_shortest_path(source_id, target_id)
+    if not path_res:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "PATH_NOT_FOUND", "message": f"No network connection path found between {source_id} and {target_id}."}
+        )
+    return path_res
+
+
+@app.get("/api/network/cases", response_model=List[Case], summary="List Network Collusion Cases")
+def get_network_cases():
+    cases = case_service.list_cases()
+    if not cases:
+        run_detection()
+        cases = case_service.list_cases()
+    return [c for c in cases if c.case_id.startswith("CASE-NET-") or c.risk_level in ["HIGH", "CRITICAL"]]
+
+
+# ==========================================
+# FIRESTORE PERSISTENT ENTITY ENDPOINTS
+# ==========================================
+
+@app.get("/api/merchants", summary="List Persistent Merchants")
+def get_merchants():
+    if not STATE["merchants"]:
+        generate_dataset(seed=SEED)
+    merchants = firestore_store.list_documents("merchants")
+    if not merchants and STATE["merchants"]:
+        for m in STATE["merchants"]:
+            firestore_store.save_merchant(m.model_dump())
+        merchants = firestore_store.list_documents("merchants")
+    return merchants
+
+
+@app.get("/api/merchants/{merchant_id}", summary="Get Merchant Detail")
+def get_merchant_detail(merchant_id: str):
+    if not STATE["merchants"]:
+        generate_dataset(seed=SEED)
+    m = firestore_store.get_document("merchants", merchant_id)
+    if not m:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "MERCHANT_NOT_FOUND", "message": f"Merchant {merchant_id} was not found."}
+        )
+    return m
+
+
+@app.get("/api/customers", summary="List Persistent Customers")
+def get_customers():
+    if not STATE["customers"]:
+        generate_dataset(seed=SEED)
+    customers = firestore_store.list_documents("customers")
+    if not customers and STATE["customers"]:
+        for c in STATE["customers"]:
+            firestore_store.save_customer(c.model_dump())
+        customers = firestore_store.list_documents("customers")
+    return customers
+
+
+@app.get("/api/customers/{customer_id}", summary="Get Customer Detail")
+def get_customer_detail(customer_id: str):
+    if not STATE["customers"]:
+        generate_dataset(seed=SEED)
+    c = firestore_store.get_document("customers", customer_id)
+    if not c:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "CUSTOMER_NOT_FOUND", "message": f"Customer {customer_id} was not found."}
+        )
+    return c
+
+
+@app.get("/api/transactions", summary="List Persistent Transactions")
+def get_transactions(limit: Optional[int] = Query(100, description="Limit transaction count")):
+    if not STATE["transactions"]:
+        generate_dataset(seed=SEED)
+    txs = firestore_store.list_documents("transactions", limit=limit)
+    if not txs and STATE["transactions"]:
+        for tx in STATE["transactions"]:
+            firestore_store.save_transaction(tx.model_dump())
+        txs = firestore_store.list_documents("transactions", limit=limit)
+    return txs
+
+
+@app.get("/api/transactions/{transaction_id}", summary="Get Transaction Detail")
+def get_transaction_detail(transaction_id: str):
+    if not STATE["transactions"]:
+        generate_dataset(seed=SEED)
+    tx = firestore_store.get_document("transactions", transaction_id)
+    if not tx:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "TRANSACTION_NOT_FOUND", "message": f"Transaction {transaction_id} was not found."}
+        )
+    return tx
+
+
+@app.get("/api/alerts", summary="List Critical Risk Alerts")
+def get_alerts():
+    return firestore_store.list_documents("alerts")
+
+
+@app.get("/api/network/entities", summary="List Network Entities")
+def get_network_entities():
+    return firestore_store.list_documents("network_entities")
+
+
+@app.get("/api/network/relationships", summary="List Network Relationships")
+def get_network_relationships():
+    return firestore_store.list_documents("network_relationships")
+
+

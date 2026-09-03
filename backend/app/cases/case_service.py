@@ -8,13 +8,15 @@ from app.models.schemas import (
     InvestigatorNote
 )
 from app.cases.case_store import CaseStore
+from app.services.firestore_store import FirestoreStore
 from app.investigation.evidence_engine import EvidenceEngine
 from app.investigation.investigation_service import InvestigationService
 
 
 class CaseService:
-    def __init__(self, store: Optional[CaseStore] = None):
+    def __init__(self, store: Optional[CaseStore] = None, firestore_store: Optional[FirestoreStore] = None):
         self.store = store or CaseStore()
+        self.firestore_store = firestore_store or FirestoreStore()
         self.evidence_engine = EvidenceEngine()
         self.investigation_service = InvestigationService()
 
@@ -147,8 +149,24 @@ class CaseService:
             )
 
             self.store.save_case(case)
+            try:
+                self.firestore_store.save_case(case.model_dump())
+            except Exception:
+                pass
+
             if not existing_case:
                 created_cases_count += 1
+
+        # Also sync merchants, customers, and transactions to Firestore
+        try:
+            for m in merchants:
+                self.firestore_store.save_merchant(m.model_dump())
+            for c in customers:
+                self.firestore_store.save_customer(c.model_dump())
+            for tx in transactions:
+                self.firestore_store.save_transaction(tx.model_dump())
+        except Exception:
+            pass
 
         return {
             "status": "success",
@@ -173,12 +191,26 @@ class CaseService:
         valid_statuses = {"NEW", "UNDER_REVIEW", "CONFIRMED_FRAUD", "FALSE_POSITIVE", "CLOSED"}
         if new_status.upper() not in valid_statuses:
             raise ValueError(f"Invalid status: {new_status}. Supported: {valid_statuses}")
-        return self.store.update_case_status(case_id, new_status)
+        
+        c = self.store.update_case_status(case_id, new_status)
+        if c:
+            try:
+                self.firestore_store.update_document("risk_cases", case_id, {"status": new_status.upper()})
+                self.firestore_store.log_audit("CASE_UPDATED", "risk_case", case_id, {"new_status": new_status.upper()})
+            except Exception:
+                pass
+        return c
 
     def add_case_note(self, case_id: str, note_text: str) -> Optional[InvestigatorNote]:
         if not note_text or not note_text.strip():
             raise ValueError("Note text cannot be empty.")
-        return self.store.add_case_note(case_id, note_text.strip())
+        note = self.store.add_case_note(case_id, note_text.strip())
+        if note:
+            try:
+                self.firestore_store.log_audit("CASE_NOTE_ADDED", "risk_case", case_id, {"note_id": note.note_id, "note": note.note})
+            except Exception:
+                pass
+        return note
 
     def get_dashboard_summary(
         self,

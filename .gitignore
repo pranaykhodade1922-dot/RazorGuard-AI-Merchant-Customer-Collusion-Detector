@@ -21,7 +21,14 @@ ENV/
 
 # Environment variables & secrets
 .env
-.env.local
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+firebase-credentials*.json
+firebase*.json
+secrets/
 
 # RazorGuard generated data (keep structure via .gitkeep)
 backend/generated_data/*.json

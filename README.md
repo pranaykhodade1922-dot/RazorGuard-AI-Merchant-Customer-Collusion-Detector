@@ -1,254 +1,152 @@
-# 🚀 RazorGuard AI — Merchant Risk Engine & Fraud Investigation API (Phase 2)
+# 🚀 RazorGuard AI — Merchant Risk Engine & Network Intelligence (Phase 3 + Firebase)
 
-**RazorGuard AI** is an explainable, defense-only fraud detection and investigation backend built for the Razorpay AI Buildathon 2026. It detects merchant–customer collusion rings by combining multi-entity identity resolution, refund velocity analysis, network graph visualization, structured evidence generation, and local SQLite case management.
-
----
-
-## 1. Overview & Objectives
-
-In payment platforms, merchant-customer fraud often involves a bad actor operating a fraudulent merchant account alongside multiple synthetic customer accounts. By cycling transactions and rapid refunds through these connected entities, collusion rings exploit payout mechanisms and promotional incentives.
-
-Phase 2 upgrades RazorGuard from a raw fraud detection script into a full **Explainable Fraud Investigation Engine & Case Management API**.
-
-An investigator can:
-1. Trigger automated fraud detection runs.
-2. View suspicious merchant-customer collusion cases.
-3. Open investigation cases with deterministic IDs (e.g. `CASE-0001`).
-4. Review **WHY** a case was flagged with structured human-readable explanations.
-5. Inspect complete **Risk Score Breakdowns** showing exact point contributions per signal.
-6. Analyze **Connected Entities** (customer counts, shared hardware, payment destinations, addresses).
-7. Inspect contributing **Transaction Evidence** with suspicious indicator flags.
-8. Query an interactive **Network Graph** of nodes and edges (merchants, customers, devices, payment identity, addresses, transactions).
-9. Track case status (`NEW`, `UNDER_REVIEW`, `CONFIRMED_FRAUD`, `FALSE_POSITIVE`, `CLOSED`).
-10. Add time-stamped **Investigator Notes**.
-11. View high-level metrics via the **Dashboard Summary API**.
+**RazorGuard AI** is an explainable, defense-only fraud detection, network intelligence, and case management system built for the Razorpay AI Buildathon 2026. It uncovers complex merchant–customer collusion rings by moving beyond transaction-level anomalies to **relationship and graph-network level intelligence** backed by **Cloud Firestore persistence**.
 
 ---
 
-## 2. System Architecture
+## 1. Overview & System Architecture
+
+RazorGuard integrates multi-entity identity resolution, refund velocity analysis, network topology graphs, rule-based pattern detectors, and Cloud Firestore persistence via the Firebase Admin SDK.
 
 ```text
-Synthetic Transactions Data (Generator)
-               │
-               ▼
-Overlap Detector (Identity & Behavior Analysis)
-               │
-               ▼
-Risk Scorer (Weighted Config & Synergy Bonus)
-               │
-               ▼
-Evidence Engine (Human-readable Evidence & Score Breakdown)
-               │
-               ▼
-Investigation Service & Network Graph Builder
-               │
-               ▼
-Case Store (SQLite Persistence: razorguard.db)
-               │
-               ▼
-FastAPI Application & REST Endpoints (/docs)
+React Frontend Dashboard
+           │
+           ▼
+    FastAPI Backend
+           │
+           ├──► Firebase Admin SDK ──► Cloud Firestore (merchants, customers, transactions,
+           │                                          risk_cases, alerts, network_entities,
+           │                                          network_relationships, audit_logs)
+           ├──► Overlap Detector & Risk Scorer
+           ├──► NetworkX Graph Topology Engine
+           └──► Local SQLite CaseStore Fallback
 ```
 
 ---
 
-## 3. Case Management & SQLite Persistence
+## 2. Firebase / Firestore Integration Setup
 
-Cases are stored locally using SQLite (`razorguard.db`), requiring zero external database setup.
-
-- **Deterministic Case IDs**: Derived consistently from merchant identifiers (e.g. `CASE-0001`), ensuring idempotent detection runs without duplicate record creation.
-- **Investigation Statuses**:
-  - `NEW`
-  - `UNDER_REVIEW`
-  - `CONFIRMED_FRAUD`
-  - `FALSE_POSITIVE`
-  - `CLOSED`
-- **Investigator Notes**: Time-stamped notes attached directly to cases.
-
----
-
-## 4. Explainable Evidence Engine
-
-Raw boolean signals and numeric ratios are converted into human-readable explanations:
-
-| Signal Name | Severity | Value / Threshold | Generated Explanation |
-| :--- | :--- | :--- | :--- |
-| `shared_payment_identity` | `CRITICAL` | `true` | "Merchant M089 and customer C002 share the same payment/payout identity." |
-| `shared_device` | `HIGH` | `true` | "Merchant M089 and customer C002 share the same device fingerprint." |
-| `shared_ip` | `MEDIUM` | `true` | "Merchant M089 and customer C002 operate from the same IP address." |
-| `address_similarity` | `HIGH` | `93% / 80%` | "The merchant and customer addresses are 93% similar." |
-| `abnormal_refund_velocity` | `HIGH` | `1513.3x / 8.0x` | "Refund activity is approximately 1513x higher than the expected baseline." |
-| `multi_signal_synergy` | `CRITICAL` | `2 / 2` | "Multi-signal collusion cluster confirmed with 2 independent identity overlaps." |
+1. **Create Firebase Project**: Go to [Firebase Console](https://console.firebase.google.com/), create a project, and enable Cloud Firestore.
+2. **Generate Service Account Key**: Navigate to `Project Settings` → `Service accounts` → `Generate new private key`.
+3. **Configure Environment Variables**:
+   Copy `backend/.env.example` to `backend/.env` and set:
+   ```env
+   FIREBASE_PROJECT_ID=your-firebase-project-id
+   FIREBASE_CLIENT_EMAIL=your-firebase-service-account-email
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nyour-private-key-here\n-----END PRIVATE KEY-----\n"
+   ```
+4. **Local Fallback Mode**: If environment variables are omitted, RazorGuard operates seamlessly in local fallback mode (in-memory & SQLite) without crashing.
+5. **Run Dev Seed Script**:
+   ```bash
+   cd backend
+   python scripts/seed_firestore.py --reset
+   ```
+6. **Verify Firebase Health**:
+   `GET http://127.0.0.1:8000/health` returns `{"status": "ok", "firebase": "connected"}`.
 
 ---
 
-## 5. Risk Score Breakdown
+## 3. Firestore Collections
 
-Every case includes a point contribution breakdown explaining how the final score was computed:
-
-```json
-{
-  "risk_score": 100.0,
-  "risk_level": "CRITICAL",
-  "score_breakdown": [
-    {
-      "signal": "shared_payment_identity",
-      "weight": 30.0,
-      "contribution": 30.0
-    },
-    {
-      "signal": "shared_device",
-      "weight": 25.0,
-      "contribution": 25.0
-    },
-    {
-      "signal": "address_similarity",
-      "weight": 15.0,
-      "contribution": 15.0
-    },
-    {
-      "signal": "abnormal_refund_velocity",
-      "weight": 20.0,
-      "contribution": 20.0
-    },
-    {
-      "signal": "multi_signal_synergy",
-      "weight": 10.0,
-      "contribution": 10.0
-    }
-  ]
-}
-```
+* `merchants`: Merchant business details, status, and aggregate risk scores.
+* `customers`: Customer profiles and synthetic identifiers.
+* `transactions`: Complete transaction log with risk levels and indicators.
+* `risk_cases`: Phase 2 investigation cases and status history.
+* `alerts`: Critical risk alerts for security operations.
+* `network_entities`: Phase 3 network graph nodes.
+* `network_relationships`: Phase 3 multi-relational edges.
+* `audit_logs`: System audit Trail (`CASE_CREATED`, `CASE_UPDATED`, `ALERT_CREATED`, `NETWORK_CASE_CREATED`, `TRANSACTION_PROCESSED`).
 
 ---
 
-## 6. API Endpoints Reference
+## 4. Fraud Network Model & Collusion Patterns
 
-FastAPI automatically serves interactive OpenAPI documentation at `/docs`.
+### Graph Nodes & Relationships
+* Nodes: `MERCHANT`, `CUSTOMER`, `DEVICE`, `PAYMENT_FINGERPRINT`, `IP`
+* Edges: `TRANSACTED_WITH`, `SHARES_DEVICE`, `SHARES_PAYMENT`, `SHARES_IP`
 
+### Collusion Patterns (100% Deterministic & Rule-Based)
+1. **`SHARED_CUSTOMER_CLUSTER`**: Multiple merchants repeatedly transacting with an identical customer subset.
+2. **`CIRCULAR_RELATIONSHIP`**: Closed loops (`Merchant A → Customer X → Merchant B → Customer Y → Merchant A`).
+3. **`DENSE_COLLUSION_CLUSTER`**: Unusually dense subgraphs (`density >= 0.4`).
+4. **`SHARED_FINGERPRINT`**: Shared hardware (`SHARED_DEVICE`), payment accounts (`SHARED_PAYMENT_FINGERPRINT`), or IPs (`SHARED_IP`).
+5. **`COORDINATED_TRANSACTION_BURST`**: Multiple transactions across related entities occurring within a short time window (e.g. 15 mins).
+6. **`REPEATED_RISKY_RELATIONSHIP`**: Merchant-customer pairs flagged repeatedly with high transaction risk (`>= 60.0`).
+
+---
+
+## 5. API Endpoints Reference
+
+FastAPI serves full interactive OpenAPI documentation at `/docs`.
+
+### Firestore & Entity Endpoints
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | `/health` | Server health check |
-| `POST` | `/api/dataset/generate` | Generate reproducible synthetic dataset |
-| `POST` | `/api/detect` | Execute collusion detection (Phase 1 compatibility) |
-| `POST` | `/api/detection/run` | Run detection engine and persist/update cases |
-| `GET` | `/api/cases` | List cases (Query filters: `status`, `risk_level`, `limit`) |
-| `GET` | `/api/cases/{case_id}` | Fetch full investigation case details |
+| `GET` | `/health` | Server & Firebase connection health status |
+| `GET` | `/api/merchants` | List persistent merchants |
+| `GET` | `/api/merchants/{merchant_id}` | Get merchant detail |
+| `GET` | `/api/customers` | List persistent customers |
+| `GET` | `/api/customers/{customer_id}` | Get customer detail |
+| `GET` | `/api/transactions` | List persistent transactions |
+| `GET` | `/api/transactions/{transaction_id}` | Get transaction detail |
+| `GET` | `/api/alerts` | List critical risk alerts |
+| `GET` | `/api/network/entities` | List persistent network entities |
+| `GET` | `/api/network/relationships` | List persistent network relationships |
+
+### Network Intelligence & Investigation Endpoints
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/network/overview` | Network topology counters and risk metrics |
+| `GET` | `/api/network/nodes` | List network nodes with filters |
+| `GET` | `/api/network/edges` | List network edges with filters |
+| `GET` | `/api/network/clusters` | List detected fraud collusion clusters |
+| `GET` | `/api/network/risky-relationships` | List top suspicious relationships |
+| `GET` | `/api/network/entity/{entity_id}` | Entity network detail inspection |
+| `GET` | `/api/network/entity/{entity_id}/connections` | 1-hop subgraph neighborhood JSON |
+| `GET` | `/api/network/path/{source_id}/{target_id}` | Calculate shortest relationship path |
+| `POST` | `/api/detection/run` | Run full detection & sync to Firestore |
+| `GET` | `/api/cases` | List investigation cases |
+| `GET` | `/api/cases/{case_id}` | Get full case details |
 | `POST` | `/api/cases/{case_id}/status` | Update investigation status |
-| `POST` | `/api/cases/{case_id}/notes` | Append investigator note |
-| `GET` | `/api/cases/{case_id}/graph` | Fetch case network graph JSON (nodes & edges) |
-| `GET` | `/api/dashboard/summary` | Fetch investigation dashboard metrics |
-| `GET` | `/api/evaluation` | Fetch precision, recall, and cost metrics |
+| `POST` | `/api/cases/{case_id}/notes` | Add investigator note |
 
 ---
 
-## 7. Example API Requests & Responses
+## 6. Installation & Testing
 
-### `GET /api/cases/CASE-0001`
-```json
-{
-  "case_id": "CASE-0001",
-  "merchant_id": "M089",
-  "merchant_name": "Zenith Store 89",
-  "customer_ids": ["C002", "C028", "C079", "C185", "C252"],
-  "risk_score": 100.0,
-  "risk_level": "CRITICAL",
-  "status": "NEW",
-  "created_at": "2026-09-03T18:50:00.000000+00:00",
-  "updated_at": "2026-09-03T18:50:00.000000+00:00",
-  "evidence": [
-    {
-      "signal": "shared_payment_identity",
-      "severity": "CRITICAL",
-      "value": true,
-      "threshold": true,
-      "explanation": "Merchant M089 and customer C002 share the same payment/payout identity."
-    }
-  ],
-  "score_breakdown": [
-    {"signal": "shared_payment_identity", "weight": 30.0, "contribution": 30.0}
-  ],
-  "connected_entities": {
-    "connected_customers_count": 5,
-    "connected_customer_ids": ["C002", "C028", "C079", "C185", "C252"],
-    "shared_devices_count": 1,
-    "shared_payment_identities_count": 1,
-    "shared_addresses_count": 1,
-    "suspicious_transactions_count": 79,
-    "detected_signals_count": 5
-  },
-  "investigator_notes": []
-}
-```
-
-### `POST /api/cases/CASE-0001/status`
-**Request Body**:
-```json
-{
-  "status": "UNDER_REVIEW"
-}
-```
-
-### `GET /api/cases/CASE-0001/graph`
-```json
-{
-  "nodes": [
-    {"id": "M089", "type": "merchant", "label": "Zenith Store 89"},
-    {"id": "C002", "type": "customer", "label": "Customer C002"}
-  ],
-  "edges": [
-    {"source": "M089", "target": "C002", "relationship": "SHARES_DEVICE"}
-  ]
-}
-```
-
-### Error Responses
-**404 Not Found**:
-```json
-{
-  "error": "CASE_NOT_FOUND",
-  "message": "Case CASE-9999 was not found."
-}
-```
-
-**400 Bad Request**:
-```json
-{
-  "error": "INVALID_STATUS",
-  "message": "Unsupported investigation status."
-}
-```
-
----
-
-## 8. Installation & Testing
-
-### 1. Installation
+### 1. Backend Setup
 ```bash
 # Navigate to backend directory
 cd backend
 
 # Install dependencies
 pip install -r requirements.txt
-```
 
-### 2. Run Automated Tests
-```bash
+# Run complete pytest test suite (27 unit tests passing)
 python -m pytest tests
-```
 
-### 3. Run Interactive CLI Demo
-```bash
-python run_demo.py
-```
+# Seed Firestore
+python scripts/seed_firestore.py --reset
 
-### 4. Launch FastAPI Server
-```bash
+# Start FastAPI server
 uvicorn app.main:app --reload
 ```
-Access Swagger UI at `http://127.0.0.1:8000/docs`.
+
+### 2. Frontend Setup
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies & run build
+npm install
+npm run build
+
+# Start React dev server
+npm run dev
+```
 
 ---
 
-## 9. Defense-Only Statement
+## 7. Defense-Only Statement
 
-> **NOTICE**: RazorGuard AI is strictly a defense-only model evaluation system. All datasets are synthetically generated using fixed random seeds. The project contains zero real customer data, zero real UPI IDs, and zero real credentials.
+> **NOTICE**: RazorGuard AI is strictly a defense-only model evaluation system built for the Razorpay AI Buildathon 2026. All datasets are synthetically generated using fixed random seeds. The project contains zero real customer data, zero real UPI IDs, and zero real credentials.
