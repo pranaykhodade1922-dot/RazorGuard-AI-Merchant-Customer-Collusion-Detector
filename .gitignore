@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+
+# Environment variables & secrets
+.env
+.env.local
+
+# RazorGuard generated data (keep structure via .gitkeep)
+backend/generated_data/*.json
+!backend/generated_data/.gitkeep
