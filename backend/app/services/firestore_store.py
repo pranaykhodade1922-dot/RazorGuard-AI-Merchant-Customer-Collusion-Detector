@@ -51,9 +51,10 @@ class FirestoreStore:
 
         if self.is_connected and self.db:
             try:
-                self.db.collection(collection_name).document(doc_id).set(data)
+                self.db.collection(collection_name).document(doc_id).set(data, timeout=2.0)
             except Exception as e:
-                logger.error(f"Firestore set error for {collection_name}/{doc_id}: {e}")
+                logger.warning(f"Firestore set error/timeout for {collection_name}/{doc_id}: {e}")
+                self.firebase._is_connected = False
 
         # Update local memory cache as well
         if collection_name not in self._memory_cache:
@@ -64,11 +65,12 @@ class FirestoreStore:
     def get_document(self, collection_name: str, doc_id: str) -> Optional[Dict[str, Any]]:
         if self.is_connected and self.db:
             try:
-                doc = self.db.collection(collection_name).document(doc_id).get()
+                doc = self.db.collection(collection_name).document(doc_id).get(timeout=2.0)
                 if doc.exists:
                     return doc.to_dict()
             except Exception as e:
-                logger.error(f"Firestore get error for {collection_name}/{doc_id}: {e}")
+                logger.warning(f"Firestore get error/timeout for {collection_name}/{doc_id}: {e}")
+                self.firebase._is_connected = False
 
         # Fallback to local memory cache
         return self._memory_cache.get(collection_name, {}).get(doc_id)
@@ -78,9 +80,10 @@ class FirestoreStore:
 
         if self.is_connected and self.db:
             try:
-                self.db.collection(collection_name).document(doc_id).update(updates)
+                self.db.collection(collection_name).document(doc_id).update(updates, timeout=2.0)
             except Exception as e:
-                logger.error(f"Firestore update error for {collection_name}/{doc_id}: {e}")
+                logger.warning(f"Firestore update error/timeout for {collection_name}/{doc_id}: {e}")
+                self.firebase._is_connected = False
 
         existing = self.get_document(collection_name, doc_id)
         if existing:
@@ -93,9 +96,10 @@ class FirestoreStore:
     def delete_document(self, collection_name: str, doc_id: str) -> bool:
         if self.is_connected and self.db:
             try:
-                self.db.collection(collection_name).document(doc_id).delete()
+                self.db.collection(collection_name).document(doc_id).delete(timeout=2.0)
             except Exception as e:
-                logger.error(f"Firestore delete error for {collection_name}/{doc_id}: {e}")
+                logger.warning(f"Firestore delete error/timeout for {collection_name}/{doc_id}: {e}")
+                self.firebase._is_connected = False
 
         if collection_name in self._memory_cache and doc_id in self._memory_cache[collection_name]:
             del self._memory_cache[collection_name][doc_id]
@@ -120,13 +124,14 @@ class FirestoreStore:
                 if limit and limit > 0:
                     query = query.limit(limit)
 
-                docs = query.stream()
+                docs = query.stream(timeout=2.0)
                 for d in docs:
                     results.append(d.to_dict())
                 if results:
                     return results
             except Exception as e:
-                logger.error(f"Firestore list error for {collection_name}: {e}")
+                logger.warning(f"Firestore list error/timeout for {collection_name}: {e}")
+                self.firebase._is_connected = False
 
         # Fallback to local memory cache filtering
         cached_docs = list(self._memory_cache.get(collection_name, {}).values())
@@ -174,7 +179,8 @@ class FirestoreStore:
     def save_transaction(self, tx_dict: Dict[str, Any]) -> Dict[str, Any]:
         tx_id = tx_dict["transaction_id"]
         res = self.create_document(self.COLLECTIONS["TRANSACTIONS"], tx_id, tx_dict)
-        self.log_audit("TRANSACTION_PROCESSED", "transaction", tx_id, {"merchant_id": tx_dict.get("merchant_id"), "amount": tx_dict.get("amount")})
+        if tx_dict.get("risk_score", 0.0) >= 60.0 or tx_dict.get("suspicious_indicators"):
+            self.log_audit("TRANSACTION_PROCESSED", "transaction", tx_id, {"merchant_id": tx_dict.get("merchant_id"), "amount": tx_dict.get("amount")})
         return res
 
     def save_case(self, case_dict: Dict[str, Any]) -> Dict[str, Any]:

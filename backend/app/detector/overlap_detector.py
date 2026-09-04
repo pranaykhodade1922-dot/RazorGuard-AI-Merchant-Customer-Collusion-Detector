@@ -17,21 +17,27 @@ def calculate_string_similarity(str1: str, str2: str) -> float:
     if s1_clean == s2_clean:
         return 1.0
         
-    # SequenceMatcher ratio
-    seq_ratio = difflib.SequenceMatcher(None, s1_clean, s2_clean).ratio()
-    
     # Token Jaccard similarity
     tokens1 = set(s1_clean.replace(",", " ").replace(".", " ").split())
     tokens2 = set(s2_clean.replace(",", " ").replace(".", " ").split())
     
     if not tokens1 or not tokens2:
-        jaccard = 0.0
-    else:
-        jaccard = len(tokens1.intersection(tokens2)) / len(tokens1.union(tokens2))
+        return 0.0
         
+    intersection = tokens1.intersection(tokens2)
+    jaccard = len(intersection) / len(tokens1.union(tokens2))
+    
+    # Fast path: if no token overlap and neither string contains the other, similarity is 0.0
+    if not intersection and s1_clean not in s2_clean and s2_clean not in s1_clean:
+        return 0.0
+        
+    seq_ratio = difflib.SequenceMatcher(None, s1_clean, s2_clean).ratio()
     return round(max(seq_ratio, jaccard), 3)
 
 
+import functools
+
+@functools.lru_cache(maxsize=4096)
 def parse_iso_timestamp(ts_str: Optional[str]) -> Optional[datetime.datetime]:
     if not ts_str:
         return None

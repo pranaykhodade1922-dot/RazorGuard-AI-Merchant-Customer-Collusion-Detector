@@ -72,9 +72,9 @@ class FirebaseService:
 
             db_client = firestore.client()
 
-            # Perform real Firestore connectivity verification test
+            # Perform real Firestore connectivity verification test with 2.0s timeout
             try:
-                db_client.collection("_health_check").limit(1).get()
+                db_client.collection("_health_check").limit(1).get(timeout=2.0)
                 self._db = db_client
                 self._is_connected = True
                 self._status_msg = "connected"

@@ -4,6 +4,7 @@ import os
 import uuid
 from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
+from collections import defaultdict
 
 from app.models.schemas import Case, InvestigatorNote, ConnectedEntitiesSummary, TransactionEvidence, EvidenceDetail, ScoreBreakdownItem
 
@@ -142,7 +143,7 @@ class CaseStore:
         risk_level: Optional[str] = None,
         limit: Optional[int] = None
     ) -> List[Case]:
-        query = "SELECT case_id FROM cases WHERE 1=1"
+        query = "SELECT case_json, status, updated_at FROM cases WHERE 1=1"
         params = []
 
         if status:
@@ -162,10 +163,27 @@ class CaseStore:
             cursor = conn.cursor()
             cursor.execute(query, params)
             rows = cursor.fetchall()
+
+            # Pre-fetch all notes for these cases
+            cursor.execute("SELECT note_id, case_id, note, created_at FROM investigator_notes ORDER BY created_at ASC")
+            all_notes = cursor.fetchall()
+            notes_by_case = defaultdict(list)
+            for r in all_notes:
+                notes_by_case[r["case_id"]].append(
+                    InvestigatorNote(
+                        note_id=r["note_id"],
+                        case_id=r["case_id"],
+                        note=r["note"],
+                        created_at=r["created_at"]
+                    ).model_dump()
+                )
+
             for r in rows:
-                c = self.get_case(r["case_id"])
-                if c:
-                    cases.append(c)
+                case_dict = json.loads(r["case_json"])
+                case_dict["status"] = r["status"]
+                case_dict["updated_at"] = r["updated_at"]
+                case_dict["investigator_notes"] = notes_by_case[case_dict["case_id"]]
+                cases.append(Case(**case_dict))
 
         return cases
 

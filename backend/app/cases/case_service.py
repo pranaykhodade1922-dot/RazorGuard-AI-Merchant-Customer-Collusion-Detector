@@ -157,13 +157,19 @@ class CaseService:
             if not existing_case:
                 created_cases_count += 1
 
-        # Also sync merchants, customers, and transactions to Firestore
+        # Also sync merchants, customers, and transactions to Firestore Store
         try:
+            flagged_merchant_set = set(sorted_merchant_ids)
+            flagged_cust_set = set()
             for m in merchants:
-                self.firestore_store.save_merchant(m.model_dump())
+                if m.merchant_id in flagged_merchant_set:
+                    self.firestore_store.save_merchant(m.model_dump())
             for c in customers:
-                self.firestore_store.save_customer(c.model_dump())
-            for tx in transactions:
+                if c.customer_id in flagged_cust_set:
+                    self.firestore_store.save_customer(c.model_dump())
+
+            suspicious_txs = [tx for tx in transactions if tx.merchant_id in flagged_merchant_set or tx.refund_status == "REFUNDED"]
+            for tx in suspicious_txs[:200]:
                 self.firestore_store.save_transaction(tx.model_dump())
         except Exception:
             pass

@@ -1,0 +1,177 @@
+[
+  {
+    "merchant_id": "M040",
+    "customer_id": "C153",
+    "is_collusive": true,
+    "ring_id": "R001",
+    "ring_type": "RING_A_DEVICE_IP_VELOCITY"
+  },
+  {
+    "merchant_id": "M040",
+    "customer_id": "C122",
+    "is_collusive": true,
+    "ring_id": "R001",
+    "ring_type": "RING_A_DEVICE_IP_VELOCITY"
+  },
+  {
+    "merchant_id": "M040",
+    "customer_id": "C050",
+    "is_collusive": true,
+    "ring_id": "R001",
+    "ring_type": "RING_A_DEVICE_IP_VELOCITY"
+  },
+  {
+    "merchant_id": "M040",
+    "customer_id": "C026",
+    "is_collusive": true,
+    "ring_id": "R001",
+    "ring_type": "RING_A_DEVICE_IP_VELOCITY"
+  },
+  {
+    "merchant_id": "M094",
+    "customer_id": "C202",
+    "is_collusive": true,
+    "ring_id": "R002",
+    "ring_type": "RING_B_PAYMENT_ADDRESS_CONCENTRATION"
+  },
+  {
+    "merchant_id": "M094",
+    "customer_id": "C293",
+    "is_collusive": true,
+    "ring_id": "R002",
+    "ring_type": "RING_B_PAYMENT_ADDRESS_CONCENTRATION"
+  },
+  {
+    "merchant_id": "M094",
+    "customer_id": "C282",
+    "is_collusive": true,
+    "ring_id": "R002",
+    "ring_type": "RING_B_PAYMENT_ADDRESS_CONCENTRATION"
+  },
+  {
+    "merchant_id": "M094",
+    "customer_id": "C431",
+    "is_collusive": true,
+    "ring_id": "R002",
+    "ring_type": "RING_B_PAYMENT_ADDRESS_CONCENTRATION"
+  },
+  {
+    "merchant_id": "M089",
+    "customer_id": "C252",
+    "is_collusive": true,
+    "ring_id": "R003",
+    "ring_type": "RING_C_DEVICE_PAYMENT_TIMING"
+  },
+  {
+    "merchant_id": "M089",
+    "customer_id": "C079",
+    "is_collusive": true,
+    "ring_id": "R003",
+    "ring_type": "RING_C_DEVICE_PAYMENT_TIMING"
+  },
+  {
+    "merchant_id": "M089",
+    "customer_id": "C028",
+    "is_collusive": true,
+    "ring_id": "R003",
+    "ring_type": "RING_C_DEVICE_PAYMENT_TIMING"
+  },
+  {
+    "merchant_id": "M089",
+    "customer_id": "C185",
+    "is_collusive": true,
+    "ring_id": "R003",
+    "ring_type": "RING_C_DEVICE_PAYMENT_TIMING"
+  },
+  {
+    "merchant_id": "M089",
+    "customer_id": "C002",
+    "is_collusive": true,
+    "ring_id": "R003",
+    "ring_type": "RING_C_DEVICE_PAYMENT_TIMING"
+  },
+  {
+    "merchant_id": "M038",
+    "customer_id": "C219",
+    "is_collusive": true,
+    "ring_id": "R004",
+    "ring_type": "RING_D_FULL_COLLUSION"
+  },
+  {
+    "merchant_id": "M038",
+    "customer_id": "C045",
+    "is_collusive": true,
+    "ring_id": "R004",
+    "ring_type": "RING_D_FULL_COLLUSION"
+  },
+  {
+    "merchant_id": "M038",
+    "customer_id": "C151",
+    "is_collusive": true,
+    "ring_id": "R004",
+    "ring_type": "RING_D_FULL_COLLUSION"
+  },
+  {
+    "merchant_id": "M038",
+    "customer_id": "C422",
+    "is_collusive": true,
+    "ring_id": "R004",
+    "ring_type": "RING_D_FULL_COLLUSION"
+  },
+  {
+    "merchant_id": "M038",
+    "customer_id": "C339",
+    "is_collusive": true,
+    "ring_id": "R004",
+    "ring_type": "RING_D_FULL_COLLUSION"
+  },
+  {
+    "merchant_id": "M017",
+    "customer_id": "C321",
+    "is_collusive": true,
+    "ring_id": "R005",
+    "ring_type": "RING_E_GEO_REFUND_ANOMALY"
+  },
+  {
+    "merchant_id": "M017",
+    "customer_id": "C308",
+    "is_collusive": true,
+    "ring_id": "R005",
+    "ring_type": "RING_E_GEO_REFUND_ANOMALY"
+  },
+  {
+    "merchant_id": "M017",
+    "customer_id": "C246",
+    "is_collusive": true,
+    "ring_id": "R005",
+    "ring_type": "RING_E_GEO_REFUND_ANOMALY"
+  },
+  {
+    "merchant_id": "M023",
+    "customer_id": "C103",
+    "is_collusive": true,
+    "ring_id": "R006",
+    "ring_type": "RING_F_HIGH_VELOCITY_TIMING"
+  },
+  {
+    "merchant_id": "M023",
+    "customer_id": "C498",
+    "is_collusive": true,
+    "ring_id": "R006",
+    "ring_type": "RING_F_HIGH_VELOCITY_TIMING"
+  },
+  {
+    "merchant_id": "M023",
+    "customer_id": "C014",
+    "is_collusive": true,
+    "ring_id": "R006",
+    "ring_type": "RING_F_HIGH_VELOCITY_TIMING"
+  },
+  {
+    "merchant_id": "M023",
+    "customer_id": "C106",
+    "is_collusive": true,
+    "ring_id": "R006",
+    "ring_type": "RING_F_HIGH_VELOCITY_TIMING"
+  }
+]

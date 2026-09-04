@@ -199,3 +199,52 @@ class DetectionRunResponse(BaseModel):
     critical_cases: int
     high_risk_cases: int
 
+
+# ==========================================
+# PHASE 4 ML / AI RISK INTELLIGENCE SCHEMAS
+# ==========================================
+
+class FeatureExplanation(BaseModel):
+    feature: str
+    value: float
+    importance: float
+    reason: str
+
+class ScoringWeightItem(BaseModel):
+    engine: str
+    raw_score: float
+    weight: float
+    weighted_contribution: float
+
+class MLScoreRequest(BaseModel):
+    merchant_id: str
+    customer_id: str
+    transaction_id: Optional[str] = None
+    transaction_data: Optional[Dict[str, Any]] = None
+    pair_risk_result: Optional[Dict[str, Any]] = None
+    network_detail: Optional[Dict[str, Any]] = None
+
+class MLScoreResponse(BaseModel):
+    merchant_id: str
+    customer_id: str
+    transaction_id: Optional[str] = None
+    transaction_risk_score: float
+    network_risk_score: float
+    ml_risk_score: float
+    final_risk_score: float
+    final_risk_level: str
+    model_version: str
+    algorithm: str
+    top_features: List[FeatureExplanation] = []
+    scoring_breakdown: List[ScoringWeightItem] = []
+
+class ModelInfoResponse(BaseModel):
+    model_version: str
+    algorithm: str
+    feature_count: int
+    feature_names: List[str]
+    metrics: Dict[str, float]
+    training_timestamp: str
+    disclaimer: str
+
+

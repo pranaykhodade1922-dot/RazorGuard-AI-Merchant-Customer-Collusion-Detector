@@ -17,16 +17,22 @@ from app.scoring.evaluator import ModelEvaluator
 from app.cases.case_service import CaseService
 from app.network.network_service import NetworkService
 from app.services.firestore_store import FirestoreStore
+from app.ml.ml_service import MLRiskService
+from app.ml.final_scorer import FinalRiskScorer
 from app.network.network_models import (
     NetworkNode, NetworkEdge, CollusionPattern, NetworkCluster,
     EntityNetworkDetail, NetworkOverview, ShortestPathResponse
 )
+from app.models.schemas import (
+    MLScoreRequest, MLScoreResponse, ModelInfoResponse,
+    FeatureExplanation, ScoringWeightItem
+)
 
 
 app = FastAPI(
-    title="RazorGuard AI — Merchant Risk Engine & Fraud Network Intelligence API",
-    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, network intelligence graph analysis, case management, and Cloud Firestore persistence.",
-    version="3.1.0"
+    title="RazorGuard AI — Merchant Risk Engine & ML Risk Intelligence API",
+    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, network intelligence graph analysis, ML risk intelligence, case management, and Cloud Firestore persistence.",
+    version="4.0.0"
 )
 
 # Global state for dataset objects in memory
@@ -40,8 +46,10 @@ STATE: Dict[str, Any] = {
 }
 
 case_service = CaseService()
-network_service = NetworkService()
+network_service = NetworkService(store=case_service.store)
 firestore_store = FirestoreStore()
+ml_service = MLRiskService()
+final_scorer = FinalRiskScorer()
 
 
 @app.exception_handler(HTTPException)
@@ -477,5 +485,100 @@ def get_network_entities():
 @app.get("/api/network/relationships", summary="List Network Relationships")
 def get_network_relationships():
     return firestore_store.list_documents("network_relationships")
+
+
+# ==========================================
+# PHASE 4 ML RISK INTELLIGENCE ENDPOINTS
+# ==========================================
+
+@app.post("/api/ml/score", response_model=MLScoreResponse, summary="Compute ML & Final Risk Intelligence Score")
+def compute_ml_score(payload: MLScoreRequest):
+    if not STATE["merchants"]:
+        generate_dataset(seed=SEED)
+
+    # 1. Transaction Risk Score lookup / baseline
+    tx_risk_score = 0.0
+    if payload.pair_risk_result:
+        tx_risk_score = float(payload.pair_risk_result.get("risk_score", 0.0))
+    elif STATE["risk_results"]:
+        for r in STATE["risk_results"]:
+            if r.merchant_id == payload.merchant_id and r.customer_id == payload.customer_id:
+                tx_risk_score = r.risk_score
+                break
+
+    # 2. Network Risk Score lookup / baseline
+    net_risk_score = tx_risk_score
+    if payload.network_detail:
+        net_risk_score = float(payload.network_detail.get("risk_score", tx_risk_score))
+    elif network_service.graph_service.graph.nodes():
+        detail = network_service.get_entity_detail(payload.merchant_id)
+        if detail:
+            net_risk_score = detail.risk_score
+
+    # 3. Predict ML Risk Score
+    ml_res = ml_service.predict_ml_risk(
+        merchant_id=payload.merchant_id,
+        customer_id=payload.customer_id,
+        transaction_data=payload.transaction_data,
+        pair_risk_result=payload.pair_risk_result,
+        network_detail=payload.network_detail
+    )
+
+    ml_score = ml_res["ml_risk_score"]
+
+    # 4. Calculate Blended Final Risk Score
+    final_res = final_scorer.calculate_final_risk(
+        transaction_risk_score=tx_risk_score,
+        network_risk_score=net_risk_score,
+        ml_risk_score=ml_score
+    )
+
+    top_features = [
+        FeatureExplanation(
+            feature=f["feature"],
+            value=f["value"],
+            importance=f["importance"],
+            reason=f["reason"]
+        ) for f in ml_res["top_features"]
+    ]
+
+    scoring_breakdown = [
+        ScoringWeightItem(
+            engine=item["engine"],
+            raw_score=item["raw_score"],
+            weight=item["weight"],
+            weighted_contribution=item["weighted_contribution"]
+        ) for item in final_res["scoring_breakdown"]
+    ]
+
+    return MLScoreResponse(
+        merchant_id=payload.merchant_id,
+        customer_id=payload.customer_id,
+        transaction_id=payload.transaction_id,
+        transaction_risk_score=tx_risk_score,
+        network_risk_score=net_risk_score,
+        ml_risk_score=ml_score,
+        final_risk_score=final_res["final_risk_score"],
+        final_risk_level=final_res["final_risk_level"],
+        model_version=ml_res["model_version"],
+        algorithm=ml_res["algorithm"],
+        top_features=top_features,
+        scoring_breakdown=scoring_breakdown
+    )
+
+
+@app.get("/api/ml/model-info", response_model=ModelInfoResponse, summary="Get ML Model Metadata & Metrics")
+def get_model_info():
+    info = ml_service.get_model_info()
+    return ModelInfoResponse(
+        model_version=info["model_version"],
+        algorithm=info["algorithm"],
+        feature_count=info["feature_count"],
+        feature_names=info["feature_names"],
+        metrics=info["metrics"],
+        training_timestamp=info["training_timestamp"],
+        disclaimer=info["disclaimer"]
+    )
+
 
 

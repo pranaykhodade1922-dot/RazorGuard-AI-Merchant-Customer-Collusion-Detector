@@ -104,15 +104,25 @@ class CollusionPatternDetector:
         patterns = []
         g = graph_service.graph
 
-        # Extract merchant & customer subgraph
+        # Extract merchant & customer subgraph with edges having multiple transactions or high risk
         mc_nodes = [n for n in g.nodes if n.startswith("MERCHANT:") or n.startswith("CUSTOMER:")]
-        sub = g.subgraph(mc_nodes)
+        
+        # Filter to edges with at least 2 transactions or non-zero risk score for cycle detection
+        risky_mc_edges = [
+            (u, v) for u, v, d in g.subgraph(mc_nodes).edges(data=True)
+            if d.get("transaction_count", 0) >= 2 or d.get("risk_score", 0.0) >= 40.0
+        ]
+        
+        if not risky_mc_edges:
+            return patterns
+
+        sub = g.edge_subgraph(risky_mc_edges)
 
         try:
             cycles = nx.cycle_basis(sub)
             for cycle in cycles:
                 if len(cycle) >= 4:  # At least 2 merchants and 2 customers
-                    entity_ids = [n.split(":", 1)[1] for n in cycle]
+                    entity_ids = [n.split(":", 1)[1] for n in cycle if ":" in n]
                     patterns.append(CollusionPattern(
                         pattern_type="CIRCULAR_RELATIONSHIP",
                         severity="CRITICAL",

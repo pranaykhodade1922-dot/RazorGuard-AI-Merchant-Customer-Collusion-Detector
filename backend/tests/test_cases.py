@@ -14,9 +14,10 @@ from app.scoring.risk_scorer import RiskScorer
 def setup_test_db(tmp_path, monkeypatch):
     db_file = os.path.join(tmp_path, "test_cases_razorguard.db")
     monkeypatch.setenv("RAZORGUARD_DB_PATH", db_file)
-    from app.main import case_service
+    from app.main import case_service, network_service
     store = CaseStore(db_path=db_file)
     case_service.store = store
+    network_service.store = store
     store.clear_all()
     yield store
     store.clear_all()

@@ -1,0 +1,4502 @@
+[
+  {
+    "customer_id": "C001",
+    "customer_name": "Sai Gupta",
+    "upi_id": "saic001@synthetic",
+    "device_id": "DEV_C_C001",
+    "ip_address": "10.1.49.148",
+    "address": "75 MG Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C002",
+    "customer_name": "Neha Reddy",
+    "upi_id": "refund_merchant089@synthetic",
+    "device_id": "DEV_M_M089",
+    "ip_address": "10.1.19.152",
+    "address": "51 Civil Lines, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C003",
+    "customer_name": "Sneha Chowdhury",
+    "upi_id": "snehac003@synthetic",
+    "device_id": "DEV_C_C003",
+    "ip_address": "10.1.97.154",
+    "address": "14 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C004",
+    "customer_name": "Vihaan Kulkarni",
+    "upi_id": "vihaanc004@synthetic",
+    "device_id": "DEV_C_C004",
+    "ip_address": "10.1.64.170",
+    "address": "45 Ring Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C005",
+    "customer_name": "Kavya Verma",
+    "upi_id": "kavyac005@synthetic",
+    "device_id": "DEV_C_C005",
+    "ip_address": "10.1.72.28",
+    "address": "2 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C006",
+    "customer_name": "Isha Joshi",
+    "upi_id": "ishac006@synthetic",
+    "device_id": "DEV_C_C006",
+    "ip_address": "10.1.65.46",
+    "address": "91 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C007",
+    "customer_name": "Anish Rao",
+    "upi_id": "anishc007@synthetic",
+    "device_id": "DEV_C_C007",
+    "ip_address": "10.1.71.120",
+    "address": "79 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C008",
+    "customer_name": "Isha Chowdhury",
+    "upi_id": "ishac008@synthetic",
+    "device_id": "DEV_C_C008",
+    "ip_address": "10.1.21.72",
+    "address": "42 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C009",
+    "customer_name": "Neha Mehta",
+    "upi_id": "nehac009@synthetic",
+    "device_id": "DEV_C_C009",
+    "ip_address": "10.1.95.98",
+    "address": "73 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C010",
+    "customer_name": "Priya Sharma",
+    "upi_id": "priyac010@synthetic",
+    "device_id": "DEV_C_C010",
+    "ip_address": "10.1.72.55",
+    "address": "42 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C011",
+    "customer_name": "Kavya Kulkarni",
+    "upi_id": "kavyac011@synthetic",
+    "device_id": "DEV_C_C011",
+    "ip_address": "10.1.86.180",
+    "address": "44 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C012",
+    "customer_name": "Ananya Rao",
+    "upi_id": "ananyac012@synthetic",
+    "device_id": "DEV_C_C012",
+    "ip_address": "10.1.20.62",
+    "address": "67 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C013",
+    "customer_name": "Anish Kumar",
+    "upi_id": "anishc013@synthetic",
+    "device_id": "DEV_C_C013",
+    "ip_address": "10.1.98.122",
+    "address": "72 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C014",
+    "customer_name": "Vikram Deshmukh",
+    "upi_id": "vikramc014@synthetic",
+    "device_id": "DEV_C_C014",
+    "ip_address": "10.1.21.76",
+    "address": "58 MG Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C015",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc015@synthetic",
+    "device_id": "DEV_C_C015",
+    "ip_address": "10.1.57.122",
+    "address": "40 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C016",
+    "customer_name": "Rohan Rao",
+    "upi_id": "rohanc016@synthetic",
+    "device_id": "DEV_C_C016",
+    "ip_address": "10.1.52.91",
+    "address": "55 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C017",
+    "customer_name": "Sneha Singh",
+    "upi_id": "snehac017@synthetic",
+    "device_id": "DEV_C_C017",
+    "ip_address": "10.1.39.31",
+    "address": "40 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C018",
+    "customer_name": "Anish Mehta",
+    "upi_id": "anishc018@synthetic",
+    "device_id": "DEV_C_C018",
+    "ip_address": "10.1.98.48",
+    "address": "16 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C019",
+    "customer_name": "Reyansh Mehta",
+    "upi_id": "reyanshc019@synthetic",
+    "device_id": "DEV_C_C019",
+    "ip_address": "10.1.77.153",
+    "address": "36 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C020",
+    "customer_name": "Diya Verma",
+    "upi_id": "diyac020@synthetic",
+    "device_id": "DEV_C_C020",
+    "ip_address": "10.1.56.46",
+    "address": "38 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C021",
+    "customer_name": "Diya Sharma",
+    "upi_id": "diyac021@synthetic",
+    "device_id": "DEV_C_C021",
+    "ip_address": "10.1.16.142",
+    "address": "36 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C022",
+    "customer_name": "Diya Deshmukh",
+    "upi_id": "diyac022@synthetic",
+    "device_id": "DEV_C_C022",
+    "ip_address": "10.1.23.224",
+    "address": "82 Anna Salai, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C023",
+    "customer_name": "Aarav Nair",
+    "upi_id": "aaravc023@synthetic",
+    "device_id": "DEV_C_C023",
+    "ip_address": "10.1.66.88",
+    "address": "61 Anna Salai, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C024",
+    "customer_name": "Sai Sharma",
+    "upi_id": "saic024@synthetic",
+    "device_id": "DEV_C_C024",
+    "ip_address": "10.1.18.103",
+    "address": "62 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C025",
+    "customer_name": "Pooja Verma",
+    "upi_id": "poojac025@synthetic",
+    "device_id": "DEV_C_C025",
+    "ip_address": "10.1.82.243",
+    "address": "20 Park Street, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C026",
+    "customer_name": "Diya Verma",
+    "upi_id": "diyac026@synthetic",
+    "device_id": "DEV_M_M040",
+    "ip_address": "10.0.64.179",
+    "address": "16 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C027",
+    "customer_name": "Siddharth Kulkarni",
+    "upi_id": "siddharthc027@synthetic",
+    "device_id": "DEV_C_C027",
+    "ip_address": "10.1.58.116",
+    "address": "100 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C028",
+    "customer_name": "Neha Gupta",
+    "upi_id": "refund_merchant089@synthetic",
+    "device_id": "DEV_M_M089",
+    "ip_address": "10.1.89.16",
+    "address": "40 Link Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C029",
+    "customer_name": "Siddharth Deshmukh",
+    "upi_id": "siddharthc029@synthetic",
+    "device_id": "DEV_C_C029",
+    "ip_address": "10.1.90.55",
+    "address": "98 Civil Lines, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C030",
+    "customer_name": "Ananya Iyer",
+    "upi_id": "ananyac030@synthetic",
+    "device_id": "DEV_C_C030",
+    "ip_address": "10.1.32.142",
+    "address": "21 Civil Lines, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C031",
+    "customer_name": "Aditya Patel",
+    "upi_id": "adityac031@synthetic",
+    "device_id": "DEV_C_C031",
+    "ip_address": "10.1.98.153",
+    "address": "53 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C032",
+    "customer_name": "Pooja Gupta",
+    "upi_id": "poojac032@synthetic",
+    "device_id": "DEV_C_C032",
+    "ip_address": "10.1.46.180",
+    "address": "30 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C033",
+    "customer_name": "Neha Verma",
+    "upi_id": "nehac033@synthetic",
+    "device_id": "DEV_C_C033",
+    "ip_address": "10.1.94.206",
+    "address": "34 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C034",
+    "customer_name": "Reyansh Kumar",
+    "upi_id": "reyanshc034@synthetic",
+    "device_id": "DEV_C_C034",
+    "ip_address": "10.1.92.39",
+    "address": "70 Civil Lines, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C035",
+    "customer_name": "Ananya Chowdhury",
+    "upi_id": "ananyac035@synthetic",
+    "device_id": "DEV_C_C035",
+    "ip_address": "10.1.31.203",
+    "address": "10 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C036",
+    "customer_name": "Diya Nair",
+    "upi_id": "diyac036@synthetic",
+    "device_id": "DEV_C_C036",
+    "ip_address": "10.1.69.177",
+    "address": "57 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C037",
+    "customer_name": "Diya Deshmukh",
+    "upi_id": "diyac037@synthetic",
+    "device_id": "DEV_C_C037",
+    "ip_address": "10.1.79.127",
+    "address": "35 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C038",
+    "customer_name": "Neha Verma",
+    "upi_id": "nehac038@synthetic",
+    "device_id": "DEV_C_C038",
+    "ip_address": "10.1.87.65",
+    "address": "56 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C039",
+    "customer_name": "Aarav Verma",
+    "upi_id": "aaravc039@synthetic",
+    "device_id": "DEV_C_C039",
+    "ip_address": "10.1.85.244",
+    "address": "87 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C040",
+    "customer_name": "Aarav Kulkarni",
+    "upi_id": "aaravc040@synthetic",
+    "device_id": "DEV_C_C040",
+    "ip_address": "10.1.32.121",
+    "address": "74 MG Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C041",
+    "customer_name": "Rahul Iyer",
+    "upi_id": "rahulc041@synthetic",
+    "device_id": "DEV_C_C041",
+    "ip_address": "10.1.84.112",
+    "address": "36 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C042",
+    "customer_name": "Vikram Chowdhury",
+    "upi_id": "vikramc042@synthetic",
+    "device_id": "DEV_C_C042",
+    "ip_address": "10.1.54.105",
+    "address": "12 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C043",
+    "customer_name": "Priya Joshi",
+    "upi_id": "priyac043@synthetic",
+    "device_id": "DEV_C_C043",
+    "ip_address": "10.1.62.178",
+    "address": "21 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C044",
+    "customer_name": "Pooja Gupta",
+    "upi_id": "poojac044@synthetic",
+    "device_id": "DEV_C_C044",
+    "ip_address": "10.1.14.117",
+    "address": "98 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C045",
+    "customer_name": "Aditya Joshi",
+    "upi_id": "adityac045@synthetic",
+    "device_id": "DEV_C_C045",
+    "ip_address": "10.1.61.222",
+    "address": "42 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C046",
+    "customer_name": "Rahul Chowdhury",
+    "upi_id": "rahulc046@synthetic",
+    "device_id": "DEV_C_C046",
+    "ip_address": "10.1.69.106",
+    "address": "85 Ring Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C047",
+    "customer_name": "Vivaan Mehta",
+    "upi_id": "vivaanc047@synthetic",
+    "device_id": "DEV_C_C047",
+    "ip_address": "10.1.90.114",
+    "address": "80 Anna Salai, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C048",
+    "customer_name": "Vivaan Mehta",
+    "upi_id": "vivaanc048@synthetic",
+    "device_id": "DEV_C_C048",
+    "ip_address": "10.1.46.113",
+    "address": "71 Park Street, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C049",
+    "customer_name": "Sneha Singh",
+    "upi_id": "snehac049@synthetic",
+    "device_id": "DEV_C_C049",
+    "ip_address": "10.1.40.182",
+    "address": "4 Link Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C050",
+    "customer_name": "Sai Gupta",
+    "upi_id": "saic050@synthetic",
+    "device_id": "DEV_M_M040",
+    "ip_address": "10.0.64.179",
+    "address": "71 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C051",
+    "customer_name": "Vihaan Singh",
+    "upi_id": "vihaanc051@synthetic",
+    "device_id": "DEV_C_C051",
+    "ip_address": "10.1.73.239",
+    "address": "83 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C052",
+    "customer_name": "Sneha Gupta",
+    "upi_id": "snehac052@synthetic",
+    "device_id": "DEV_C_C052",
+    "ip_address": "10.1.70.63",
+    "address": "54 Anna Salai, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C053",
+    "customer_name": "Neha Rao",
+    "upi_id": "nehac053@synthetic",
+    "device_id": "DEV_C_C053",
+    "ip_address": "10.1.86.131",
+    "address": "50 Civil Lines, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C054",
+    "customer_name": "Anish Reddy",
+    "upi_id": "anishc054@synthetic",
+    "device_id": "DEV_C_C054",
+    "ip_address": "10.1.63.88",
+    "address": "9 Bannerghatta Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C055",
+    "customer_name": "Rahul Gupta",
+    "upi_id": "rahulc055@synthetic",
+    "device_id": "DEV_C_C055",
+    "ip_address": "10.1.85.149",
+    "address": "37 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C056",
+    "customer_name": "Neha Singh",
+    "upi_id": "nehac056@synthetic",
+    "device_id": "DEV_C_C056",
+    "ip_address": "10.1.71.89",
+    "address": "58 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C057",
+    "customer_name": "Priya Rao",
+    "upi_id": "priyac057@synthetic",
+    "device_id": "DEV_C_C057",
+    "ip_address": "10.1.34.252",
+    "address": "59 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C058",
+    "customer_name": "Sneha Mehta",
+    "upi_id": "snehac058@synthetic",
+    "device_id": "DEV_C_C058",
+    "ip_address": "10.1.15.82",
+    "address": "30 Gachibowli Main Rd, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C059",
+    "customer_name": "Anish Singh",
+    "upi_id": "anishc059@synthetic",
+    "device_id": "DEV_C_C059",
+    "ip_address": "10.1.73.247",
+    "address": "50 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C060",
+    "customer_name": "Vivaan Patel",
+    "upi_id": "vivaanc060@synthetic",
+    "device_id": "DEV_C_C060",
+    "ip_address": "10.1.22.135",
+    "address": "13 Anna Salai, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C061",
+    "customer_name": "Neha Sharma",
+    "upi_id": "nehac061@synthetic",
+    "device_id": "DEV_C_C061",
+    "ip_address": "10.1.19.121",
+    "address": "53 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C062",
+    "customer_name": "Ananya Joshi",
+    "upi_id": "ananyac062@synthetic",
+    "device_id": "DEV_C_C062",
+    "ip_address": "10.1.52.219",
+    "address": "84 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C063",
+    "customer_name": "Neha Chowdhury",
+    "upi_id": "nehac063@synthetic",
+    "device_id": "DEV_C_C063",
+    "ip_address": "10.1.79.10",
+    "address": "41 Anna Salai, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C064",
+    "customer_name": "Siddharth Verma",
+    "upi_id": "siddharthc064@synthetic",
+    "device_id": "DEV_C_C064",
+    "ip_address": "10.1.39.192",
+    "address": "81 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C065",
+    "customer_name": "Aditya Kumar",
+    "upi_id": "adityac065@synthetic",
+    "device_id": "DEV_C_C065",
+    "ip_address": "10.1.66.43",
+    "address": "98 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C066",
+    "customer_name": "Sneha Gupta",
+    "upi_id": "snehac066@synthetic",
+    "device_id": "DEV_C_C066",
+    "ip_address": "10.1.17.76",
+    "address": "6 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C067",
+    "customer_name": "Kavya Joshi",
+    "upi_id": "kavyac067@synthetic",
+    "device_id": "DEV_C_C067",
+    "ip_address": "10.1.77.106",
+    "address": "19 Civil Lines, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C068",
+    "customer_name": "Amit Iyer",
+    "upi_id": "amitc068@synthetic",
+    "device_id": "DEV_C_C068",
+    "ip_address": "10.1.20.157",
+    "address": "22 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C069",
+    "customer_name": "Riya Nair",
+    "upi_id": "riyac069@synthetic",
+    "device_id": "DEV_C_C069",
+    "ip_address": "10.1.28.60",
+    "address": "64 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C070",
+    "customer_name": "Neha Iyer",
+    "upi_id": "nehac070@synthetic",
+    "device_id": "DEV_C_C070",
+    "ip_address": "10.1.95.3",
+    "address": "59 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C071",
+    "customer_name": "Neha Reddy",
+    "upi_id": "nehac071@synthetic",
+    "device_id": "DEV_C_C071",
+    "ip_address": "10.1.30.19",
+    "address": "87 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C072",
+    "customer_name": "Neha Joshi",
+    "upi_id": "nehac072@synthetic",
+    "device_id": "DEV_C_C072",
+    "ip_address": "10.1.98.65",
+    "address": "82 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C073",
+    "customer_name": "Neha Chowdhury",
+    "upi_id": "nehac073@synthetic",
+    "device_id": "DEV_C_C073",
+    "ip_address": "10.1.71.28",
+    "address": "26 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C074",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc074@synthetic",
+    "device_id": "DEV_C_C074",
+    "ip_address": "10.1.99.76",
+    "address": "74 Bannerghatta Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C075",
+    "customer_name": "Aarav Chowdhury",
+    "upi_id": "aaravc075@synthetic",
+    "device_id": "DEV_C_C075",
+    "ip_address": "10.1.82.222",
+    "address": "36 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C076",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac076@synthetic",
+    "device_id": "DEV_C_C076",
+    "ip_address": "10.1.46.199",
+    "address": "78 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C077",
+    "customer_name": "Ayaan Nair",
+    "upi_id": "ayaanc077@synthetic",
+    "device_id": "DEV_C_C077",
+    "ip_address": "10.1.89.65",
+    "address": "29 Civil Lines, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C078",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac078@synthetic",
+    "device_id": "DEV_C_C078",
+    "ip_address": "10.1.90.166",
+    "address": "81 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C079",
+    "customer_name": "Vivaan Gupta",
+    "upi_id": "refund_merchant089@synthetic",
+    "device_id": "DEV_M_M089",
+    "ip_address": "10.1.56.188",
+    "address": "5 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C080",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc080@synthetic",
+    "device_id": "DEV_C_C080",
+    "ip_address": "10.1.32.52",
+    "address": "42 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C081",
+    "customer_name": "Arjun Kulkarni",
+    "upi_id": "arjunc081@synthetic",
+    "device_id": "DEV_C_C081",
+    "ip_address": "10.1.44.213",
+    "address": "68 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C082",
+    "customer_name": "Sai Gupta",
+    "upi_id": "saic082@synthetic",
+    "device_id": "DEV_C_C082",
+    "ip_address": "10.1.24.120",
+    "address": "38 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C083",
+    "customer_name": "Aditya Patel",
+    "upi_id": "adityac083@synthetic",
+    "device_id": "DEV_C_C083",
+    "ip_address": "10.1.81.94",
+    "address": "87 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C084",
+    "customer_name": "Aditya Kulkarni",
+    "upi_id": "adityac084@synthetic",
+    "device_id": "DEV_C_C084",
+    "ip_address": "10.1.78.32",
+    "address": "2 Bannerghatta Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C085",
+    "customer_name": "Neha Joshi",
+    "upi_id": "nehac085@synthetic",
+    "device_id": "DEV_C_C085",
+    "ip_address": "10.1.91.241",
+    "address": "75 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C086",
+    "customer_name": "Kavya Verma",
+    "upi_id": "kavyac086@synthetic",
+    "device_id": "DEV_C_C086",
+    "ip_address": "10.1.89.227",
+    "address": "61 MG Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C087",
+    "customer_name": "Rohan Joshi",
+    "upi_id": "rohanc087@synthetic",
+    "device_id": "DEV_C_C087",
+    "ip_address": "10.1.91.211",
+    "address": "83 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C088",
+    "customer_name": "Neha Reddy",
+    "upi_id": "nehac088@synthetic",
+    "device_id": "DEV_C_C088",
+    "ip_address": "10.1.24.36",
+    "address": "84 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C089",
+    "customer_name": "Vivaan Sharma",
+    "upi_id": "vivaanc089@synthetic",
+    "device_id": "DEV_C_C089",
+    "ip_address": "10.1.22.61",
+    "address": "64 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C090",
+    "customer_name": "Rohan Patel",
+    "upi_id": "rohanc090@synthetic",
+    "device_id": "DEV_C_C090",
+    "ip_address": "10.1.95.244",
+    "address": "59 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C091",
+    "customer_name": "Anish Deshmukh",
+    "upi_id": "anishc091@synthetic",
+    "device_id": "DEV_C_C091",
+    "ip_address": "10.1.63.168",
+    "address": "76 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C092",
+    "customer_name": "Vihaan Chowdhury",
+    "upi_id": "vihaanc092@synthetic",
+    "device_id": "DEV_C_C092",
+    "ip_address": "10.1.45.9",
+    "address": "79 Gachibowli Main Rd, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C093",
+    "customer_name": "Sneha Joshi",
+    "upi_id": "snehac093@synthetic",
+    "device_id": "DEV_C_C093",
+    "ip_address": "10.1.40.219",
+    "address": "57 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C094",
+    "customer_name": "Kavya Verma",
+    "upi_id": "kavyac094@synthetic",
+    "device_id": "DEV_C_C094",
+    "ip_address": "10.1.17.102",
+    "address": "70 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C095",
+    "customer_name": "Ananya Mehta",
+    "upi_id": "ananyac095@synthetic",
+    "device_id": "DEV_C_C095",
+    "ip_address": "10.1.94.55",
+    "address": "59 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C096",
+    "customer_name": "Vikram Iyer",
+    "upi_id": "vikramc096@synthetic",
+    "device_id": "DEV_C_C096",
+    "ip_address": "10.1.41.254",
+    "address": "7 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C097",
+    "customer_name": "Arjun Kulkarni",
+    "upi_id": "arjunc097@synthetic",
+    "device_id": "DEV_C_C097",
+    "ip_address": "10.1.36.151",
+    "address": "9 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C098",
+    "customer_name": "Reyansh Chowdhury",
+    "upi_id": "reyanshc098@synthetic",
+    "device_id": "DEV_C_C098",
+    "ip_address": "10.1.86.1",
+    "address": "43 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C099",
+    "customer_name": "Ananya Chowdhury",
+    "upi_id": "ananyac099@synthetic",
+    "device_id": "DEV_C_C099",
+    "ip_address": "10.1.42.205",
+    "address": "17 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C100",
+    "customer_name": "Sai Verma",
+    "upi_id": "saic100@synthetic",
+    "device_id": "DEV_C_C100",
+    "ip_address": "10.1.55.203",
+    "address": "17 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C101",
+    "customer_name": "Ayaan Nair",
+    "upi_id": "ayaanc101@synthetic",
+    "device_id": "DEV_C_C101",
+    "ip_address": "10.1.43.14",
+    "address": "3 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C102",
+    "customer_name": "Arjun Deshmukh",
+    "upi_id": "arjunc102@synthetic",
+    "device_id": "DEV_C_C102",
+    "ip_address": "10.1.18.122",
+    "address": "68 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C103",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac103@synthetic",
+    "device_id": "DEV_C_C103",
+    "ip_address": "10.1.23.116",
+    "address": "66 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C104",
+    "customer_name": "Rahul Mehta",
+    "upi_id": "rahulc104@synthetic",
+    "device_id": "DEV_C_C104",
+    "ip_address": "10.1.48.118",
+    "address": "94 Ring Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C105",
+    "customer_name": "Vikram Sharma",
+    "upi_id": "vikramc105@synthetic",
+    "device_id": "DEV_C_C105",
+    "ip_address": "10.1.64.176",
+    "address": "62 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C106",
+    "customer_name": "Vihaan Singh",
+    "upi_id": "vihaanc106@synthetic",
+    "device_id": "DEV_C_C106",
+    "ip_address": "10.1.51.156",
+    "address": "10 Station Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C107",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc107@synthetic",
+    "device_id": "DEV_C_C107",
+    "ip_address": "10.1.91.150",
+    "address": "36 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C108",
+    "customer_name": "Rohan Deshmukh",
+    "upi_id": "rohanc108@synthetic",
+    "device_id": "DEV_C_C108",
+    "ip_address": "10.1.77.76",
+    "address": "49 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C109",
+    "customer_name": "Neha Rao",
+    "upi_id": "nehac109@synthetic",
+    "device_id": "DEV_C_C109",
+    "ip_address": "10.1.93.167",
+    "address": "13 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C110",
+    "customer_name": "Rohan Deshmukh",
+    "upi_id": "rohanc110@synthetic",
+    "device_id": "DEV_C_C110",
+    "ip_address": "10.1.39.106",
+    "address": "56 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C111",
+    "customer_name": "Priya Chowdhury",
+    "upi_id": "priyac111@synthetic",
+    "device_id": "DEV_C_C111",
+    "ip_address": "10.1.22.81",
+    "address": "52 Gachibowli Main Rd, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C112",
+    "customer_name": "Isha Joshi",
+    "upi_id": "ishac112@synthetic",
+    "device_id": "DEV_C_C112",
+    "ip_address": "10.1.97.237",
+    "address": "48 Park Street, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C113",
+    "customer_name": "Pooja Verma",
+    "upi_id": "poojac113@synthetic",
+    "device_id": "DEV_C_C113",
+    "ip_address": "10.1.65.25",
+    "address": "11 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C114",
+    "customer_name": "Anish Deshmukh",
+    "upi_id": "anishc114@synthetic",
+    "device_id": "DEV_C_C114",
+    "ip_address": "10.1.17.151",
+    "address": "17 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C115",
+    "customer_name": "Rohan Rao",
+    "upi_id": "rohanc115@synthetic",
+    "device_id": "DEV_C_C115",
+    "ip_address": "10.1.62.91",
+    "address": "86 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C116",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac116@synthetic",
+    "device_id": "DEV_C_C116",
+    "ip_address": "10.1.46.154",
+    "address": "93 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C117",
+    "customer_name": "Diya Joshi",
+    "upi_id": "diyac117@synthetic",
+    "device_id": "DEV_C_C117",
+    "ip_address": "10.1.37.40",
+    "address": "74 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C118",
+    "customer_name": "Neha Singh",
+    "upi_id": "nehac118@synthetic",
+    "device_id": "DEV_C_C118",
+    "ip_address": "10.1.81.95",
+    "address": "14 FC Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C119",
+    "customer_name": "Vihaan Kulkarni",
+    "upi_id": "vihaanc119@synthetic",
+    "device_id": "DEV_C_C119",
+    "ip_address": "10.1.64.217",
+    "address": "74 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C120",
+    "customer_name": "Rohan Kulkarni",
+    "upi_id": "rohanc120@synthetic",
+    "device_id": "DEV_C_C120",
+    "ip_address": "10.1.13.47",
+    "address": "78 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C121",
+    "customer_name": "Ananya Deshmukh",
+    "upi_id": "ananyac121@synthetic",
+    "device_id": "DEV_C_C121",
+    "ip_address": "10.1.10.47",
+    "address": "44 FC Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C122",
+    "customer_name": "Arjun Nair",
+    "upi_id": "arjunc122@synthetic",
+    "device_id": "DEV_M_M040",
+    "ip_address": "10.0.64.179",
+    "address": "9 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C123",
+    "customer_name": "Aarav Verma",
+    "upi_id": "aaravc123@synthetic",
+    "device_id": "DEV_C_C123",
+    "ip_address": "10.1.68.88",
+    "address": "49 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C124",
+    "customer_name": "Sai Joshi",
+    "upi_id": "saic124@synthetic",
+    "device_id": "DEV_C_C124",
+    "ip_address": "10.1.82.153",
+    "address": "93 FC Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C125",
+    "customer_name": "Aditya Reddy",
+    "upi_id": "adityac125@synthetic",
+    "device_id": "DEV_C_C125",
+    "ip_address": "10.1.89.13",
+    "address": "20 Park Street, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C126",
+    "customer_name": "Neha Verma",
+    "upi_id": "nehac126@synthetic",
+    "device_id": "DEV_C_C126",
+    "ip_address": "10.1.72.156",
+    "address": "57 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C127",
+    "customer_name": "Neha Kumar",
+    "upi_id": "nehac127@synthetic",
+    "device_id": "DEV_C_C127",
+    "ip_address": "10.1.24.89",
+    "address": "28 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C128",
+    "customer_name": "Isha Verma",
+    "upi_id": "ishac128@synthetic",
+    "device_id": "DEV_C_C128",
+    "ip_address": "10.1.72.135",
+    "address": "87 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C129",
+    "customer_name": "Neha Gupta",
+    "upi_id": "nehac129@synthetic",
+    "device_id": "DEV_C_C129",
+    "ip_address": "10.1.86.15",
+    "address": "29 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C130",
+    "customer_name": "Aarav Mehta",
+    "upi_id": "aaravc130@synthetic",
+    "device_id": "DEV_C_C130",
+    "ip_address": "10.1.42.75",
+    "address": "28 Park Street, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C131",
+    "customer_name": "Priya Verma",
+    "upi_id": "priyac131@synthetic",
+    "device_id": "DEV_C_C131",
+    "ip_address": "10.1.32.34",
+    "address": "64 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C132",
+    "customer_name": "Riya Rao",
+    "upi_id": "riyac132@synthetic",
+    "device_id": "DEV_C_C132",
+    "ip_address": "10.1.95.207",
+    "address": "65 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C133",
+    "customer_name": "Kavya Verma",
+    "upi_id": "kavyac133@synthetic",
+    "device_id": "DEV_C_C133",
+    "ip_address": "10.1.65.5",
+    "address": "95 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C134",
+    "customer_name": "Neha Reddy",
+    "upi_id": "nehac134@synthetic",
+    "device_id": "DEV_C_C134",
+    "ip_address": "10.1.64.147",
+    "address": "41 Link Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C135",
+    "customer_name": "Riya Deshmukh",
+    "upi_id": "riyac135@synthetic",
+    "device_id": "DEV_C_C135",
+    "ip_address": "10.1.61.6",
+    "address": "38 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C136",
+    "customer_name": "Priya Patel",
+    "upi_id": "priyac136@synthetic",
+    "device_id": "DEV_C_C136",
+    "ip_address": "10.1.21.112",
+    "address": "89 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C137",
+    "customer_name": "Vihaan Mehta",
+    "upi_id": "vihaanc137@synthetic",
+    "device_id": "DEV_C_C137",
+    "ip_address": "10.1.77.21",
+    "address": "76 Gachibowli Main Rd, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C138",
+    "customer_name": "Riya Chowdhury",
+    "upi_id": "riyac138@synthetic",
+    "device_id": "DEV_C_C138",
+    "ip_address": "10.1.38.86",
+    "address": "96 FC Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C139",
+    "customer_name": "Sai Verma",
+    "upi_id": "saic139@synthetic",
+    "device_id": "DEV_C_C139",
+    "ip_address": "10.1.34.232",
+    "address": "68 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C140",
+    "customer_name": "Kavya Joshi",
+    "upi_id": "kavyac140@synthetic",
+    "device_id": "DEV_C_C140",
+    "ip_address": "10.1.28.66",
+    "address": "31 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C141",
+    "customer_name": "Reyansh Patel",
+    "upi_id": "reyanshc141@synthetic",
+    "device_id": "DEV_C_C141",
+    "ip_address": "10.1.32.244",
+    "address": "98 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C142",
+    "customer_name": "Vikram Singh",
+    "upi_id": "vikramc142@synthetic",
+    "device_id": "DEV_C_C142",
+    "ip_address": "10.1.84.115",
+    "address": "97 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C143",
+    "customer_name": "Neha Reddy",
+    "upi_id": "nehac143@synthetic",
+    "device_id": "DEV_C_C143",
+    "ip_address": "10.1.29.113",
+    "address": "81 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C144",
+    "customer_name": "Aditya Singh",
+    "upi_id": "adityac144@synthetic",
+    "device_id": "DEV_C_C144",
+    "ip_address": "10.1.45.152",
+    "address": "81 Bannerghatta Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C145",
+    "customer_name": "Vivaan Joshi",
+    "upi_id": "vivaanc145@synthetic",
+    "device_id": "DEV_C_C145",
+    "ip_address": "10.1.67.10",
+    "address": "40 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C146",
+    "customer_name": "Vivaan Joshi",
+    "upi_id": "vivaanc146@synthetic",
+    "device_id": "DEV_C_C146",
+    "ip_address": "10.1.88.153",
+    "address": "10 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C147",
+    "customer_name": "Rahul Kumar",
+    "upi_id": "rahulc147@synthetic",
+    "device_id": "DEV_C_C147",
+    "ip_address": "10.1.15.116",
+    "address": "75 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C148",
+    "customer_name": "Amit Iyer",
+    "upi_id": "amitc148@synthetic",
+    "device_id": "DEV_C_C148",
+    "ip_address": "10.1.70.129",
+    "address": "42 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C149",
+    "customer_name": "Arjun Sharma",
+    "upi_id": "arjunc149@synthetic",
+    "device_id": "DEV_C_C149",
+    "ip_address": "10.1.20.130",
+    "address": "14 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C150",
+    "customer_name": "Vikram Patel",
+    "upi_id": "vikramc150@synthetic",
+    "device_id": "DEV_C_C150",
+    "ip_address": "10.1.66.135",
+    "address": "32 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C151",
+    "customer_name": "Rahul Nair",
+    "upi_id": "rahulc151@synthetic",
+    "device_id": "DEV_C_C151",
+    "ip_address": "10.1.46.100",
+    "address": "47 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C152",
+    "customer_name": "Isha Kulkarni",
+    "upi_id": "ishac152@synthetic",
+    "device_id": "DEV_C_C152",
+    "ip_address": "10.1.16.203",
+    "address": "87 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C153",
+    "customer_name": "Vikram Iyer",
+    "upi_id": "vikramc153@synthetic",
+    "device_id": "DEV_M_M040",
+    "ip_address": "10.0.64.179",
+    "address": "9 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C154",
+    "customer_name": "Neha Kumar",
+    "upi_id": "nehac154@synthetic",
+    "device_id": "DEV_C_C154",
+    "ip_address": "10.1.29.86",
+    "address": "33 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C155",
+    "customer_name": "Aditya Nair",
+    "upi_id": "adityac155@synthetic",
+    "device_id": "DEV_C_C155",
+    "ip_address": "10.1.93.179",
+    "address": "45 Bannerghatta Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C156",
+    "customer_name": "Neha Kumar",
+    "upi_id": "nehac156@synthetic",
+    "device_id": "DEV_C_C156",
+    "ip_address": "10.1.49.144",
+    "address": "77 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C157",
+    "customer_name": "Riya Iyer",
+    "upi_id": "riyac157@synthetic",
+    "device_id": "DEV_C_C157",
+    "ip_address": "10.1.21.166",
+    "address": "17 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C158",
+    "customer_name": "Neha Kumar",
+    "upi_id": "nehac158@synthetic",
+    "device_id": "DEV_C_C158",
+    "ip_address": "10.1.49.47",
+    "address": "3 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C159",
+    "customer_name": "Reyansh Joshi",
+    "upi_id": "reyanshc159@synthetic",
+    "device_id": "DEV_C_C159",
+    "ip_address": "10.1.27.40",
+    "address": "25 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C160",
+    "customer_name": "Aditya Gupta",
+    "upi_id": "adityac160@synthetic",
+    "device_id": "DEV_C_C160",
+    "ip_address": "10.1.77.10",
+    "address": "65 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C161",
+    "customer_name": "Neha Joshi",
+    "upi_id": "nehac161@synthetic",
+    "device_id": "DEV_C_C161",
+    "ip_address": "10.1.29.42",
+    "address": "77 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C162",
+    "customer_name": "Sai Chowdhury",
+    "upi_id": "saic162@synthetic",
+    "device_id": "DEV_C_C162",
+    "ip_address": "10.1.15.106",
+    "address": "93 Anna Salai, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C163",
+    "customer_name": "Kavya Iyer",
+    "upi_id": "kavyac163@synthetic",
+    "device_id": "DEV_C_C163",
+    "ip_address": "10.1.46.193",
+    "address": "57 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C164",
+    "customer_name": "Anish Kulkarni",
+    "upi_id": "anishc164@synthetic",
+    "device_id": "DEV_C_C164",
+    "ip_address": "10.1.40.80",
+    "address": "30 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C165",
+    "customer_name": "Pooja Reddy",
+    "upi_id": "poojac165@synthetic",
+    "device_id": "DEV_C_C165",
+    "ip_address": "10.1.66.119",
+    "address": "48 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C166",
+    "customer_name": "Diya Kulkarni",
+    "upi_id": "diyac166@synthetic",
+    "device_id": "DEV_C_C166",
+    "ip_address": "10.1.63.248",
+    "address": "65 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C167",
+    "customer_name": "Sai Chowdhury",
+    "upi_id": "saic167@synthetic",
+    "device_id": "DEV_C_C167",
+    "ip_address": "10.1.42.14",
+    "address": "78 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C168",
+    "customer_name": "Vikram Singh",
+    "upi_id": "vikramc168@synthetic",
+    "device_id": "DEV_C_C168",
+    "ip_address": "10.1.76.218",
+    "address": "71 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C169",
+    "customer_name": "Vihaan Gupta",
+    "upi_id": "vihaanc169@synthetic",
+    "device_id": "DEV_C_C169",
+    "ip_address": "10.1.44.116",
+    "address": "98 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C170",
+    "customer_name": "Rahul Patel",
+    "upi_id": "rahulc170@synthetic",
+    "device_id": "DEV_C_C170",
+    "ip_address": "10.1.67.227",
+    "address": "12 Civil Lines, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C171",
+    "customer_name": "Kavya Reddy",
+    "upi_id": "kavyac171@synthetic",
+    "device_id": "DEV_C_C171",
+    "ip_address": "10.1.60.129",
+    "address": "54 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C172",
+    "customer_name": "Kavya Mehta",
+    "upi_id": "kavyac172@synthetic",
+    "device_id": "DEV_C_C172",
+    "ip_address": "10.1.38.8",
+    "address": "11 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C173",
+    "customer_name": "Priya Reddy",
+    "upi_id": "priyac173@synthetic",
+    "device_id": "DEV_C_C173",
+    "ip_address": "10.1.28.36",
+    "address": "92 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C174",
+    "customer_name": "Vivaan Gupta",
+    "upi_id": "vivaanc174@synthetic",
+    "device_id": "DEV_C_C174",
+    "ip_address": "10.1.70.115",
+    "address": "90 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C175",
+    "customer_name": "Siddharth Sharma",
+    "upi_id": "siddharthc175@synthetic",
+    "device_id": "DEV_C_C175",
+    "ip_address": "10.1.37.214",
+    "address": "3 Bannerghatta Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C176",
+    "customer_name": "Arjun Rao",
+    "upi_id": "arjunc176@synthetic",
+    "device_id": "DEV_C_C176",
+    "ip_address": "10.1.40.78",
+    "address": "15 Bannerghatta Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C177",
+    "customer_name": "Vihaan Sharma",
+    "upi_id": "vihaanc177@synthetic",
+    "device_id": "DEV_C_C177",
+    "ip_address": "10.1.68.17",
+    "address": "54 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C178",
+    "customer_name": "Vihaan Chowdhury",
+    "upi_id": "vihaanc178@synthetic",
+    "device_id": "DEV_C_C178",
+    "ip_address": "10.1.12.162",
+    "address": "77 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C179",
+    "customer_name": "Rahul Nair",
+    "upi_id": "rahulc179@synthetic",
+    "device_id": "DEV_C_C179",
+    "ip_address": "10.1.47.110",
+    "address": "92 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C180",
+    "customer_name": "Aarav Nair",
+    "upi_id": "aaravc180@synthetic",
+    "device_id": "DEV_C_C180",
+    "ip_address": "10.1.63.48",
+    "address": "31 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C181",
+    "customer_name": "Neha Iyer",
+    "upi_id": "nehac181@synthetic",
+    "device_id": "DEV_C_C181",
+    "ip_address": "10.1.18.245",
+    "address": "68 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C182",
+    "customer_name": "Rahul Rao",
+    "upi_id": "rahulc182@synthetic",
+    "device_id": "DEV_C_C182",
+    "ip_address": "10.1.15.163",
+    "address": "50 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C183",
+    "customer_name": "Riya Joshi",
+    "upi_id": "riyac183@synthetic",
+    "device_id": "DEV_C_C183",
+    "ip_address": "10.1.55.202",
+    "address": "96 MG Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C184",
+    "customer_name": "Aditya Joshi",
+    "upi_id": "adityac184@synthetic",
+    "device_id": "DEV_C_C184",
+    "ip_address": "10.1.84.189",
+    "address": "94 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C185",
+    "customer_name": "Priya Patel",
+    "upi_id": "refund_merchant089@synthetic",
+    "device_id": "DEV_M_M089",
+    "ip_address": "10.1.53.209",
+    "address": "46 Ring Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C186",
+    "customer_name": "Vikram Patel",
+    "upi_id": "vikramc186@synthetic",
+    "device_id": "DEV_C_C186",
+    "ip_address": "10.1.90.47",
+    "address": "90 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C187",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc187@synthetic",
+    "device_id": "DEV_C_C187",
+    "ip_address": "10.1.35.12",
+    "address": "5 Bannerghatta Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C188",
+    "customer_name": "Reyansh Reddy",
+    "upi_id": "reyanshc188@synthetic",
+    "device_id": "DEV_C_C188",
+    "ip_address": "10.1.75.102",
+    "address": "41 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C189",
+    "customer_name": "Rohan Singh",
+    "upi_id": "rohanc189@synthetic",
+    "device_id": "DEV_C_C189",
+    "ip_address": "10.1.46.92",
+    "address": "5 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C190",
+    "customer_name": "Vivaan Chowdhury",
+    "upi_id": "vivaanc190@synthetic",
+    "device_id": "DEV_C_C190",
+    "ip_address": "10.1.57.112",
+    "address": "35 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C191",
+    "customer_name": "Riya Deshmukh",
+    "upi_id": "riyac191@synthetic",
+    "device_id": "DEV_C_C191",
+    "ip_address": "10.1.33.128",
+    "address": "50 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C192",
+    "customer_name": "Sneha Singh",
+    "upi_id": "snehac192@synthetic",
+    "device_id": "DEV_C_C192",
+    "ip_address": "10.1.20.187",
+    "address": "67 Bannerghatta Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C193",
+    "customer_name": "Isha Verma",
+    "upi_id": "ishac193@synthetic",
+    "device_id": "DEV_C_C193",
+    "ip_address": "10.1.79.76",
+    "address": "78 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C194",
+    "customer_name": "Priya Verma",
+    "upi_id": "priyac194@synthetic",
+    "device_id": "DEV_C_C194",
+    "ip_address": "10.1.49.115",
+    "address": "42 Bannerghatta Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C195",
+    "customer_name": "Siddharth Deshmukh",
+    "upi_id": "siddharthc195@synthetic",
+    "device_id": "DEV_C_C195",
+    "ip_address": "10.1.54.115",
+    "address": "22 Anna Salai, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C196",
+    "customer_name": "Vivaan Deshmukh",
+    "upi_id": "vivaanc196@synthetic",
+    "device_id": "DEV_C_C196",
+    "ip_address": "10.1.45.164",
+    "address": "79 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C197",
+    "customer_name": "Vivaan Verma",
+    "upi_id": "vivaanc197@synthetic",
+    "device_id": "DEV_C_C197",
+    "ip_address": "10.1.96.41",
+    "address": "47 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C198",
+    "customer_name": "Aarav Patel",
+    "upi_id": "aaravc198@synthetic",
+    "device_id": "DEV_C_C198",
+    "ip_address": "10.1.18.61",
+    "address": "5 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C199",
+    "customer_name": "Vikram Joshi",
+    "upi_id": "vikramc199@synthetic",
+    "device_id": "DEV_C_C199",
+    "ip_address": "10.1.14.155",
+    "address": "50 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C200",
+    "customer_name": "Arjun Iyer",
+    "upi_id": "arjunc200@synthetic",
+    "device_id": "DEV_C_C200",
+    "ip_address": "10.1.66.196",
+    "address": "48 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C201",
+    "customer_name": "Aditya Nair",
+    "upi_id": "adityac201@synthetic",
+    "device_id": "DEV_C_C201",
+    "ip_address": "10.1.60.81",
+    "address": "68 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C202",
+    "customer_name": "Vikram Gupta",
+    "upi_id": "refund_merchant094@synthetic",
+    "device_id": "DEV_C_C202",
+    "ip_address": "10.1.33.128",
+    "address": "18 Anna Salai, Kolkata Suite 1",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C203",
+    "customer_name": "Rahul Kumar",
+    "upi_id": "rahulc203@synthetic",
+    "device_id": "DEV_C_C203",
+    "ip_address": "10.1.67.55",
+    "address": "34 Bannerghatta Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C204",
+    "customer_name": "Siddharth Gupta",
+    "upi_id": "siddharthc204@synthetic",
+    "device_id": "DEV_C_C204",
+    "ip_address": "10.1.27.219",
+    "address": "26 Station Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C205",
+    "customer_name": "Aditya Singh",
+    "upi_id": "adityac205@synthetic",
+    "device_id": "DEV_C_C205",
+    "ip_address": "10.1.21.208",
+    "address": "92 Anna Salai, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C206",
+    "customer_name": "Neha Chowdhury",
+    "upi_id": "nehac206@synthetic",
+    "device_id": "DEV_C_C206",
+    "ip_address": "10.1.18.141",
+    "address": "86 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C207",
+    "customer_name": "Rohan Gupta",
+    "upi_id": "rohanc207@synthetic",
+    "device_id": "DEV_C_C207",
+    "ip_address": "10.1.56.131",
+    "address": "21 Park Street, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C208",
+    "customer_name": "Ayaan Verma",
+    "upi_id": "ayaanc208@synthetic",
+    "device_id": "DEV_C_C208",
+    "ip_address": "10.1.73.7",
+    "address": "18 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C209",
+    "customer_name": "Kavya Rao",
+    "upi_id": "kavyac209@synthetic",
+    "device_id": "DEV_C_C209",
+    "ip_address": "10.1.26.157",
+    "address": "60 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C210",
+    "customer_name": "Aditya Verma",
+    "upi_id": "adityac210@synthetic",
+    "device_id": "DEV_C_C210",
+    "ip_address": "10.1.77.106",
+    "address": "51 Anna Salai, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C211",
+    "customer_name": "Isha Chowdhury",
+    "upi_id": "ishac211@synthetic",
+    "device_id": "DEV_C_C211",
+    "ip_address": "10.1.92.19",
+    "address": "17 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C212",
+    "customer_name": "Neha Singh",
+    "upi_id": "nehac212@synthetic",
+    "device_id": "DEV_C_C212",
+    "ip_address": "10.1.91.151",
+    "address": "17 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C213",
+    "customer_name": "Sai Kulkarni",
+    "upi_id": "saic213@synthetic",
+    "device_id": "DEV_C_C213",
+    "ip_address": "10.1.17.213",
+    "address": "56 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C214",
+    "customer_name": "Vihaan Rao",
+    "upi_id": "vihaanc214@synthetic",
+    "device_id": "DEV_C_C214",
+    "ip_address": "10.1.30.83",
+    "address": "39 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C215",
+    "customer_name": "Sneha Mehta",
+    "upi_id": "snehac215@synthetic",
+    "device_id": "DEV_C_C215",
+    "ip_address": "10.1.20.65",
+    "address": "67 Bannerghatta Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C216",
+    "customer_name": "Reyansh Iyer",
+    "upi_id": "reyanshc216@synthetic",
+    "device_id": "DEV_C_C216",
+    "ip_address": "10.1.88.137",
+    "address": "17 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C217",
+    "customer_name": "Aditya Rao",
+    "upi_id": "adityac217@synthetic",
+    "device_id": "DEV_C_C217",
+    "ip_address": "10.1.29.44",
+    "address": "76 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C218",
+    "customer_name": "Neha Nair",
+    "upi_id": "nehac218@synthetic",
+    "device_id": "DEV_C_C218",
+    "ip_address": "10.1.13.21",
+    "address": "73 MG Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C219",
+    "customer_name": "Vivaan Iyer",
+    "upi_id": "vivaanc219@synthetic",
+    "device_id": "DEV_C_C219",
+    "ip_address": "10.1.83.107",
+    "address": "84 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C220",
+    "customer_name": "Siddharth Iyer",
+    "upi_id": "siddharthc220@synthetic",
+    "device_id": "DEV_C_C220",
+    "ip_address": "10.1.47.165",
+    "address": "64 Ring Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C221",
+    "customer_name": "Diya Singh",
+    "upi_id": "diyac221@synthetic",
+    "device_id": "DEV_C_C221",
+    "ip_address": "10.1.48.117",
+    "address": "88 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C222",
+    "customer_name": "Aditya Deshmukh",
+    "upi_id": "adityac222@synthetic",
+    "device_id": "DEV_C_C222",
+    "ip_address": "10.1.63.124",
+    "address": "21 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C223",
+    "customer_name": "Neha Mehta",
+    "upi_id": "nehac223@synthetic",
+    "device_id": "DEV_C_C223",
+    "ip_address": "10.1.50.221",
+    "address": "78 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C224",
+    "customer_name": "Sneha Joshi",
+    "upi_id": "snehac224@synthetic",
+    "device_id": "DEV_C_C224",
+    "ip_address": "10.1.57.132",
+    "address": "52 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C225",
+    "customer_name": "Rohan Verma",
+    "upi_id": "rohanc225@synthetic",
+    "device_id": "DEV_C_C225",
+    "ip_address": "10.1.25.69",
+    "address": "31 Anna Salai, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C226",
+    "customer_name": "Neha Mehta",
+    "upi_id": "nehac226@synthetic",
+    "device_id": "DEV_C_C226",
+    "ip_address": "10.1.47.243",
+    "address": "13 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C227",
+    "customer_name": "Riya Chowdhury",
+    "upi_id": "riyac227@synthetic",
+    "device_id": "DEV_C_C227",
+    "ip_address": "10.1.51.240",
+    "address": "32 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C228",
+    "customer_name": "Amit Deshmukh",
+    "upi_id": "amitc228@synthetic",
+    "device_id": "DEV_C_C228",
+    "ip_address": "10.1.73.132",
+    "address": "25 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C229",
+    "customer_name": "Neha Singh",
+    "upi_id": "nehac229@synthetic",
+    "device_id": "DEV_C_C229",
+    "ip_address": "10.1.21.242",
+    "address": "64 MG Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C230",
+    "customer_name": "Riya Rao",
+    "upi_id": "riyac230@synthetic",
+    "device_id": "DEV_C_C230",
+    "ip_address": "10.1.84.91",
+    "address": "31 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C231",
+    "customer_name": "Vivaan Sharma",
+    "upi_id": "vivaanc231@synthetic",
+    "device_id": "DEV_C_C231",
+    "ip_address": "10.1.93.173",
+    "address": "64 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C232",
+    "customer_name": "Pooja Gupta",
+    "upi_id": "poojac232@synthetic",
+    "device_id": "DEV_C_C232",
+    "ip_address": "10.1.27.226",
+    "address": "14 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C233",
+    "customer_name": "Ananya Deshmukh",
+    "upi_id": "ananyac233@synthetic",
+    "device_id": "DEV_C_C233",
+    "ip_address": "10.1.56.12",
+    "address": "98 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C234",
+    "customer_name": "Riya Sharma",
+    "upi_id": "riyac234@synthetic",
+    "device_id": "DEV_C_C234",
+    "ip_address": "10.1.46.19",
+    "address": "47 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C235",
+    "customer_name": "Riya Rao",
+    "upi_id": "riyac235@synthetic",
+    "device_id": "DEV_C_C235",
+    "ip_address": "10.1.45.212",
+    "address": "98 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C236",
+    "customer_name": "Siddharth Iyer",
+    "upi_id": "siddharthc236@synthetic",
+    "device_id": "DEV_C_C236",
+    "ip_address": "10.1.60.96",
+    "address": "17 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C237",
+    "customer_name": "Priya Rao",
+    "upi_id": "priyac237@synthetic",
+    "device_id": "DEV_C_C237",
+    "ip_address": "10.1.35.155",
+    "address": "97 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C238",
+    "customer_name": "Rahul Kumar",
+    "upi_id": "rahulc238@synthetic",
+    "device_id": "DEV_C_C238",
+    "ip_address": "10.1.27.183",
+    "address": "6 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C239",
+    "customer_name": "Priya Kulkarni",
+    "upi_id": "priyac239@synthetic",
+    "device_id": "DEV_C_C239",
+    "ip_address": "10.1.29.156",
+    "address": "67 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C240",
+    "customer_name": "Rahul Patel",
+    "upi_id": "rahulc240@synthetic",
+    "device_id": "DEV_C_C240",
+    "ip_address": "10.1.30.101",
+    "address": "79 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C241",
+    "customer_name": "Siddharth Deshmukh",
+    "upi_id": "siddharthc241@synthetic",
+    "device_id": "DEV_C_C241",
+    "ip_address": "10.1.74.213",
+    "address": "76 FC Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C242",
+    "customer_name": "Rahul Rao",
+    "upi_id": "rahulc242@synthetic",
+    "device_id": "DEV_C_C242",
+    "ip_address": "10.1.48.122",
+    "address": "91 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C243",
+    "customer_name": "Aarav Joshi",
+    "upi_id": "aaravc243@synthetic",
+    "device_id": "DEV_C_C243",
+    "ip_address": "10.1.63.150",
+    "address": "87 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C244",
+    "customer_name": "Diya Kulkarni",
+    "upi_id": "diyac244@synthetic",
+    "device_id": "DEV_C_C244",
+    "ip_address": "10.1.43.248",
+    "address": "77 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C245",
+    "customer_name": "Vikram Kulkarni",
+    "upi_id": "vikramc245@synthetic",
+    "device_id": "DEV_C_C245",
+    "ip_address": "10.1.84.123",
+    "address": "93 MG Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C246",
+    "customer_name": "Sai Rao",
+    "upi_id": "saic246@synthetic",
+    "device_id": "DEV_C_C246",
+    "ip_address": "10.1.14.147",
+    "address": "19 Civil Lines, Kolkata",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C247",
+    "customer_name": "Sneha Verma",
+    "upi_id": "snehac247@synthetic",
+    "device_id": "DEV_C_C247",
+    "ip_address": "10.1.50.108",
+    "address": "3 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C248",
+    "customer_name": "Arjun Kumar",
+    "upi_id": "arjunc248@synthetic",
+    "device_id": "DEV_C_C248",
+    "ip_address": "10.1.88.236",
+    "address": "53 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C249",
+    "customer_name": "Pooja Chowdhury",
+    "upi_id": "poojac249@synthetic",
+    "device_id": "DEV_C_C249",
+    "ip_address": "10.1.76.54",
+    "address": "91 Park Street, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C250",
+    "customer_name": "Rohan Joshi",
+    "upi_id": "rohanc250@synthetic",
+    "device_id": "DEV_C_C250",
+    "ip_address": "10.1.50.245",
+    "address": "68 Gachibowli Main Rd, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C251",
+    "customer_name": "Sai Singh",
+    "upi_id": "saic251@synthetic",
+    "device_id": "DEV_C_C251",
+    "ip_address": "10.1.96.198",
+    "address": "70 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C252",
+    "customer_name": "Anish Iyer",
+    "upi_id": "refund_merchant089@synthetic",
+    "device_id": "DEV_M_M089",
+    "ip_address": "10.1.34.246",
+    "address": "79 Anna Salai, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C253",
+    "customer_name": "Ayaan Gupta",
+    "upi_id": "ayaanc253@synthetic",
+    "device_id": "DEV_C_C253",
+    "ip_address": "10.1.46.181",
+    "address": "29 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C254",
+    "customer_name": "Reyansh Deshmukh",
+    "upi_id": "reyanshc254@synthetic",
+    "device_id": "DEV_C_C254",
+    "ip_address": "10.1.54.144",
+    "address": "41 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C255",
+    "customer_name": "Anish Gupta",
+    "upi_id": "anishc255@synthetic",
+    "device_id": "DEV_C_C255",
+    "ip_address": "10.1.96.140",
+    "address": "16 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C256",
+    "customer_name": "Riya Reddy",
+    "upi_id": "riyac256@synthetic",
+    "device_id": "DEV_C_C256",
+    "ip_address": "10.1.47.11",
+    "address": "45 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C257",
+    "customer_name": "Diya Deshmukh",
+    "upi_id": "diyac257@synthetic",
+    "device_id": "DEV_C_C257",
+    "ip_address": "10.1.93.66",
+    "address": "45 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C258",
+    "customer_name": "Anish Singh",
+    "upi_id": "anishc258@synthetic",
+    "device_id": "DEV_C_C258",
+    "ip_address": "10.1.44.239",
+    "address": "26 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C259",
+    "customer_name": "Rohan Deshmukh",
+    "upi_id": "rohanc259@synthetic",
+    "device_id": "DEV_C_C259",
+    "ip_address": "10.1.88.190",
+    "address": "18 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C260",
+    "customer_name": "Amit Mehta",
+    "upi_id": "amitc260@synthetic",
+    "device_id": "DEV_C_C260",
+    "ip_address": "10.1.38.164",
+    "address": "7 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C261",
+    "customer_name": "Ayaan Sharma",
+    "upi_id": "ayaanc261@synthetic",
+    "device_id": "DEV_C_C261",
+    "ip_address": "10.1.70.26",
+    "address": "53 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C262",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac262@synthetic",
+    "device_id": "DEV_C_C262",
+    "ip_address": "10.1.30.105",
+    "address": "1 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C263",
+    "customer_name": "Vikram Reddy",
+    "upi_id": "vikramc263@synthetic",
+    "device_id": "DEV_C_C263",
+    "ip_address": "10.1.46.83",
+    "address": "62 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C264",
+    "customer_name": "Diya Iyer",
+    "upi_id": "diyac264@synthetic",
+    "device_id": "DEV_C_C264",
+    "ip_address": "10.1.93.147",
+    "address": "99 Station Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C265",
+    "customer_name": "Ayaan Rao",
+    "upi_id": "ayaanc265@synthetic",
+    "device_id": "DEV_C_C265",
+    "ip_address": "10.1.32.240",
+    "address": "23 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C266",
+    "customer_name": "Vivaan Chowdhury",
+    "upi_id": "vivaanc266@synthetic",
+    "device_id": "DEV_C_C266",
+    "ip_address": "10.1.47.225",
+    "address": "64 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C267",
+    "customer_name": "Vivaan Sharma",
+    "upi_id": "vivaanc267@synthetic",
+    "device_id": "DEV_C_C267",
+    "ip_address": "10.1.23.238",
+    "address": "73 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C268",
+    "customer_name": "Priya Gupta",
+    "upi_id": "priyac268@synthetic",
+    "device_id": "DEV_C_C268",
+    "ip_address": "10.1.77.127",
+    "address": "83 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C269",
+    "customer_name": "Arjun Chowdhury",
+    "upi_id": "arjunc269@synthetic",
+    "device_id": "DEV_C_C269",
+    "ip_address": "10.1.24.85",
+    "address": "35 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C270",
+    "customer_name": "Sai Deshmukh",
+    "upi_id": "saic270@synthetic",
+    "device_id": "DEV_C_C270",
+    "ip_address": "10.1.33.4",
+    "address": "83 Bannerghatta Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C271",
+    "customer_name": "Anish Joshi",
+    "upi_id": "anishc271@synthetic",
+    "device_id": "DEV_C_C271",
+    "ip_address": "10.1.32.157",
+    "address": "73 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C272",
+    "customer_name": "Vikram Reddy",
+    "upi_id": "vikramc272@synthetic",
+    "device_id": "DEV_C_C272",
+    "ip_address": "10.1.51.23",
+    "address": "55 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C273",
+    "customer_name": "Riya Iyer",
+    "upi_id": "riyac273@synthetic",
+    "device_id": "DEV_C_C273",
+    "ip_address": "10.1.71.83",
+    "address": "24 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C274",
+    "customer_name": "Ayaan Sharma",
+    "upi_id": "ayaanc274@synthetic",
+    "device_id": "DEV_C_C274",
+    "ip_address": "10.1.67.193",
+    "address": "50 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C275",
+    "customer_name": "Ananya Joshi",
+    "upi_id": "ananyac275@synthetic",
+    "device_id": "DEV_C_C275",
+    "ip_address": "10.1.11.67",
+    "address": "75 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C276",
+    "customer_name": "Vikram Joshi",
+    "upi_id": "vikramc276@synthetic",
+    "device_id": "DEV_C_C276",
+    "ip_address": "10.1.69.79",
+    "address": "8 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C277",
+    "customer_name": "Sai Kumar",
+    "upi_id": "saic277@synthetic",
+    "device_id": "DEV_C_C277",
+    "ip_address": "10.1.91.235",
+    "address": "89 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C278",
+    "customer_name": "Diya Joshi",
+    "upi_id": "diyac278@synthetic",
+    "device_id": "DEV_C_C278",
+    "ip_address": "10.1.71.40",
+    "address": "29 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C279",
+    "customer_name": "Neha Deshmukh",
+    "upi_id": "nehac279@synthetic",
+    "device_id": "DEV_C_C279",
+    "ip_address": "10.1.70.194",
+    "address": "54 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C280",
+    "customer_name": "Rohan Kulkarni",
+    "upi_id": "rohanc280@synthetic",
+    "device_id": "DEV_C_C280",
+    "ip_address": "10.1.97.194",
+    "address": "98 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C281",
+    "customer_name": "Siddharth Chowdhury",
+    "upi_id": "siddharthc281@synthetic",
+    "device_id": "DEV_C_C281",
+    "ip_address": "10.1.77.181",
+    "address": "68 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C282",
+    "customer_name": "Kavya Verma",
+    "upi_id": "refund_merchant094@synthetic",
+    "device_id": "DEV_C_C282",
+    "ip_address": "10.1.74.52",
+    "address": "18 Anna Salai, Kolkata Suite 3",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C283",
+    "customer_name": "Amit Rao",
+    "upi_id": "amitc283@synthetic",
+    "device_id": "DEV_C_C283",
+    "ip_address": "10.1.76.114",
+    "address": "22 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C284",
+    "customer_name": "Vihaan Iyer",
+    "upi_id": "vihaanc284@synthetic",
+    "device_id": "DEV_C_C284",
+    "ip_address": "10.1.72.24",
+    "address": "92 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C285",
+    "customer_name": "Rahul Singh",
+    "upi_id": "rahulc285@synthetic",
+    "device_id": "DEV_C_C285",
+    "ip_address": "10.1.75.107",
+    "address": "59 Park Street, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C286",
+    "customer_name": "Neha Nair",
+    "upi_id": "nehac286@synthetic",
+    "device_id": "DEV_C_C286",
+    "ip_address": "10.1.96.207",
+    "address": "72 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C287",
+    "customer_name": "Diya Deshmukh",
+    "upi_id": "diyac287@synthetic",
+    "device_id": "DEV_C_C287",
+    "ip_address": "10.1.10.191",
+    "address": "51 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C288",
+    "customer_name": "Reyansh Nair",
+    "upi_id": "reyanshc288@synthetic",
+    "device_id": "DEV_C_C288",
+    "ip_address": "10.1.54.180",
+    "address": "6 Gachibowli Main Rd, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C289",
+    "customer_name": "Aditya Rao",
+    "upi_id": "adityac289@synthetic",
+    "device_id": "DEV_C_C289",
+    "ip_address": "10.1.14.74",
+    "address": "9 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C290",
+    "customer_name": "Isha Patel",
+    "upi_id": "ishac290@synthetic",
+    "device_id": "DEV_C_C290",
+    "ip_address": "10.1.57.229",
+    "address": "99 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C291",
+    "customer_name": "Riya Singh",
+    "upi_id": "riyac291@synthetic",
+    "device_id": "DEV_C_C291",
+    "ip_address": "10.1.97.247",
+    "address": "49 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C292",
+    "customer_name": "Neha Chowdhury",
+    "upi_id": "nehac292@synthetic",
+    "device_id": "DEV_C_C292",
+    "ip_address": "10.1.25.46",
+    "address": "84 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C293",
+    "customer_name": "Rohan Kumar",
+    "upi_id": "refund_merchant094@synthetic",
+    "device_id": "DEV_C_C293",
+    "ip_address": "10.1.10.194",
+    "address": "18 Anna Salai, Kolkata Suite 5",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C294",
+    "customer_name": "Aarav Gupta",
+    "upi_id": "aaravc294@synthetic",
+    "device_id": "DEV_C_C294",
+    "ip_address": "10.1.64.137",
+    "address": "87 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C295",
+    "customer_name": "Riya Chowdhury",
+    "upi_id": "riyac295@synthetic",
+    "device_id": "DEV_C_C295",
+    "ip_address": "10.1.54.40",
+    "address": "32 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C296",
+    "customer_name": "Ananya Mehta",
+    "upi_id": "ananyac296@synthetic",
+    "device_id": "DEV_C_C296",
+    "ip_address": "10.1.88.197",
+    "address": "5 Gachibowli Main Rd, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C297",
+    "customer_name": "Aarav Mehta",
+    "upi_id": "aaravc297@synthetic",
+    "device_id": "DEV_C_C297",
+    "ip_address": "10.1.86.9",
+    "address": "9 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C298",
+    "customer_name": "Neha Nair",
+    "upi_id": "nehac298@synthetic",
+    "device_id": "DEV_C_C298",
+    "ip_address": "10.1.61.113",
+    "address": "32 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C299",
+    "customer_name": "Ayaan Rao",
+    "upi_id": "ayaanc299@synthetic",
+    "device_id": "DEV_C_C299",
+    "ip_address": "10.1.27.129",
+    "address": "97 MG Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C300",
+    "customer_name": "Diya Mehta",
+    "upi_id": "diyac300@synthetic",
+    "device_id": "DEV_C_C300",
+    "ip_address": "10.1.96.210",
+    "address": "74 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C301",
+    "customer_name": "Priya Mehta",
+    "upi_id": "priyac301@synthetic",
+    "device_id": "DEV_C_C301",
+    "ip_address": "10.1.38.106",
+    "address": "19 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C302",
+    "customer_name": "Diya Gupta",
+    "upi_id": "diyac302@synthetic",
+    "device_id": "DEV_C_C302",
+    "ip_address": "10.1.32.161",
+    "address": "72 Link Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C303",
+    "customer_name": "Neha Kumar",
+    "upi_id": "nehac303@synthetic",
+    "device_id": "DEV_C_C303",
+    "ip_address": "10.1.92.172",
+    "address": "7 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C304",
+    "customer_name": "Riya Kulkarni",
+    "upi_id": "riyac304@synthetic",
+    "device_id": "DEV_C_C304",
+    "ip_address": "10.1.62.39",
+    "address": "90 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C305",
+    "customer_name": "Diya Kumar",
+    "upi_id": "diyac305@synthetic",
+    "device_id": "DEV_C_C305",
+    "ip_address": "10.1.70.62",
+    "address": "97 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C306",
+    "customer_name": "Ayaan Gupta",
+    "upi_id": "ayaanc306@synthetic",
+    "device_id": "DEV_C_C306",
+    "ip_address": "10.1.81.106",
+    "address": "60 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C307",
+    "customer_name": "Isha Rao",
+    "upi_id": "ishac307@synthetic",
+    "device_id": "DEV_C_C307",
+    "ip_address": "10.1.42.53",
+    "address": "50 Civil Lines, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C308",
+    "customer_name": "Priya Iyer",
+    "upi_id": "priyac308@synthetic",
+    "device_id": "DEV_C_C308",
+    "ip_address": "10.1.21.138",
+    "address": "58 FC Road, Delhi",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C309",
+    "customer_name": "Anish Chowdhury",
+    "upi_id": "anishc309@synthetic",
+    "device_id": "DEV_C_C309",
+    "ip_address": "10.1.58.173",
+    "address": "7 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C310",
+    "customer_name": "Siddharth Nair",
+    "upi_id": "siddharthc310@synthetic",
+    "device_id": "DEV_C_C310",
+    "ip_address": "10.1.85.186",
+    "address": "10 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C311",
+    "customer_name": "Neha Rao",
+    "upi_id": "nehac311@synthetic",
+    "device_id": "DEV_C_C311",
+    "ip_address": "10.1.52.78",
+    "address": "62 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C312",
+    "customer_name": "Aarav Mehta",
+    "upi_id": "aaravc312@synthetic",
+    "device_id": "DEV_C_C312",
+    "ip_address": "10.1.71.235",
+    "address": "95 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C313",
+    "customer_name": "Ayaan Deshmukh",
+    "upi_id": "ayaanc313@synthetic",
+    "device_id": "DEV_C_C313",
+    "ip_address": "10.1.80.83",
+    "address": "51 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C314",
+    "customer_name": "Diya Kumar",
+    "upi_id": "diyac314@synthetic",
+    "device_id": "DEV_C_C314",
+    "ip_address": "10.1.49.67",
+    "address": "69 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C315",
+    "customer_name": "Kavya Rao",
+    "upi_id": "kavyac315@synthetic",
+    "device_id": "DEV_C_C315",
+    "ip_address": "10.1.70.195",
+    "address": "60 Station Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C316",
+    "customer_name": "Priya Reddy",
+    "upi_id": "priyac316@synthetic",
+    "device_id": "DEV_C_C316",
+    "ip_address": "10.1.62.12",
+    "address": "48 FC Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C317",
+    "customer_name": "Amit Chowdhury",
+    "upi_id": "amitc317@synthetic",
+    "device_id": "DEV_C_C317",
+    "ip_address": "10.1.12.67",
+    "address": "95 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C318",
+    "customer_name": "Rohan Reddy",
+    "upi_id": "rohanc318@synthetic",
+    "device_id": "DEV_C_C318",
+    "ip_address": "10.1.35.85",
+    "address": "38 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C319",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc319@synthetic",
+    "device_id": "DEV_C_C319",
+    "ip_address": "10.1.93.242",
+    "address": "64 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C320",
+    "customer_name": "Neha Joshi",
+    "upi_id": "nehac320@synthetic",
+    "device_id": "DEV_C_C320",
+    "ip_address": "10.1.92.190",
+    "address": "98 Anna Salai, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C321",
+    "customer_name": "Pooja Singh",
+    "upi_id": "poojac321@synthetic",
+    "device_id": "DEV_C_C321",
+    "ip_address": "10.1.31.36",
+    "address": "94 FC Road, Bengaluru",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C322",
+    "customer_name": "Anish Rao",
+    "upi_id": "anishc322@synthetic",
+    "device_id": "DEV_C_C322",
+    "ip_address": "10.1.92.246",
+    "address": "24 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C323",
+    "customer_name": "Vivaan Rao",
+    "upi_id": "vivaanc323@synthetic",
+    "device_id": "DEV_C_C323",
+    "ip_address": "10.1.10.106",
+    "address": "10 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C324",
+    "customer_name": "Arjun Chowdhury",
+    "upi_id": "arjunc324@synthetic",
+    "device_id": "DEV_C_C324",
+    "ip_address": "10.1.11.56",
+    "address": "9 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C325",
+    "customer_name": "Rahul Singh",
+    "upi_id": "rahulc325@synthetic",
+    "device_id": "DEV_C_C325",
+    "ip_address": "10.1.91.171",
+    "address": "8 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C326",
+    "customer_name": "Siddharth Reddy",
+    "upi_id": "siddharthc326@synthetic",
+    "device_id": "DEV_C_C326",
+    "ip_address": "10.1.12.2",
+    "address": "85 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C327",
+    "customer_name": "Rohan Rao",
+    "upi_id": "rohanc327@synthetic",
+    "device_id": "DEV_C_C327",
+    "ip_address": "10.1.77.185",
+    "address": "2 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C328",
+    "customer_name": "Ananya Rao",
+    "upi_id": "ananyac328@synthetic",
+    "device_id": "DEV_C_C328",
+    "ip_address": "10.1.99.173",
+    "address": "3 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C329",
+    "customer_name": "Isha Kulkarni",
+    "upi_id": "ishac329@synthetic",
+    "device_id": "DEV_C_C329",
+    "ip_address": "10.1.77.39",
+    "address": "14 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C330",
+    "customer_name": "Ayaan Mehta",
+    "upi_id": "ayaanc330@synthetic",
+    "device_id": "DEV_C_C330",
+    "ip_address": "10.1.60.21",
+    "address": "46 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C331",
+    "customer_name": "Kavya Kumar",
+    "upi_id": "kavyac331@synthetic",
+    "device_id": "DEV_C_C331",
+    "ip_address": "10.1.99.58",
+    "address": "73 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C332",
+    "customer_name": "Diya Iyer",
+    "upi_id": "diyac332@synthetic",
+    "device_id": "DEV_C_C332",
+    "ip_address": "10.1.21.104",
+    "address": "84 MG Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C333",
+    "customer_name": "Riya Kumar",
+    "upi_id": "riyac333@synthetic",
+    "device_id": "DEV_C_C333",
+    "ip_address": "10.1.99.44",
+    "address": "8 MG Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C334",
+    "customer_name": "Aditya Singh",
+    "upi_id": "adityac334@synthetic",
+    "device_id": "DEV_C_C334",
+    "ip_address": "10.1.82.251",
+    "address": "83 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C335",
+    "customer_name": "Vihaan Reddy",
+    "upi_id": "vihaanc335@synthetic",
+    "device_id": "DEV_C_C335",
+    "ip_address": "10.1.98.228",
+    "address": "30 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C336",
+    "customer_name": "Amit Singh",
+    "upi_id": "amitc336@synthetic",
+    "device_id": "DEV_C_C336",
+    "ip_address": "10.1.97.237",
+    "address": "6 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C337",
+    "customer_name": "Ananya Reddy",
+    "upi_id": "ananyac337@synthetic",
+    "device_id": "DEV_C_C337",
+    "ip_address": "10.1.12.247",
+    "address": "23 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C338",
+    "customer_name": "Reyansh Nair",
+    "upi_id": "reyanshc338@synthetic",
+    "device_id": "DEV_C_C338",
+    "ip_address": "10.1.19.77",
+    "address": "97 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C339",
+    "customer_name": "Sai Nair",
+    "upi_id": "saic339@synthetic",
+    "device_id": "DEV_C_C339",
+    "ip_address": "10.1.96.230",
+    "address": "73 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C340",
+    "customer_name": "Rohan Joshi",
+    "upi_id": "rohanc340@synthetic",
+    "device_id": "DEV_C_C340",
+    "ip_address": "10.1.98.186",
+    "address": "97 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C341",
+    "customer_name": "Aditya Rao",
+    "upi_id": "adityac341@synthetic",
+    "device_id": "DEV_C_C341",
+    "ip_address": "10.1.65.60",
+    "address": "7 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C342",
+    "customer_name": "Aditya Joshi",
+    "upi_id": "adityac342@synthetic",
+    "device_id": "DEV_C_C342",
+    "ip_address": "10.1.13.163",
+    "address": "100 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C343",
+    "customer_name": "Ananya Kulkarni",
+    "upi_id": "ananyac343@synthetic",
+    "device_id": "DEV_C_C343",
+    "ip_address": "10.1.55.142",
+    "address": "63 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C344",
+    "customer_name": "Riya Kumar",
+    "upi_id": "riyac344@synthetic",
+    "device_id": "DEV_C_C344",
+    "ip_address": "10.1.94.98",
+    "address": "88 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C345",
+    "customer_name": "Aditya Kulkarni",
+    "upi_id": "adityac345@synthetic",
+    "device_id": "DEV_C_C345",
+    "ip_address": "10.1.20.69",
+    "address": "32 Station Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C346",
+    "customer_name": "Arjun Kumar",
+    "upi_id": "arjunc346@synthetic",
+    "device_id": "DEV_C_C346",
+    "ip_address": "10.1.50.93",
+    "address": "95 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C347",
+    "customer_name": "Vihaan Verma",
+    "upi_id": "vihaanc347@synthetic",
+    "device_id": "DEV_C_C347",
+    "ip_address": "10.1.56.195",
+    "address": "40 Anna Salai, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C348",
+    "customer_name": "Ananya Verma",
+    "upi_id": "ananyac348@synthetic",
+    "device_id": "DEV_C_C348",
+    "ip_address": "10.1.65.115",
+    "address": "12 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C349",
+    "customer_name": "Rohan Rao",
+    "upi_id": "rohanc349@synthetic",
+    "device_id": "DEV_C_C349",
+    "ip_address": "10.1.21.91",
+    "address": "14 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C350",
+    "customer_name": "Rohan Verma",
+    "upi_id": "rohanc350@synthetic",
+    "device_id": "DEV_C_C350",
+    "ip_address": "10.1.47.106",
+    "address": "50 MG Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C351",
+    "customer_name": "Riya Kulkarni",
+    "upi_id": "riyac351@synthetic",
+    "device_id": "DEV_C_C351",
+    "ip_address": "10.1.41.147",
+    "address": "93 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C352",
+    "customer_name": "Rahul Patel",
+    "upi_id": "rahulc352@synthetic",
+    "device_id": "DEV_C_C352",
+    "ip_address": "10.1.44.78",
+    "address": "22 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C353",
+    "customer_name": "Ananya Singh",
+    "upi_id": "ananyac353@synthetic",
+    "device_id": "DEV_C_C353",
+    "ip_address": "10.1.65.71",
+    "address": "9 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C354",
+    "customer_name": "Isha Gupta",
+    "upi_id": "ishac354@synthetic",
+    "device_id": "DEV_C_C354",
+    "ip_address": "10.1.42.242",
+    "address": "10 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C355",
+    "customer_name": "Ayaan Deshmukh",
+    "upi_id": "ayaanc355@synthetic",
+    "device_id": "DEV_C_C355",
+    "ip_address": "10.1.35.118",
+    "address": "77 Link Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C356",
+    "customer_name": "Vihaan Patel",
+    "upi_id": "vihaanc356@synthetic",
+    "device_id": "DEV_C_C356",
+    "ip_address": "10.1.52.216",
+    "address": "1 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C357",
+    "customer_name": "Siddharth Kumar",
+    "upi_id": "siddharthc357@synthetic",
+    "device_id": "DEV_C_C357",
+    "ip_address": "10.1.65.209",
+    "address": "57 FC Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C358",
+    "customer_name": "Vikram Nair",
+    "upi_id": "vikramc358@synthetic",
+    "device_id": "DEV_C_C358",
+    "ip_address": "10.1.87.243",
+    "address": "39 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C359",
+    "customer_name": "Sneha Mehta",
+    "upi_id": "snehac359@synthetic",
+    "device_id": "DEV_C_C359",
+    "ip_address": "10.1.60.248",
+    "address": "41 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C360",
+    "customer_name": "Priya Gupta",
+    "upi_id": "priyac360@synthetic",
+    "device_id": "DEV_C_C360",
+    "ip_address": "10.1.51.97",
+    "address": "74 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C361",
+    "customer_name": "Ananya Chowdhury",
+    "upi_id": "ananyac361@synthetic",
+    "device_id": "DEV_C_C361",
+    "ip_address": "10.1.82.52",
+    "address": "47 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C362",
+    "customer_name": "Amit Rao",
+    "upi_id": "amitc362@synthetic",
+    "device_id": "DEV_C_C362",
+    "ip_address": "10.1.13.244",
+    "address": "88 Ring Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C363",
+    "customer_name": "Anish Singh",
+    "upi_id": "anishc363@synthetic",
+    "device_id": "DEV_C_C363",
+    "ip_address": "10.1.98.18",
+    "address": "57 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C364",
+    "customer_name": "Isha Iyer",
+    "upi_id": "ishac364@synthetic",
+    "device_id": "DEV_C_C364",
+    "ip_address": "10.1.40.65",
+    "address": "18 Bannerghatta Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C365",
+    "customer_name": "Neha Patel",
+    "upi_id": "nehac365@synthetic",
+    "device_id": "DEV_C_C365",
+    "ip_address": "10.1.67.254",
+    "address": "49 Station Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C366",
+    "customer_name": "Siddharth Singh",
+    "upi_id": "siddharthc366@synthetic",
+    "device_id": "DEV_C_C366",
+    "ip_address": "10.1.98.108",
+    "address": "69 Ring Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C367",
+    "customer_name": "Rohan Sharma",
+    "upi_id": "rohanc367@synthetic",
+    "device_id": "DEV_C_C367",
+    "ip_address": "10.1.86.164",
+    "address": "90 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C368",
+    "customer_name": "Aditya Verma",
+    "upi_id": "adityac368@synthetic",
+    "device_id": "DEV_C_C368",
+    "ip_address": "10.1.31.166",
+    "address": "85 FC Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C369",
+    "customer_name": "Siddharth Sharma",
+    "upi_id": "siddharthc369@synthetic",
+    "device_id": "DEV_C_C369",
+    "ip_address": "10.1.65.28",
+    "address": "97 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C370",
+    "customer_name": "Aarav Verma",
+    "upi_id": "aaravc370@synthetic",
+    "device_id": "DEV_C_C370",
+    "ip_address": "10.1.76.143",
+    "address": "29 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C371",
+    "customer_name": "Amit Deshmukh",
+    "upi_id": "amitc371@synthetic",
+    "device_id": "DEV_C_C371",
+    "ip_address": "10.1.60.119",
+    "address": "58 FC Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C372",
+    "customer_name": "Neha Nair",
+    "upi_id": "nehac372@synthetic",
+    "device_id": "DEV_C_C372",
+    "ip_address": "10.1.71.27",
+    "address": "45 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C373",
+    "customer_name": "Diya Kumar",
+    "upi_id": "diyac373@synthetic",
+    "device_id": "DEV_C_C373",
+    "ip_address": "10.1.54.80",
+    "address": "15 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C374",
+    "customer_name": "Priya Singh",
+    "upi_id": "priyac374@synthetic",
+    "device_id": "DEV_C_C374",
+    "ip_address": "10.1.54.122",
+    "address": "67 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C375",
+    "customer_name": "Vihaan Singh",
+    "upi_id": "vihaanc375@synthetic",
+    "device_id": "DEV_C_C375",
+    "ip_address": "10.1.48.12",
+    "address": "41 Station Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C376",
+    "customer_name": "Sneha Verma",
+    "upi_id": "snehac376@synthetic",
+    "device_id": "DEV_C_C376",
+    "ip_address": "10.1.96.205",
+    "address": "44 Station Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C377",
+    "customer_name": "Sai Reddy",
+    "upi_id": "saic377@synthetic",
+    "device_id": "DEV_C_C377",
+    "ip_address": "10.1.80.41",
+    "address": "67 Park Street, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C378",
+    "customer_name": "Priya Rao",
+    "upi_id": "priyac378@synthetic",
+    "device_id": "DEV_C_C378",
+    "ip_address": "10.1.61.162",
+    "address": "60 Civil Lines, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C379",
+    "customer_name": "Sai Patel",
+    "upi_id": "saic379@synthetic",
+    "device_id": "DEV_C_C379",
+    "ip_address": "10.1.88.227",
+    "address": "51 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C380",
+    "customer_name": "Reyansh Singh",
+    "upi_id": "reyanshc380@synthetic",
+    "device_id": "DEV_C_C380",
+    "ip_address": "10.1.37.53",
+    "address": "50 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C381",
+    "customer_name": "Ananya Kulkarni",
+    "upi_id": "ananyac381@synthetic",
+    "device_id": "DEV_C_C381",
+    "ip_address": "10.1.78.48",
+    "address": "74 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C382",
+    "customer_name": "Kavya Joshi",
+    "upi_id": "kavyac382@synthetic",
+    "device_id": "DEV_C_C382",
+    "ip_address": "10.1.43.172",
+    "address": "59 Station Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C383",
+    "customer_name": "Pooja Rao",
+    "upi_id": "poojac383@synthetic",
+    "device_id": "DEV_C_C383",
+    "ip_address": "10.1.88.101",
+    "address": "77 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C384",
+    "customer_name": "Amit Verma",
+    "upi_id": "amitc384@synthetic",
+    "device_id": "DEV_C_C384",
+    "ip_address": "10.1.89.45",
+    "address": "46 Anna Salai, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C385",
+    "customer_name": "Neha Deshmukh",
+    "upi_id": "nehac385@synthetic",
+    "device_id": "DEV_C_C385",
+    "ip_address": "10.1.20.173",
+    "address": "79 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C386",
+    "customer_name": "Arjun Joshi",
+    "upi_id": "arjunc386@synthetic",
+    "device_id": "DEV_C_C386",
+    "ip_address": "10.1.24.47",
+    "address": "31 Bannerghatta Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C387",
+    "customer_name": "Kavya Deshmukh",
+    "upi_id": "kavyac387@synthetic",
+    "device_id": "DEV_C_C387",
+    "ip_address": "10.1.63.153",
+    "address": "66 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C388",
+    "customer_name": "Arjun Nair",
+    "upi_id": "arjunc388@synthetic",
+    "device_id": "DEV_C_C388",
+    "ip_address": "10.1.72.163",
+    "address": "55 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C389",
+    "customer_name": "Rohan Deshmukh",
+    "upi_id": "rohanc389@synthetic",
+    "device_id": "DEV_C_C389",
+    "ip_address": "10.1.72.74",
+    "address": "72 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C390",
+    "customer_name": "Arjun Patel",
+    "upi_id": "arjunc390@synthetic",
+    "device_id": "DEV_C_C390",
+    "ip_address": "10.1.16.222",
+    "address": "58 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C391",
+    "customer_name": "Kavya Sharma",
+    "upi_id": "kavyac391@synthetic",
+    "device_id": "DEV_C_C391",
+    "ip_address": "10.1.59.247",
+    "address": "18 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C392",
+    "customer_name": "Rohan Rao",
+    "upi_id": "rohanc392@synthetic",
+    "device_id": "DEV_C_C392",
+    "ip_address": "10.1.63.182",
+    "address": "53 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C393",
+    "customer_name": "Neha Singh",
+    "upi_id": "nehac393@synthetic",
+    "device_id": "DEV_C_C393",
+    "ip_address": "10.1.13.204",
+    "address": "11 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C394",
+    "customer_name": "Ayaan Gupta",
+    "upi_id": "ayaanc394@synthetic",
+    "device_id": "DEV_C_C394",
+    "ip_address": "10.1.78.74",
+    "address": "36 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C395",
+    "customer_name": "Sai Kulkarni",
+    "upi_id": "saic395@synthetic",
+    "device_id": "DEV_C_C395",
+    "ip_address": "10.1.80.131",
+    "address": "73 Anna Salai, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C396",
+    "customer_name": "Vihaan Nair",
+    "upi_id": "vihaanc396@synthetic",
+    "device_id": "DEV_C_C396",
+    "ip_address": "10.1.56.139",
+    "address": "35 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C397",
+    "customer_name": "Vivaan Kulkarni",
+    "upi_id": "vivaanc397@synthetic",
+    "device_id": "DEV_C_C397",
+    "ip_address": "10.1.64.27",
+    "address": "70 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C398",
+    "customer_name": "Anish Chowdhury",
+    "upi_id": "anishc398@synthetic",
+    "device_id": "DEV_C_C398",
+    "ip_address": "10.1.67.68",
+    "address": "39 MG Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C399",
+    "customer_name": "Kavya Chowdhury",
+    "upi_id": "kavyac399@synthetic",
+    "device_id": "DEV_C_C399",
+    "ip_address": "10.1.40.54",
+    "address": "57 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C400",
+    "customer_name": "Anish Nair",
+    "upi_id": "anishc400@synthetic",
+    "device_id": "DEV_C_C400",
+    "ip_address": "10.1.90.110",
+    "address": "91 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C401",
+    "customer_name": "Sai Nair",
+    "upi_id": "saic401@synthetic",
+    "device_id": "DEV_C_C401",
+    "ip_address": "10.1.17.146",
+    "address": "27 Civil Lines, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C402",
+    "customer_name": "Kavya Rao",
+    "upi_id": "kavyac402@synthetic",
+    "device_id": "DEV_C_C402",
+    "ip_address": "10.1.31.83",
+    "address": "77 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C403",
+    "customer_name": "Sneha Gupta",
+    "upi_id": "snehac403@synthetic",
+    "device_id": "DEV_C_C403",
+    "ip_address": "10.1.75.253",
+    "address": "74 Bannerghatta Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C404",
+    "customer_name": "Neha Chowdhury",
+    "upi_id": "nehac404@synthetic",
+    "device_id": "DEV_C_C404",
+    "ip_address": "10.1.17.71",
+    "address": "18 Gachibowli Main Rd, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C405",
+    "customer_name": "Vikram Patel",
+    "upi_id": "vikramc405@synthetic",
+    "device_id": "DEV_C_C405",
+    "ip_address": "10.1.51.213",
+    "address": "32 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C406",
+    "customer_name": "Ayaan Kulkarni",
+    "upi_id": "ayaanc406@synthetic",
+    "device_id": "DEV_C_C406",
+    "ip_address": "10.1.83.162",
+    "address": "63 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C407",
+    "customer_name": "Ananya Iyer",
+    "upi_id": "ananyac407@synthetic",
+    "device_id": "DEV_C_C407",
+    "ip_address": "10.1.19.163",
+    "address": "49 Anna Salai, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C408",
+    "customer_name": "Aditya Kumar",
+    "upi_id": "adityac408@synthetic",
+    "device_id": "DEV_C_C408",
+    "ip_address": "10.1.68.244",
+    "address": "89 FC Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C409",
+    "customer_name": "Pooja Joshi",
+    "upi_id": "poojac409@synthetic",
+    "device_id": "DEV_C_C409",
+    "ip_address": "10.1.68.163",
+    "address": "100 Station Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C410",
+    "customer_name": "Neha Deshmukh",
+    "upi_id": "nehac410@synthetic",
+    "device_id": "DEV_C_C410",
+    "ip_address": "10.1.60.56",
+    "address": "9 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C411",
+    "customer_name": "Isha Chowdhury",
+    "upi_id": "ishac411@synthetic",
+    "device_id": "DEV_C_C411",
+    "ip_address": "10.1.51.213",
+    "address": "64 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C412",
+    "customer_name": "Diya Joshi",
+    "upi_id": "diyac412@synthetic",
+    "device_id": "DEV_C_C412",
+    "ip_address": "10.1.53.229",
+    "address": "73 Anna Salai, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C413",
+    "customer_name": "Neha Kulkarni",
+    "upi_id": "nehac413@synthetic",
+    "device_id": "DEV_C_C413",
+    "ip_address": "10.1.90.201",
+    "address": "6 Station Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C414",
+    "customer_name": "Neha Sharma",
+    "upi_id": "nehac414@synthetic",
+    "device_id": "DEV_C_C414",
+    "ip_address": "10.1.68.1",
+    "address": "21 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C415",
+    "customer_name": "Isha Mehta",
+    "upi_id": "ishac415@synthetic",
+    "device_id": "DEV_C_C415",
+    "ip_address": "10.1.30.224",
+    "address": "84 Bannerghatta Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C416",
+    "customer_name": "Ananya Verma",
+    "upi_id": "ananyac416@synthetic",
+    "device_id": "DEV_C_C416",
+    "ip_address": "10.1.57.171",
+    "address": "33 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C417",
+    "customer_name": "Vikram Patel",
+    "upi_id": "vikramc417@synthetic",
+    "device_id": "DEV_C_C417",
+    "ip_address": "10.1.99.194",
+    "address": "51 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C418",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc418@synthetic",
+    "device_id": "DEV_C_C418",
+    "ip_address": "10.1.10.55",
+    "address": "91 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C419",
+    "customer_name": "Pooja Verma",
+    "upi_id": "poojac419@synthetic",
+    "device_id": "DEV_C_C419",
+    "ip_address": "10.1.76.175",
+    "address": "76 Civil Lines, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C420",
+    "customer_name": "Neha Sharma",
+    "upi_id": "nehac420@synthetic",
+    "device_id": "DEV_C_C420",
+    "ip_address": "10.1.25.253",
+    "address": "90 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C421",
+    "customer_name": "Isha Deshmukh",
+    "upi_id": "ishac421@synthetic",
+    "device_id": "DEV_C_C421",
+    "ip_address": "10.1.39.99",
+    "address": "62 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C422",
+    "customer_name": "Aditya Deshmukh",
+    "upi_id": "adityac422@synthetic",
+    "device_id": "DEV_C_C422",
+    "ip_address": "10.1.57.226",
+    "address": "14 FC Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C423",
+    "customer_name": "Diya Patel",
+    "upi_id": "diyac423@synthetic",
+    "device_id": "DEV_C_C423",
+    "ip_address": "10.1.92.174",
+    "address": "100 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C424",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc424@synthetic",
+    "device_id": "DEV_C_C424",
+    "ip_address": "10.1.66.90",
+    "address": "79 Park Street, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C425",
+    "customer_name": "Anish Mehta",
+    "upi_id": "anishc425@synthetic",
+    "device_id": "DEV_C_C425",
+    "ip_address": "10.1.97.114",
+    "address": "53 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C426",
+    "customer_name": "Reyansh Verma",
+    "upi_id": "reyanshc426@synthetic",
+    "device_id": "DEV_C_C426",
+    "ip_address": "10.1.85.187",
+    "address": "18 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C427",
+    "customer_name": "Riya Joshi",
+    "upi_id": "riyac427@synthetic",
+    "device_id": "DEV_C_C427",
+    "ip_address": "10.1.41.71",
+    "address": "41 Park Street, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C428",
+    "customer_name": "Vikram Verma",
+    "upi_id": "vikramc428@synthetic",
+    "device_id": "DEV_C_C428",
+    "ip_address": "10.1.86.185",
+    "address": "71 Link Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C429",
+    "customer_name": "Siddharth Gupta",
+    "upi_id": "siddharthc429@synthetic",
+    "device_id": "DEV_C_C429",
+    "ip_address": "10.1.36.133",
+    "address": "85 Bannerghatta Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C430",
+    "customer_name": "Siddharth Rao",
+    "upi_id": "siddharthc430@synthetic",
+    "device_id": "DEV_C_C430",
+    "ip_address": "10.1.47.166",
+    "address": "96 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C431",
+    "customer_name": "Vivaan Kulkarni",
+    "upi_id": "refund_merchant094@synthetic",
+    "device_id": "DEV_C_C431",
+    "ip_address": "10.1.24.62",
+    "address": "18 Anna Salai, Kolkata Suite 5",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C432",
+    "customer_name": "Pooja Iyer",
+    "upi_id": "poojac432@synthetic",
+    "device_id": "DEV_C_C432",
+    "ip_address": "10.1.56.240",
+    "address": "68 MG Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C433",
+    "customer_name": "Priya Patel",
+    "upi_id": "priyac433@synthetic",
+    "device_id": "DEV_C_C433",
+    "ip_address": "10.1.56.140",
+    "address": "73 Gachibowli Main Rd, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C434",
+    "customer_name": "Neha Patel",
+    "upi_id": "nehac434@synthetic",
+    "device_id": "DEV_C_C434",
+    "ip_address": "10.1.12.151",
+    "address": "99 Station Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C435",
+    "customer_name": "Aditya Sharma",
+    "upi_id": "adityac435@synthetic",
+    "device_id": "DEV_C_C435",
+    "ip_address": "10.1.17.243",
+    "address": "28 MG Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C436",
+    "customer_name": "Riya Rao",
+    "upi_id": "riyac436@synthetic",
+    "device_id": "DEV_C_C436",
+    "ip_address": "10.1.63.109",
+    "address": "81 Ring Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C437",
+    "customer_name": "Sneha Kumar",
+    "upi_id": "snehac437@synthetic",
+    "device_id": "DEV_C_C437",
+    "ip_address": "10.1.78.158",
+    "address": "82 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C438",
+    "customer_name": "Arjun Gupta",
+    "upi_id": "arjunc438@synthetic",
+    "device_id": "DEV_C_C438",
+    "ip_address": "10.1.75.236",
+    "address": "40 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C439",
+    "customer_name": "Reyansh Kulkarni",
+    "upi_id": "reyanshc439@synthetic",
+    "device_id": "DEV_C_C439",
+    "ip_address": "10.1.60.151",
+    "address": "69 FC Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C440",
+    "customer_name": "Vikram Kulkarni",
+    "upi_id": "vikramc440@synthetic",
+    "device_id": "DEV_C_C440",
+    "ip_address": "10.1.40.15",
+    "address": "40 Gachibowli Main Rd, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C441",
+    "customer_name": "Ayaan Verma",
+    "upi_id": "ayaanc441@synthetic",
+    "device_id": "DEV_C_C441",
+    "ip_address": "10.1.88.156",
+    "address": "15 Anna Salai, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C442",
+    "customer_name": "Vivaan Gupta",
+    "upi_id": "vivaanc442@synthetic",
+    "device_id": "DEV_C_C442",
+    "ip_address": "10.1.27.180",
+    "address": "16 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C443",
+    "customer_name": "Aarav Patel",
+    "upi_id": "aaravc443@synthetic",
+    "device_id": "DEV_C_C443",
+    "ip_address": "10.1.76.201",
+    "address": "45 Ring Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C444",
+    "customer_name": "Anish Gupta",
+    "upi_id": "anishc444@synthetic",
+    "device_id": "DEV_C_C444",
+    "ip_address": "10.1.44.188",
+    "address": "48 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C445",
+    "customer_name": "Vihaan Kulkarni",
+    "upi_id": "vihaanc445@synthetic",
+    "device_id": "DEV_C_C445",
+    "ip_address": "10.1.44.135",
+    "address": "43 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C446",
+    "customer_name": "Aditya Gupta",
+    "upi_id": "adityac446@synthetic",
+    "device_id": "DEV_C_C446",
+    "ip_address": "10.1.75.93",
+    "address": "64 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C447",
+    "customer_name": "Vivaan Singh",
+    "upi_id": "vivaanc447@synthetic",
+    "device_id": "DEV_C_C447",
+    "ip_address": "10.1.42.198",
+    "address": "48 Park Street, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C448",
+    "customer_name": "Vihaan Reddy",
+    "upi_id": "vihaanc448@synthetic",
+    "device_id": "DEV_C_C448",
+    "ip_address": "10.1.10.12",
+    "address": "30 Ring Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C449",
+    "customer_name": "Aarav Mehta",
+    "upi_id": "aaravc449@synthetic",
+    "device_id": "DEV_C_C449",
+    "ip_address": "10.1.59.236",
+    "address": "61 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C450",
+    "customer_name": "Arjun Patel",
+    "upi_id": "arjunc450@synthetic",
+    "device_id": "DEV_C_C450",
+    "ip_address": "10.1.38.83",
+    "address": "71 Gachibowli Main Rd, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C451",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc451@synthetic",
+    "device_id": "DEV_C_C451",
+    "ip_address": "10.1.83.96",
+    "address": "35 Station Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C452",
+    "customer_name": "Vihaan Rao",
+    "upi_id": "vihaanc452@synthetic",
+    "device_id": "DEV_C_C452",
+    "ip_address": "10.1.76.252",
+    "address": "23 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C453",
+    "customer_name": "Vivaan Kumar",
+    "upi_id": "vivaanc453@synthetic",
+    "device_id": "DEV_C_C453",
+    "ip_address": "10.1.49.84",
+    "address": "60 Bannerghatta Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C454",
+    "customer_name": "Aditya Rao",
+    "upi_id": "adityac454@synthetic",
+    "device_id": "DEV_C_C454",
+    "ip_address": "10.1.35.75",
+    "address": "2 FC Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C455",
+    "customer_name": "Amit Kulkarni",
+    "upi_id": "amitc455@synthetic",
+    "device_id": "DEV_C_C455",
+    "ip_address": "10.1.41.119",
+    "address": "95 Link Road, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C456",
+    "customer_name": "Kavya Nair",
+    "upi_id": "kavyac456@synthetic",
+    "device_id": "DEV_C_C456",
+    "ip_address": "10.1.79.195",
+    "address": "99 Civil Lines, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C457",
+    "customer_name": "Ayaan Patel",
+    "upi_id": "ayaanc457@synthetic",
+    "device_id": "DEV_C_C457",
+    "ip_address": "10.1.39.139",
+    "address": "53 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C458",
+    "customer_name": "Kavya Iyer",
+    "upi_id": "kavyac458@synthetic",
+    "device_id": "DEV_C_C458",
+    "ip_address": "10.1.94.97",
+    "address": "43 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C459",
+    "customer_name": "Anish Deshmukh",
+    "upi_id": "anishc459@synthetic",
+    "device_id": "DEV_C_C459",
+    "ip_address": "10.1.77.252",
+    "address": "14 Civil Lines, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C460",
+    "customer_name": "Ayaan Kumar",
+    "upi_id": "ayaanc460@synthetic",
+    "device_id": "DEV_C_C460",
+    "ip_address": "10.1.45.24",
+    "address": "8 Park Street, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C461",
+    "customer_name": "Vivaan Reddy",
+    "upi_id": "vivaanc461@synthetic",
+    "device_id": "DEV_C_C461",
+    "ip_address": "10.1.99.230",
+    "address": "67 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C462",
+    "customer_name": "Kavya Singh",
+    "upi_id": "kavyac462@synthetic",
+    "device_id": "DEV_C_C462",
+    "ip_address": "10.1.74.35",
+    "address": "75 Station Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C463",
+    "customer_name": "Vikram Chowdhury",
+    "upi_id": "vikramc463@synthetic",
+    "device_id": "DEV_C_C463",
+    "ip_address": "10.1.82.16",
+    "address": "10 Link Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C464",
+    "customer_name": "Isha Iyer",
+    "upi_id": "ishac464@synthetic",
+    "device_id": "DEV_C_C464",
+    "ip_address": "10.1.43.218",
+    "address": "31 Bannerghatta Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C465",
+    "customer_name": "Priya Reddy",
+    "upi_id": "priyac465@synthetic",
+    "device_id": "DEV_C_C465",
+    "ip_address": "10.1.50.116",
+    "address": "90 FC Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C466",
+    "customer_name": "Ananya Mehta",
+    "upi_id": "ananyac466@synthetic",
+    "device_id": "DEV_C_C466",
+    "ip_address": "10.1.84.28",
+    "address": "26 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C467",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc467@synthetic",
+    "device_id": "DEV_C_C467",
+    "ip_address": "10.1.50.105",
+    "address": "58 Anna Salai, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C468",
+    "customer_name": "Vihaan Rao",
+    "upi_id": "vihaanc468@synthetic",
+    "device_id": "DEV_C_C468",
+    "ip_address": "10.1.67.79",
+    "address": "99 Civil Lines, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C469",
+    "customer_name": "Neha Gupta",
+    "upi_id": "nehac469@synthetic",
+    "device_id": "DEV_C_C469",
+    "ip_address": "10.1.97.78",
+    "address": "12 Park Street, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C470",
+    "customer_name": "Sneha Deshmukh",
+    "upi_id": "snehac470@synthetic",
+    "device_id": "DEV_C_C470",
+    "ip_address": "10.1.28.24",
+    "address": "28 FC Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C471",
+    "customer_name": "Sneha Mehta",
+    "upi_id": "snehac471@synthetic",
+    "device_id": "DEV_C_C471",
+    "ip_address": "10.1.16.174",
+    "address": "51 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C472",
+    "customer_name": "Diya Gupta",
+    "upi_id": "diyac472@synthetic",
+    "device_id": "DEV_C_C472",
+    "ip_address": "10.1.67.143",
+    "address": "4 Gachibowli Main Rd, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C473",
+    "customer_name": "Anish Rao",
+    "upi_id": "anishc473@synthetic",
+    "device_id": "DEV_C_C473",
+    "ip_address": "10.1.23.206",
+    "address": "13 Anna Salai, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C474",
+    "customer_name": "Arjun Verma",
+    "upi_id": "arjunc474@synthetic",
+    "device_id": "DEV_C_C474",
+    "ip_address": "10.1.26.51",
+    "address": "8 Civil Lines, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C475",
+    "customer_name": "Riya Joshi",
+    "upi_id": "riyac475@synthetic",
+    "device_id": "DEV_C_C475",
+    "ip_address": "10.1.43.235",
+    "address": "75 Link Road, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C476",
+    "customer_name": "Aditya Sharma",
+    "upi_id": "adityac476@synthetic",
+    "device_id": "DEV_C_C476",
+    "ip_address": "10.1.26.24",
+    "address": "26 Anna Salai, Delhi",
+    "city": "Delhi"
+  },
+  {
+    "customer_id": "C477",
+    "customer_name": "Priya Verma",
+    "upi_id": "priyac477@synthetic",
+    "device_id": "DEV_C_C477",
+    "ip_address": "10.1.31.237",
+    "address": "60 MG Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C478",
+    "customer_name": "Amit Kumar",
+    "upi_id": "amitc478@synthetic",
+    "device_id": "DEV_C_C478",
+    "ip_address": "10.1.58.175",
+    "address": "64 MG Road, Kolkata",
+    "city": "Kolkata"
+  },
+  {
+    "customer_id": "C479",
+    "customer_name": "Isha Patel",
+    "upi_id": "ishac479@synthetic",
+    "device_id": "DEV_C_C479",
+    "ip_address": "10.1.45.72",
+    "address": "28 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C480",
+    "customer_name": "Neha Reddy",
+    "upi_id": "nehac480@synthetic",
+    "device_id": "DEV_C_C480",
+    "ip_address": "10.1.89.158",
+    "address": "5 Link Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C481",
+    "customer_name": "Ayaan Iyer",
+    "upi_id": "ayaanc481@synthetic",
+    "device_id": "DEV_C_C481",
+    "ip_address": "10.1.80.123",
+    "address": "64 Gachibowli Main Rd, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C482",
+    "customer_name": "Vivaan Verma",
+    "upi_id": "vivaanc482@synthetic",
+    "device_id": "DEV_C_C482",
+    "ip_address": "10.1.63.52",
+    "address": "50 Park Street, Hyderabad",
+    "city": "Hyderabad"
+  },
+  {
+    "customer_id": "C483",
+    "customer_name": "Vikram Reddy",
+    "upi_id": "vikramc483@synthetic",
+    "device_id": "DEV_C_C483",
+    "ip_address": "10.1.12.254",
+    "address": "81 Ring Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C484",
+    "customer_name": "Riya Kulkarni",
+    "upi_id": "riyac484@synthetic",
+    "device_id": "DEV_C_C484",
+    "ip_address": "10.1.72.89",
+    "address": "62 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C485",
+    "customer_name": "Amit Rao",
+    "upi_id": "amitc485@synthetic",
+    "device_id": "DEV_C_C485",
+    "ip_address": "10.1.33.7",
+    "address": "50 Bannerghatta Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C486",
+    "customer_name": "Priya Nair",
+    "upi_id": "priyac486@synthetic",
+    "device_id": "DEV_C_C486",
+    "ip_address": "10.1.17.208",
+    "address": "4 Bannerghatta Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C487",
+    "customer_name": "Pooja Rao",
+    "upi_id": "poojac487@synthetic",
+    "device_id": "DEV_C_C487",
+    "ip_address": "10.1.39.250",
+    "address": "99 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C488",
+    "customer_name": "Sai Verma",
+    "upi_id": "saic488@synthetic",
+    "device_id": "DEV_C_C488",
+    "ip_address": "10.1.44.137",
+    "address": "85 Civil Lines, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C489",
+    "customer_name": "Anish Sharma",
+    "upi_id": "anishc489@synthetic",
+    "device_id": "DEV_C_C489",
+    "ip_address": "10.1.55.240",
+    "address": "74 Gachibowli Main Rd, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C490",
+    "customer_name": "Sai Patel",
+    "upi_id": "saic490@synthetic",
+    "device_id": "DEV_C_C490",
+    "ip_address": "10.1.99.92",
+    "address": "76 FC Road, Pune",
+    "city": "Pune"
+  },
+  {
+    "customer_id": "C491",
+    "customer_name": "Amit Sharma",
+    "upi_id": "amitc491@synthetic",
+    "device_id": "DEV_C_C491",
+    "ip_address": "10.1.28.145",
+    "address": "73 Link Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C492",
+    "customer_name": "Reyansh Chowdhury",
+    "upi_id": "reyanshc492@synthetic",
+    "device_id": "DEV_C_C492",
+    "ip_address": "10.1.32.126",
+    "address": "70 Bannerghatta Road, Ahmedabad",
+    "city": "Ahmedabad"
+  },
+  {
+    "customer_id": "C493",
+    "customer_name": "Vivaan Verma",
+    "upi_id": "vivaanc493@synthetic",
+    "device_id": "DEV_C_C493",
+    "ip_address": "10.1.38.6",
+    "address": "30 Link Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C494",
+    "customer_name": "Rahul Singh",
+    "upi_id": "rahulc494@synthetic",
+    "device_id": "DEV_C_C494",
+    "ip_address": "10.1.35.207",
+    "address": "43 Link Road, Mumbai",
+    "city": "Mumbai"
+  },
+  {
+    "customer_id": "C495",
+    "customer_name": "Arjun Joshi",
+    "upi_id": "arjunc495@synthetic",
+    "device_id": "DEV_C_C495",
+    "ip_address": "10.1.12.38",
+    "address": "42 MG Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C496",
+    "customer_name": "Amit Deshmukh",
+    "upi_id": "amitc496@synthetic",
+    "device_id": "DEV_C_C496",
+    "ip_address": "10.1.77.221",
+    "address": "100 Station Road, Bengaluru",
+    "city": "Bengaluru"
+  },
+  {
+    "customer_id": "C497",
+    "customer_name": "Kavya Verma",
+    "upi_id": "kavyac497@synthetic",
+    "device_id": "DEV_C_C497",
+    "ip_address": "10.1.85.26",
+    "address": "91 Gachibowli Main Rd, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C498",
+    "customer_name": "Priya Gupta",
+    "upi_id": "priyac498@synthetic",
+    "device_id": "DEV_C_C498",
+    "ip_address": "10.1.65.203",
+    "address": "18 Park Street, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C499",
+    "customer_name": "Vikram Singh",
+    "upi_id": "vikramc499@synthetic",
+    "device_id": "DEV_C_C499",
+    "ip_address": "10.1.98.228",
+    "address": "23 Ring Road, Chennai",
+    "city": "Chennai"
+  },
+  {
+    "customer_id": "C500",
+    "customer_name": "Siddharth Kulkarni",
+    "upi_id": "siddharthc500@synthetic",
+    "device_id": "DEV_C_C500",
+    "ip_address": "10.1.32.97",
+    "address": "29 Link Road, Chennai",
+    "city": "Chennai"
+  }
+]

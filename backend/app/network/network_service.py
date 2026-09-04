@@ -63,10 +63,10 @@ class NetworkService:
         # 4. Integrate Network Cases into Phase 2 CaseStore
         self._sync_network_cases(clusters)
 
-        # 5. Persist Network Entities & Relationships to Firestore Store
+        # 5. Persist Network Entities & Risky Relationships to Firestore Store
         try:
-            nodes = self.get_nodes()
-            for n in nodes:
+            nodes = [n for n in self.get_nodes() if n.type in ["MERCHANT", "CUSTOMER"] or n.risk_score > 0.0]
+            for n in nodes[:100]:
                 self.firestore_store.save_network_entity({
                     "entity_id": n.id,
                     "entity_type": n.type,
@@ -75,8 +75,8 @@ class NetworkService:
                     "metadata": n.attributes
                 })
 
-            edges = self.get_edges()
-            for e in edges:
+            risky_edges = [e for e in self.get_edges() if e.risk_score >= 60.0 or e.relationship.startswith("SHARES_")]
+            for e in risky_edges[:100]:
                 self.firestore_store.save_network_relationship(e.model_dump())
         except Exception:
             pass
@@ -116,10 +116,13 @@ class NetworkService:
             # Compute transaction totals
             total_amt = 0.0
             tx_count = 0
-            for tx in self.cached_transactions:
-                if tx.merchant_id in set(comp_merchants) and tx.customer_id in set(comp_customers):
-                    total_amt += tx.amount
-                    tx_count += 1
+            comp_m_set = set(comp_merchants)
+            comp_c_set = set(comp_customers)
+            if comp_m_set and comp_c_set:
+                for tx in self.cached_transactions:
+                    if tx.merchant_id in comp_m_set and tx.customer_id in comp_c_set:
+                        total_amt += tx.amount
+                        tx_count += 1
 
             # Extract subgraph nodes and edges
             sub_nodes: List[NetworkNode] = []
