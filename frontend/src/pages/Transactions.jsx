@@ -1,95 +1,244 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeftRight, Search, Filter } from 'lucide-react';
+import { fetchTransactions, fetchTransactionDetail, fetchMLScore } from '../api';
+import RiskScoreBadge from '../components/RiskScoreBadge';
+import RiskBreakdownCard from '../components/RiskBreakdownCard';
+import MLExplainabilityCard from '../components/MLExplainabilityCard';
+import EvidenceList from '../components/EvidenceList';
+import { CreditCard, Search, Filter, RefreshCw, X, ArrowRight, ShieldAlert, Cpu } from 'lucide-react';
 
-export default function Transactions() {
+export default function Transactions({ onSelectMerchant, onSelectCustomer, onSelectCase }) {
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTx, setSelectedTx] = useState(null);
+  const [mlScoreData, setMlScoreData] = useState(null);
+  const [search, setSearch] = useState('');
+  const [filterStatus, setFilterStatus] = useState('ALL');
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadTransactions = async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchTransactions(100);
+      setTransactions(data || []);
+    } catch (err) {
+      console.error('Failed fetching transactions:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Fetch transactions from backend
-    fetch('/api/cases')
-      .then(res => res.json())
-      .then(cases => {
-        const txList = [];
-        cases.forEach(c => {
-          if (c.transactions) {
-            c.transactions.forEach(t => txList.push(t));
-          }
-        });
-        setTransactions(txList);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    loadTransactions();
   }, []);
 
-  const filteredTxs = transactions.filter(t => {
-    if (!searchTerm) return true;
-    const term = searchTerm.toLowerCase();
-    return t.transaction_id.toLowerCase().includes(term) || t.merchant_id.toLowerCase().includes(term) || t.customer_id.toLowerCase().includes(term);
+  const openTransactionDetail = async (tx) => {
+    setSelectedTx(tx);
+    try {
+      // Calculate ML Score for transaction
+      const mlRes = await fetchMLScore({
+        merchant_id: tx.merchant_id,
+        customer_id: tx.customer_id,
+        transaction_id: tx.transaction_id,
+        transaction_data: tx
+      });
+      setMlScoreData(mlRes);
+    } catch (err) {
+      console.error('Failed fetching ML score for transaction:', err);
+    }
+  };
+
+  const filteredTxs = transactions.filter(tx => {
+    const matchesSearch = tx.transaction_id.toLowerCase().includes(search.toLowerCase()) ||
+                          tx.merchant_id.toLowerCase().includes(search.toLowerCase()) ||
+                          tx.customer_id.toLowerCase().includes(search.toLowerCase());
+    if (!matchesSearch) return false;
+    if (filterStatus === 'REFUNDED') return tx.refund_status === 'REFUNDED';
+    if (filterStatus === 'FAILED') return tx.status === 'FAILED';
+    if (filterStatus === 'SUCCESS') return tx.status === 'SUCCESS';
+    return true;
   });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: '800' }}>Transaction Evidence Explorer</h1>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Inspect contributing payments, rapid refund indicators, and shared device tags</p>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <CreditCard size={22} color="#fbbf24" />
+            <span>Transaction Risk Workspace</span>
+          </h2>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            Inspect raw transactions, refund velocity, shared payment identity signals, and ML risk scores.
+          </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <button className="btn-secondary btn-sm" onClick={loadTransactions}>
+          <RefreshCw size={14} />
+          <span>Refresh</span>
+        </button>
+      </div>
+
+      {/* Filter & Search Bar */}
+      <div className="glass-panel" style={{ padding: '12px 16px', display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: '240px', background: '#0f172a', padding: '6px 12px', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
+          <Search size={16} color="#94a3b8" />
           <input
             type="text"
-            placeholder="Search Tx ID, Merchant, Customer..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ background: 'var(--bg-card)', color: 'white', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.875rem', width: '260px' }}
+            placeholder="Search by Transaction ID (TX_...), Merchant ID (M...), or Customer ID (C...)"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ background: 'transparent', border: 'none', outline: 'none', color: 'white', fontSize: '0.85rem', width: '100%' }}
           />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Filter size={14} color="#94a3b8" />
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Status Filter:</span>
+          <select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            style={{ background: '#0f172a', color: 'white', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '6px 10px', fontSize: '0.8rem' }}
+          >
+            <option value="ALL">All Statuses</option>
+            <option value="REFUNDED">Refunded Transactions</option>
+            <option value="SUCCESS">Successful</option>
+            <option value="FAILED">Failed</option>
+          </select>
         </div>
       </div>
 
-      <div className="glass-panel" style={{ overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
+      {/* Transactions Table */}
+      <div className="saas-table-container">
+        <table className="saas-table">
           <thead>
-            <tr style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
-              <th style={{ padding: '12px 16px' }}>Tx ID</th>
-              <th style={{ padding: '12px 16px' }}>Merchant</th>
-              <th style={{ padding: '12px 16px' }}>Customer</th>
-              <th style={{ padding: '12px 16px' }}>Amount</th>
-              <th style={{ padding: '12px 16px' }}>Type</th>
-              <th style={{ padding: '12px 16px' }}>Refund Status</th>
-              <th style={{ padding: '12px 16px' }}>Suspicious Indicators</th>
+            <tr>
+              <th>Tx ID</th>
+              <th>Merchant</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Refund Status</th>
+              <th>Tx Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              <tr><td colSpan="7" style={{ padding: '24px', textCenter: 'center', color: 'var(--text-muted)' }}>Loading transactions...</td></tr>
+            {isLoading ? (
+              <tr>
+                <td colSpan="7" style={{ textAlign: 'center', padding: '24px', color: 'var(--text-muted)' }}>
+                  Loading transactions...
+                </td>
+              </tr>
             ) : filteredTxs.length === 0 ? (
-              <tr><td colSpan="7" style={{ padding: '24px', textCenter: 'center', color: 'var(--text-muted)' }}>No transactions matching search query.</td></tr>
+              <tr>
+                <td colSpan="7" style={{ textAlign: 'center', padding: '24px', color: 'var(--text-muted)' }}>
+                  No transactions found matching search criteria.
+                </td>
+              </tr>
             ) : (
-              filteredTxs.map((t, idx) => (
-                <tr key={idx} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '12px 16px', fontWeight: '700', color: '#818cf8' }}>{t.transaction_id}</td>
-                  <td style={{ padding: '12px 16px', fontWeight: '600' }}>{t.merchant_id}</td>
-                  <td style={{ padding: '12px 16px', fontWeight: '600' }}>{t.customer_id}</td>
-                  <td style={{ padding: '12px 16px', fontWeight: '700' }}>₹{t.amount.toLocaleString()}</td>
-                  <td style={{ padding: '12px 16px' }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: t.transaction_type === 'REFUND' ? '#f43f5e' : '#10b981' }}>{t.transaction_type}</span>
-                  </td>
-                  <td style={{ padding: '12px 16px' }}>{t.refund_status}</td>
-                  <td style={{ padding: '12px 16px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                      {t.suspicious_indicators && t.suspicious_indicators.map((ind, i) => (
-                        <span key={i} style={{ fontSize: '0.7rem', color: '#f59e0b' }}>• {ind}</span>
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-              ))
+              filteredTxs.map(tx => {
+                const isRefunded = tx.refund_status === 'REFUNDED';
+                return (
+                  <tr key={tx.transaction_id} className="clickable-row" onClick={() => openTransactionDetail(tx)}>
+                    <td style={{ fontFamily: 'monospace', fontWeight: '700', color: 'white' }}>{tx.transaction_id}</td>
+                    <td>
+                      <span
+                        onClick={(e) => { e.stopPropagation(); if (onSelectMerchant) onSelectMerchant(tx.merchant_id); }}
+                        style={{ color: '#818cf8', fontWeight: '600', textDecoration: 'underline', cursor: 'pointer' }}
+                      >
+                        {tx.merchant_id}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        onClick={(e) => { e.stopPropagation(); if (onSelectCustomer) onSelectCustomer(tx.customer_id); }}
+                        style={{ color: '#2dd4bf', fontWeight: '600', textDecoration: 'underline', cursor: 'pointer' }}
+                      >
+                        {tx.customer_id}
+                      </span>
+                    </td>
+                    <td style={{ fontWeight: '700', color: 'white' }}>₹{Number(tx.amount || 0).toLocaleString()}</td>
+                    <td>
+                      <span style={{ fontSize: '0.725rem', fontWeight: '700', padding: '2px 8px', borderRadius: '4px', background: isRefunded ? 'rgba(244, 63, 94, 0.15)' : 'rgba(16, 185, 129, 0.15)', color: isRefunded ? '#f43f5e' : '#10b981' }}>
+                        {tx.refund_status || 'NORMAL'}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ fontSize: '0.725rem', color: tx.status === 'SUCCESS' ? '#10b981' : '#f59e0b' }}>
+                        ● {tx.status || 'SUCCESS'}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="btn-secondary btn-sm" onClick={(e) => { e.stopPropagation(); openTransactionDetail(tx); }}>
+                        Inspect Risk
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Transaction Detail Workspace Modal */}
+      {selectedTx && (
+        <div className="modal-overlay" onClick={() => setSelectedTx(null)}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '720px', padding: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid var(--border-color)', pb: '12px' }}>
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'white' }}>Transaction Detail & Risk Intelligence</h3>
+                <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                  ID: <code style={{ color: '#fbbf24' }}>{selectedTx.transaction_id}</code>
+                </div>
+              </div>
+              <button onClick={() => setSelectedTx(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Overview Details */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', background: 'var(--bg-subtle)', padding: '14px', borderRadius: '8px' }}>
+                <div>
+                  <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>Amount</div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: '800', color: 'white' }}>₹{Number(selectedTx.amount || 0).toLocaleString()}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>Merchant</div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#818cf8', cursor: 'pointer' }} onClick={() => { setSelectedTx(null); if (onSelectMerchant) onSelectMerchant(selectedTx.merchant_id); }}>
+                    {selectedTx.merchant_id}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>Customer</div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#2dd4bf', cursor: 'pointer' }} onClick={() => { setSelectedTx(null); if (onSelectCustomer) onSelectCustomer(selectedTx.customer_id); }}>
+                    {selectedTx.customer_id}
+                  </div>
+                </div>
+              </div>
+
+              {/* Risk Breakdown */}
+              <RiskBreakdownCard
+                finalRiskScore={mlScoreData ? mlScoreData.final_risk_score : 70}
+                finalRiskLevel={mlScoreData ? mlScoreData.final_risk_level : 'HIGH'}
+                transactionRiskScore={mlScoreData ? mlScoreData.transaction_risk_score : 80}
+                networkRiskScore={mlScoreData ? mlScoreData.network_risk_score : 75}
+                mlRiskScore={mlScoreData ? mlScoreData.ml_risk_score : 60}
+                breakdown={mlScoreData ? mlScoreData.scoring_breakdown : []}
+              />
+
+              {/* ML Explainability */}
+              {mlScoreData && (
+                <MLExplainabilityCard
+                  mlRiskScore={mlScoreData.ml_risk_score}
+                  modelVersion={mlScoreData.model_version}
+                  algorithm={mlScoreData.algorithm}
+                  topFeatures={mlScoreData.top_features}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

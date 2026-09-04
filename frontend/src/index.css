@@ -1,27 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --bg-card-hover: #334155;
+  --bg-dark: #090d16;
+  --bg-card: #131b2e;
+  --bg-card-hover: #1c2742;
   --bg-subtle: #0f172a;
-  --border-color: #334155;
-  --border-subtle: #1e293b;
+  --border-color: #1e2d4a;
+  --border-subtle: #17223b;
   
   --primary: #6366f1;
   --primary-hover: #4f46e5;
-  --primary-light: rgba(99, 102, 241, 0.15);
+  --primary-light: rgba(99, 102, 241, 0.12);
   
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
 
   --risk-critical: #f43f5e;
-  --risk-critical-bg: rgba(244, 63, 94, 0.15);
+  --risk-critical-bg: rgba(244, 63, 94, 0.12);
   --risk-high: #f59e0b;
-  --risk-high-bg: rgba(245, 158, 11, 0.15);
+  --risk-high-bg: rgba(245, 158, 11, 0.12);
   --risk-medium: #eab308;
-  --risk-medium-bg: rgba(234, 179, 8, 0.15);
+  --risk-medium-bg: rgba(234, 179, 8, 0.12);
   --risk-low: #10b981;
-  --risk-low-bg: rgba(16, 185, 129, 0.15);
+  --risk-low-bg: rgba(16, 185, 129, 0.12);
 }
 
 * {
@@ -36,9 +38,10 @@ body {
   color: var(--text-main);
   line-height: 1.5;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-code, pre {
+code, pre, .mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
@@ -59,20 +62,33 @@ code, pre {
 }
 
 .glass-panel {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
+  background: rgba(19, 27, 46, 0.85);
+  backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.725rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -108,7 +124,7 @@ code, pre {
   padding: 8px 16px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -129,7 +145,7 @@ code, pre {
   padding: 8px 16px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -143,6 +159,89 @@ code, pre {
 }
 
 .btn-sm {
-  padding: 4px 10px;
-  font-size: 0.75rem;
+  padding: 5px 12px;
+  font-size: 0.775rem;
+}
+
+/* Data Tables */
+.saas-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.saas-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.saas-table th {
+  background: #0f172a;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: uppercase;
+  font-size: 0.725rem;
+  letter-spacing: 0.05em;
+}
+
+.saas-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.saas-table tr:hover td {
+  background: var(--bg-card-hover);
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 13, 22, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: modalFadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Skeleton Loading Pulse */
+.skeleton {
+  background: linear-gradient(90deg, #131b2e 25%, #1c2742 50%, #131b2e 75%);
+  background-size: 200% 100%;
+  animation: loadingPulse 1.5s infinite;
+  border-radius: 6px;
+}
+
+@keyframes loadingPulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

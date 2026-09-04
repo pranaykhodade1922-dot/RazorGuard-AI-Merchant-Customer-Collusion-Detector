@@ -581,4 +581,85 @@ def get_model_info():
     )
 
 
+@app.get("/api/search", summary="Global Command Search Across Entities and Cases")
+def global_search(q: str = Query(..., min_length=1, description="Search query")):
+    if not STATE["merchants"]:
+        generate_dataset(seed=SEED)
+
+    query = q.strip().lower()
+    results = []
+
+    # 1. Search Merchants
+    for m in STATE["merchants"]:
+        name = getattr(m, "merchant_name", getattr(m, "name", m.merchant_id))
+        category = getattr(m, "category", "")
+        risk_score = getattr(m, "risk_score", 0.0)
+        if query in m.merchant_id.lower() or query in name.lower() or query in category.lower():
+            results.append({
+                "id": m.merchant_id,
+                "title": f"{name} ({m.merchant_id})",
+                "type": "MERCHANT",
+                "subtitle": f"Category: {category} | Risk Score: {risk_score}",
+                "risk_score": risk_score,
+                "url": f"/merchants/{m.merchant_id}"
+            })
+
+    # 2. Search Customers
+    for c in STATE["customers"]:
+        name = getattr(c, "customer_name", getattr(c, "name", c.customer_id))
+        email = getattr(c, "email", "")
+        risk_score = getattr(c, "risk_score", 0.0)
+        if query in c.customer_id.lower() or query in name.lower() or query in email.lower():
+            results.append({
+                "id": c.customer_id,
+                "title": f"{name} ({c.customer_id})",
+                "type": "CUSTOMER",
+                "subtitle": f"Email: {email} | Risk Score: {risk_score}",
+                "risk_score": risk_score,
+                "url": f"/customers/{c.customer_id}"
+            })
+
+    # 3. Search Transactions
+    for tx in STATE["transactions"][:500]:
+        tx_id = getattr(tx, "transaction_id", "")
+        m_id = getattr(tx, "merchant_id", "")
+        c_id = getattr(tx, "customer_id", "")
+        amount = getattr(tx, "amount", 0.0)
+        tx_status = getattr(tx, "status", "SUCCESS")
+        if query in tx_id.lower() or query in m_id.lower() or query in c_id.lower():
+            results.append({
+                "id": tx_id,
+                "title": f"Tx {tx_id} (₹{amount:,.2f})",
+                "type": "TRANSACTION",
+                "subtitle": f"Merchant: {m_id} | Customer: {c_id} | Status: {tx_status}",
+                "risk_score": 50.0 if getattr(tx, "refund_status", "") == "REFUNDED" else 10.0,
+                "url": f"/transactions/{tx_id}"
+            })
+
+    # 4. Search Cases
+    cases = case_service.list_cases()
+    for cs in cases:
+        cs_id = cs.case_id
+        m_id = cs.merchant_id
+        title = getattr(cs, "title", f"Collusion Ring Case for Merchant {m_id}")
+        cs_status = cs.status
+        severity = getattr(cs, "risk_level", "HIGH")
+        score = cs.risk_score
+        if query in cs_id.lower() or query in m_id.lower() or query in title.lower():
+            results.append({
+                "id": cs_id,
+                "title": f"{cs_id}: {title}",
+                "type": "CASE",
+                "subtitle": f"Status: {cs_status} | Level: {severity} | Score: {score}",
+                "risk_score": score,
+                "url": f"/cases/{cs_id}"
+            })
+
+
+
+    return results[:20]
+
+
+
+
 

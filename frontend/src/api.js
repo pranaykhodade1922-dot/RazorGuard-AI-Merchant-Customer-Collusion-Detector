@@ -108,3 +108,61 @@ export async function fetchShortestPath(sourceId, targetId) {
   const res = await fetch(`${API_BASE}/network/path/${sourceId}/${targetId}`);
   return res.json();
 }
+
+// Global Search Endpoint
+export async function fetchGlobalSearch(query) {
+  if (!query || query.trim().length === 0) return [];
+  const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query.trim())}`);
+  return res.json();
+}
+
+// Phase 5 Persistent Entities Endpoints
+export async function fetchMerchants() {
+  const res = await fetch(`${API_BASE}/merchants`);
+  return res.json();
+}
+
+export async function fetchMerchantDetail(merchantId) {
+  const res = await fetch(`${API_BASE}/merchants/${merchantId}`);
+  return res.json();
+}
+
+export async function fetchCustomers() {
+  const res = await fetch(`${API_BASE}/customers`);
+  return res.json();
+}
+
+export async function fetchCustomerDetail(customerId) {
+  const res = await fetch(`${API_BASE}/customers/${customerId}`);
+  return res.json();
+}
+
+export async function fetchTransactions(limit = 100) {
+  const res = await fetch(`${API_BASE}/transactions?limit=${limit}`);
+  return res.json();
+}
+
+export async function fetchTransactionDetail(transactionId) {
+  const res = await fetch(`${API_BASE}/transactions/${transactionId}`);
+  return res.json();
+}
+
+export async function fetchAlerts() {
+  const res = await fetch(`${API_BASE}/alerts`);
+  return res.json();
+}
+
+// Phase 4 ML Risk Intelligence Endpoints
+export async function fetchMLScore(payload) {
+  const res = await fetch(`${API_BASE}/ml/score`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  return res.json();
+}
+
+export async function fetchModelInfo() {
+  const res = await fetch(`${API_BASE}/ml/model-info`);
+  return res.json();
+}
