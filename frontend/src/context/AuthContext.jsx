@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   auth,
+  isFirebaseConfigured,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup
 } from '../firebase';
 
 const AuthContext = createContext(null);
@@ -50,7 +53,7 @@ export function AuthProvider({ children }) {
             console.warn('Failed retrieving Firebase ID token:', e);
           }
 
-          const role = localStorage.getItem(`user_role_${firebaseUser.uid}`) || 'ADMIN';
+          const role = localStorage.getItem(`user_role_${firebaseUser.uid}`) || (firebaseUser.email?.toLowerCase().includes('admin') ? 'ADMIN' : 'ANALYST');
           const userObj = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
@@ -181,6 +184,62 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const loginWithGoogle = async () => {
+    setAuthError(null);
+    if (!auth) {
+      const msg = 'Firebase authentication client is uninitialized. Please configure VITE_FIREBASE_API_KEY.';
+      setAuthError(msg);
+      throw new Error(msg);
+    }
+
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      const fbUser = userCredential.user;
+      const idToken = await fbUser.getIdToken();
+
+      const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
+      const emailLower = (fbUser.email || '').toLowerCase();
+      const role = storedRole || (emailLower.includes('admin') ? 'ADMIN' : 'ANALYST');
+      localStorage.setItem(`user_role_${fbUser.uid}`, role);
+
+      const userObj = {
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'User'),
+        photoURL: fbUser.photoURL || null,
+        role: role,
+        token: idToken,
+        getIdToken: async () => idToken
+      };
+
+      setUser(userObj);
+      setAuthState('AUTHENTICATED');
+      localStorage.setItem('razorguard_auth_user', JSON.stringify({
+        uid: userObj.uid,
+        email: userObj.email,
+        displayName: userObj.displayName,
+        photoURL: userObj.photoURL,
+        role: userObj.role,
+        token: idToken
+      }));
+      return userObj;
+    } catch (err) {
+      let friendlyMsg = err.message || 'Google authentication failed.';
+      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+        friendlyMsg = 'Google sign-in was cancelled.';
+      } else if (err.code === 'auth/popup-blocked') {
+        friendlyMsg = 'Google sign-in popup was blocked by your browser. Please allow popups for this site.';
+      } else if (err.code === 'auth/account-exists-with-different-credential') {
+        friendlyMsg = 'An account already exists with the same email address using a different sign-in method.';
+      } else if (err.code === 'auth/invalid-api-key' || err.code === 'auth/api-key-not-valid' || err.message?.includes('api-key')) {
+        friendlyMsg = 'Firebase API Key is invalid or unconfigured. Please configure VITE_FIREBASE_API_KEY in your environment.';
+      }
+      setAuthError(friendlyMsg);
+      throw new Error(friendlyMsg);
+    }
+  };
+
   const register = async (name, email, password, role = 'ANALYST') => {
     setAuthError(null);
     try {
@@ -254,6 +313,8 @@ export function AuthProvider({ children }) {
       authState,
       authError,
       login,
+      loginWithGoogle,
+      signInWithGoogle: loginWithGoogle,
       register,
       logout,
       getToken,

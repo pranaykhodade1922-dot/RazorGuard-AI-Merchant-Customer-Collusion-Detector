@@ -5,11 +5,16 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth';
 
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+const isFirebaseConfigured = Boolean(apiKey && !apiKey.includes('DemoKey'));
+
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyDemoKeyForRazorGuardLocalBuild2026',
+  apiKey: apiKey || 'AIzaSyDemoKeyForRazorGuardLocalBuild2026',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'razorguard-ai.firebaseapp.com',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'razorguard-ai',
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'razorguard-ai.appspot.com',
@@ -32,10 +37,13 @@ try {
 export {
   auth,
   initError,
+  isFirebaseConfigured,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup
 };
 
