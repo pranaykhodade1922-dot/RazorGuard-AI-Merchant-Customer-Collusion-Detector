@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Play, RefreshCw, Search, Bell, Activity, Database, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Shield, Play, RefreshCw, Search, Bell, Activity } from 'lucide-react';
 
 export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpenSearch }) {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -60,7 +60,7 @@ export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpen
         {/* Engine Live Status Pill */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '4px 10px', borderRadius: '20px', fontSize: '0.75rem', color: '#10b981', fontWeight: '600' }}>
           <Activity size={13} />
-          <span>{engineStatus || 'Phase 4 ML Engine Ready'}</span>
+          <span>{engineStatus || 'RazorGuard Engine Ready'}</span>
         </div>
       </div>
 
@@ -101,16 +101,12 @@ export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpen
             <div className="glass-panel" style={{ position: 'absolute', right: 0, top: '48px', width: '320px', padding: '16px', zIndex: 110 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '8px' }}>
                 <h4 style={{ fontSize: '0.875rem', fontWeight: '700' }}>Investigation Alerts</h4>
-                <span style={{ fontSize: '0.7rem', color: '#6366f1', background: 'rgba(99, 102, 241, 0.15)', padding: '1px 6px', borderRadius: '4px' }}>3 Unread</span>
+                <span style={{ fontSize: '0.7rem', color: '#6366f1', background: 'rgba(99, 102, 241, 0.15)', padding: '1px 6px', borderRadius: '4px' }}>Active System</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.775rem' }}>
                 <div style={{ padding: '8px', background: 'var(--bg-subtle)', borderRadius: '6px' }}>
                   <div style={{ fontWeight: '700', color: '#f43f5e' }}>Critical Collusion Ring Detected</div>
-                  <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>Merchant M089 flagged with 4 shared payment identities.</div>
-                </div>
-                <div style={{ padding: '8px', background: 'var(--bg-subtle)', borderRadius: '6px' }}>
-                  <div style={{ fontWeight: '700', color: '#f59e0b' }}>ML Score Alert (87.5)</div>
-                  <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>High refund velocity anomaly predicted by Random Forest.</div>
+                  <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>High-density cycle pattern flagged by network detector.</div>
                 </div>
               </div>
             </div>

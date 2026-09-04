@@ -24,45 +24,7 @@ export default function Alerts({ onSelectCase, onSelectMerchant }) {
     loadAlerts();
   }, []);
 
-  const mockFallbackAlerts = [
-    {
-      id: 'ALT-1001',
-      title: 'Critical Collusion Ring Detected',
-      entity_id: 'M089',
-      entity_type: 'MERCHANT',
-      risk_score: 94.5,
-      severity: 'CRITICAL',
-      timestamp: '2026-09-04T08:15:00Z',
-      case_id: 'CASE-0002',
-      description: 'Merchant M089 engaged in circular collusion pattern with 4 shared payment identities.'
-    },
-    {
-      id: 'ALT-1002',
-      title: 'High Refund Velocity Anomaly',
-      entity_id: 'M014',
-      entity_type: 'MERCHANT',
-      risk_score: 78.0,
-      severity: 'HIGH',
-      timestamp: '2026-09-04T07:45:00Z',
-      case_id: 'CASE-0005',
-      description: 'Abnormal refund ratio exceeding 45% threshold within tight time window.'
-    },
-    {
-      id: 'ALT-1003',
-      title: 'Shared Device Hardware Cluster',
-      entity_id: 'C002',
-      entity_type: 'CUSTOMER',
-      risk_score: 82.0,
-      severity: 'CRITICAL',
-      timestamp: '2026-09-04T06:30:00Z',
-      case_id: 'CASE-0002',
-      description: 'Customer device fingerprint associated with 5 distinct merchant payout accounts.'
-    }
-  ];
-
-  const displayAlerts = alerts.length > 0 ? alerts : mockFallbackAlerts;
-
-  const filteredAlerts = displayAlerts.filter(a => {
+  const filteredAlerts = alerts.filter(a => {
     if (filterSeverity === 'ALL') return true;
     return a.severity === filterSeverity;
   });
@@ -114,7 +76,16 @@ export default function Alerts({ onSelectCase, onSelectMerchant }) {
 
       {/* Alerts Grid */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {filteredAlerts.map(alert => (
+        {isLoading ? (
+          <div className="glass-card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+            Loading active alerts feed...
+          </div>
+        ) : filteredAlerts.length === 0 ? (
+          <div className="glass-card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+            No active risk alerts match current criteria.
+          </div>
+        ) : (
+          filteredAlerts.map(alert => (
           <div
             key={alert.id}
             className="glass-card"
@@ -168,7 +139,7 @@ export default function Alerts({ onSelectCase, onSelectMerchant }) {
               )}
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </div>
   );

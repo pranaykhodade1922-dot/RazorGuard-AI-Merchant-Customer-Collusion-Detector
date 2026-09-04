@@ -49,14 +49,24 @@ class FirestoreStore:
         data["updated_at"] = data.get("updated_at") or datetime.now(timezone.utc).isoformat()
         data["created_at"] = data.get("created_at") or data["updated_at"]
 
-        if self.is_connected and self.db:
+        # Check if identical document is already cached to avoid duplicate Firestore writes
+        cached = self._memory_cache.get(collection_name, {}).get(doc_id)
+        is_unchanged = False
+        if cached:
+            # Compare non-timestamp fields to determine if write is necessary
+            c_copy = {k: v for k, v in cached.items() if k not in ("updated_at", "created_at")}
+            d_copy = {k: v for k, v in data.items() if k not in ("updated_at", "created_at")}
+            if c_copy == d_copy:
+                is_unchanged = True
+
+        if self.is_connected and self.db and not is_unchanged:
             try:
-                self.db.collection(collection_name).document(doc_id).set(data, timeout=2.0)
+                self.db.collection(collection_name).document(doc_id).set(data, timeout=1.5)
             except Exception as e:
                 logger.warning(f"Firestore set error/timeout for {collection_name}/{doc_id}: {e}")
                 self.firebase._is_connected = False
 
-        # Update local memory cache as well
+        # Update local memory cache
         if collection_name not in self._memory_cache:
             self._memory_cache[collection_name] = {}
         self._memory_cache[collection_name][doc_id] = data

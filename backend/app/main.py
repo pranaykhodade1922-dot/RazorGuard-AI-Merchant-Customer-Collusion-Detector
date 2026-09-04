@@ -75,9 +75,10 @@ def health_check():
     firebase_status = firestore_store.firebase.get_status_message()
     return {
         "status": "ok",
-        "engine": "RazorGuard AI Phase 3 — Network Intelligence & Firestore",
+        "engine": "RazorGuard AI — Merchant Risk & Collusion Intelligence",
         "firebase": firebase_status
     }
+
 
 
 @app.post("/api/dataset/generate", response_model=DatasetSummary, summary="Generate Synthetic Dataset")
@@ -102,87 +103,102 @@ def generate_dataset(seed: int = Query(SEED, description="Random seed for reprod
     )
 
 
+import threading
+
+DETECTION_LOCK = threading.Lock()
+
+
 @app.post("/api/detect", summary="Run Collusion Detection Engine")
 def run_detection():
-    if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
-        generate_dataset(seed=SEED)
+    with DETECTION_LOCK:
+        if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
+            generate_dataset(seed=SEED)
 
-    merchants = STATE["merchants"]
-    customers = STATE["customers"]
-    transactions = STATE["transactions"]
-    ground_truth = STATE["ground_truth"]
+        if STATE["risk_results"] and STATE["suspicious_cases"]:
+            return {
+                "status": "success",
+                "total_pairs_analyzed": len(STATE["risk_results"]),
+                "flagged_cases_count": len(STATE["suspicious_cases"]),
+                "flagged_high_critical_pairs": len([r for r in STATE["risk_results"] if r.risk_level in ["HIGH", "CRITICAL"]])
+            }
 
-    detector = OverlapDetector()
-    pair_signals_map = detector.analyze_all_pairs(merchants, customers, transactions)
+        merchants = STATE["merchants"]
+        customers = STATE["customers"]
+        transactions = STATE["transactions"]
+        ground_truth = STATE["ground_truth"]
 
-    scorer = RiskScorer()
-    gt_map = {(gt.merchant_id, gt.customer_id): gt.is_collusive for gt in ground_truth}
+        detector = OverlapDetector()
+        pair_signals_map = detector.analyze_all_pairs(merchants, customers, transactions)
 
-    risk_results: List[RiskScoreResult] = []
+        scorer = RiskScorer()
+        gt_map = {(gt.merchant_id, gt.customer_id): gt.is_collusive for gt in ground_truth}
 
-    for (m_id, c_id), signals in pair_signals_map.items():
-        is_collusive = gt_map.get((m_id, c_id), False)
-        result = scorer.calculate_risk(m_id, c_id, signals, ground_truth_collusive=is_collusive)
-        risk_results.append(result)
+        risk_results: List[RiskScoreResult] = []
 
-    STATE["risk_results"] = risk_results
+        for (m_id, c_id), signals in pair_signals_map.items():
+            is_collusive = gt_map.get((m_id, c_id), False)
+            result = scorer.calculate_risk(m_id, c_id, signals, ground_truth_collusive=is_collusive)
+            risk_results.append(result)
 
-    graph_builder = IdentityGraphBuilder()
-    graph_builder.build_graph(merchants, customers, transactions)
-    suspicious_cases = graph_builder.find_suspicious_rings(risk_results, merchants)
+        STATE["risk_results"] = risk_results
 
-    STATE["suspicious_cases"] = suspicious_cases
+        graph_builder = IdentityGraphBuilder()
+        graph_builder.build_graph(merchants, customers, transactions)
+        suspicious_cases = graph_builder.find_suspicious_rings(risk_results, merchants)
 
-    # Process Phase 2 Cases
-    case_service.process_detection_results(merchants, customers, transactions, risk_results)
+        STATE["suspicious_cases"] = suspicious_cases
 
-    # Process Phase 3 Network Analysis
-    network_service.analyze_network(merchants, customers, transactions, risk_results)
+        # Process Phase 2 Cases
+        case_service.process_detection_results(merchants, customers, transactions, risk_results)
 
-    flagged_high_critical = [r for r in risk_results if r.risk_level in ["HIGH", "CRITICAL"]]
+        # Process Phase 3 Network Analysis
+        network_service.analyze_network(merchants, customers, transactions, risk_results)
 
-    return {
-        "status": "success",
-        "total_pairs_analyzed": len(risk_results),
-        "flagged_cases_count": len(suspicious_cases),
-        "flagged_high_critical_pairs": len(flagged_high_critical)
-    }
+        flagged_high_critical = [r for r in risk_results if r.risk_level in ["HIGH", "CRITICAL"]]
+
+        return {
+            "status": "success",
+            "total_pairs_analyzed": len(risk_results),
+            "flagged_cases_count": len(suspicious_cases),
+            "flagged_high_critical_pairs": len(flagged_high_critical)
+        }
 
 
 @app.post("/api/detection/run", response_model=DetectionRunResponse, summary="Run Full Detection & Network Analysis")
 def run_full_detection():
-    if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
-        generate_dataset(seed=SEED)
+    with DETECTION_LOCK:
+        if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
+            generate_dataset(seed=SEED)
 
-    merchants = STATE["merchants"]
-    customers = STATE["customers"]
-    transactions = STATE["transactions"]
-    ground_truth = STATE["ground_truth"]
+        merchants = STATE["merchants"]
+        customers = STATE["customers"]
+        transactions = STATE["transactions"]
+        ground_truth = STATE["ground_truth"]
 
-    detector = OverlapDetector()
-    pair_signals_map = detector.analyze_all_pairs(merchants, customers, transactions)
+        detector = OverlapDetector()
+        pair_signals_map = detector.analyze_all_pairs(merchants, customers, transactions)
 
-    scorer = RiskScorer()
-    gt_map = {(gt.merchant_id, gt.customer_id): gt.is_collusive for gt in ground_truth}
+        scorer = RiskScorer()
+        gt_map = {(gt.merchant_id, gt.customer_id): gt.is_collusive for gt in ground_truth}
 
-    risk_results: List[RiskScoreResult] = []
+        risk_results: List[RiskScoreResult] = []
 
-    for (m_id, c_id), signals in pair_signals_map.items():
-        is_collusive = gt_map.get((m_id, c_id), False)
-        result = scorer.calculate_risk(m_id, c_id, signals, ground_truth_collusive=is_collusive)
-        risk_results.append(result)
+        for (m_id, c_id), signals in pair_signals_map.items():
+            is_collusive = gt_map.get((m_id, c_id), False)
+            result = scorer.calculate_risk(m_id, c_id, signals, ground_truth_collusive=is_collusive)
+            risk_results.append(result)
 
-    STATE["risk_results"] = risk_results
+        STATE["risk_results"] = risk_results
 
-    res = case_service.process_detection_results(merchants, customers, transactions, risk_results)
-    network_service.analyze_network(merchants, customers, transactions, risk_results)
+        res = case_service.process_detection_results(merchants, customers, transactions, risk_results)
+        network_service.analyze_network(merchants, customers, transactions, risk_results)
 
-    return DetectionRunResponse(
-        status="success",
-        cases_created=res["cases_created"],
-        critical_cases=res["critical_cases"],
-        high_risk_cases=res["high_risk_cases"]
-    )
+        return DetectionRunResponse(
+            status="success",
+            cases_created=res["cases_created"],
+            critical_cases=res["critical_cases"],
+            high_risk_cases=res["high_risk_cases"]
+        )
 
 
 @app.get("/api/cases", response_model=List[Case], summary="List Suspicious Investigation Cases")
@@ -401,11 +417,26 @@ def get_network_cases():
 def get_merchants():
     if not STATE["merchants"]:
         generate_dataset(seed=SEED)
+    if not STATE["risk_results"]:
+        run_detection()
     merchants = firestore_store.list_documents("merchants")
     if not merchants and STATE["merchants"]:
         for m in STATE["merchants"]:
             firestore_store.save_merchant(m.model_dump())
         merchants = firestore_store.list_documents("merchants")
+
+    # Enrich merchant risk scores from risk_results & cases
+    m_risk_map = {}
+    for r in STATE["risk_results"]:
+        m_risk_map[r.merchant_id] = max(m_risk_map.get(r.merchant_id, 0.0), r.risk_score)
+    for c in case_service.list_cases():
+        m_risk_map[c.merchant_id] = max(m_risk_map.get(c.merchant_id, 0.0), c.risk_score)
+
+    for m in merchants:
+        m_id = m.get("merchant_id")
+        if m_id in m_risk_map:
+            m["risk_score"] = m_risk_map[m_id]
+
     return merchants
 
 
@@ -414,6 +445,12 @@ def get_merchant_detail(merchant_id: str):
     if not STATE["merchants"]:
         generate_dataset(seed=SEED)
     m = firestore_store.get_document("merchants", merchant_id)
+    if not m:
+        # Fallback to STATE merchants
+        for st_m in STATE["merchants"]:
+            if st_m.merchant_id == merchant_id:
+                m = st_m.model_dump()
+                break
     if not m:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -440,6 +477,11 @@ def get_customer_detail(customer_id: str):
         generate_dataset(seed=SEED)
     c = firestore_store.get_document("customers", customer_id)
     if not c:
+        for st_c in STATE["customers"]:
+            if st_c.customer_id == customer_id:
+                c = st_c.model_dump()
+                break
+    if not c:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"error": "CUSTOMER_NOT_FOUND", "message": f"Customer {customer_id} was not found."}
@@ -453,7 +495,7 @@ def get_transactions(limit: Optional[int] = Query(100, description="Limit transa
         generate_dataset(seed=SEED)
     txs = firestore_store.list_documents("transactions", limit=limit)
     if not txs and STATE["transactions"]:
-        for tx in STATE["transactions"]:
+        for tx in STATE["transactions"][:100]:
             firestore_store.save_transaction(tx.model_dump())
         txs = firestore_store.list_documents("transactions", limit=limit)
     return txs
@@ -465,6 +507,11 @@ def get_transaction_detail(transaction_id: str):
         generate_dataset(seed=SEED)
     tx = firestore_store.get_document("transactions", transaction_id)
     if not tx:
+        for st_tx in STATE["transactions"]:
+            if st_tx.transaction_id == transaction_id:
+                tx = st_tx.model_dump()
+                break
+    if not tx:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"error": "TRANSACTION_NOT_FOUND", "message": f"Transaction {transaction_id} was not found."}
@@ -474,7 +521,33 @@ def get_transaction_detail(transaction_id: str):
 
 @app.get("/api/alerts", summary="List Critical Risk Alerts")
 def get_alerts():
-    return firestore_store.list_documents("alerts")
+    alerts = firestore_store.list_documents("alerts")
+    if not alerts:
+        if not STATE["risk_results"]:
+            run_detection()
+        cases = case_service.list_cases()
+        generated_alerts = []
+        for idx, c in enumerate(cases):
+            if c.risk_level in ["HIGH", "CRITICAL"]:
+                alert_obj = {
+                    "id": f"ALT-{1000 + idx + 1}",
+                    "title": f"{c.risk_level} Collusion Ring Detected",
+                    "entity_id": c.merchant_id,
+                    "entity_type": "MERCHANT",
+                    "risk_score": c.risk_score,
+                    "severity": c.risk_level,
+                    "timestamp": c.created_at,
+                    "case_id": c.case_id,
+                    "description": f"Merchant {c.merchant_id} ({c.merchant_name}) flagged with risk score {c.risk_score}."
+                }
+                generated_alerts.append(alert_obj)
+                try:
+                    firestore_store.create_document("alerts", alert_obj["id"], alert_obj)
+                except Exception:
+                    pass
+        alerts = firestore_store.list_documents("alerts") or generated_alerts
+    return alerts
+
 
 
 @app.get("/api/network/entities", summary="List Network Entities")

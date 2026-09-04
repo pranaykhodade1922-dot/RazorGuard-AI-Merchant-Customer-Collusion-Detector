@@ -72,7 +72,7 @@ export default function App() {
 
   useEffect(() => {
     fetchHealth()
-      .then(res => setEngineStatus(res.engine || 'Phase 4 Active'))
+      .then(res => setEngineStatus(res.engine || 'RazorGuard Active'))
       .catch(() => setEngineStatus('Offline'));
     loadSummary();
   }, []);

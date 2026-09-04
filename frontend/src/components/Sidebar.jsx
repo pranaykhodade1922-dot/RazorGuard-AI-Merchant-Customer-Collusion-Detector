@@ -9,7 +9,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'transactions', label: 'Transactions', icon: CreditCard },
     { id: 'merchants', label: 'Merchants', icon: Store },
     { id: 'customers', label: 'Customers', icon: Users },
-    { id: 'network', label: 'Network Intelligence', icon: Network, badge: 'Phase 3' },
+    { id: 'network', label: 'Network Intelligence', icon: Network },
     { id: 'cases', label: 'Cases Workspace', icon: ShieldAlert },
     { id: 'alerts', label: 'Active Alerts', icon: Bell },
     { id: 'analytics', label: 'Fraud Analytics', icon: BarChart3 },
@@ -107,11 +107,6 @@ export default function Sidebar({ activeTab, setActiveTab }) {
               {!collapsed && (
                 <span style={{ flex: 1 }}>{item.label}</span>
               )}
-              {!collapsed && item.badge && (
-                <span style={{ fontSize: '0.65rem', background: 'rgba(45, 212, 191, 0.15)', color: '#2dd4bf', padding: '1px 6px', borderRadius: '4px', fontWeight: '700' }}>
-                  {item.badge}
-                </span>
-              )}
             </button>
           );
         })}
@@ -123,7 +118,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginBottom: '4px' }}>Buildathon 2026 Edition</div>
           <div style={{ fontSize: '0.775rem', fontWeight: '600', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Sparkles size={14} color="#6366f1" />
-            <span>Phase 4 ML Scorer Active</span>
+            <span>RazorGuard AI Active</span>
           </div>
         </div>
       )}

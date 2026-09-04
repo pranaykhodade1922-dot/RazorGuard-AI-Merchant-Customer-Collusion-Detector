@@ -33,8 +33,15 @@ export default function Analytics() {
     loadData();
   }, []);
 
-  const evalMetrics = evaluation?.evaluation_metrics || { accuracy: 1.0, precision: 1.0, recall: 1.0, f1_score: 1.0, roc_auc: 1.0 };
-  const costModel = evaluation?.false_positive_cost_model || { cost_savings: '₹2,450,000', false_positives_avoided: 142 };
+  const evalMetrics = evaluation?.evaluation_metrics;
+  const costModel = evaluation?.false_positive_cost_model;
+
+  const formatPct = (val) => {
+    if (val === undefined || val === null) return 'N/A';
+    const num = Number(val);
+    if (isNaN(num)) return 'N/A';
+    return (num > 1 ? num : num * 100).toFixed(1) + '%';
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -61,7 +68,7 @@ export default function Analytics() {
         <div className="glass-card">
           <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>Detection Accuracy</div>
           <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#10b981', margin: '4px 0' }}>
-            {(evalMetrics.accuracy * 100).toFixed(1)}%
+            {formatPct(evalMetrics?.accuracy ?? modelInfo?.metrics?.accuracy)}
           </div>
           <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)' }}>Ground truth benchmark</div>
         </div>
@@ -69,7 +76,7 @@ export default function Analytics() {
         <div className="glass-card">
           <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>Precision Rate</div>
           <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#6366f1', margin: '4px 0' }}>
-            {(evalMetrics.precision * 100).toFixed(1)}%
+            {formatPct(evalMetrics?.precision)}
           </div>
           <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)' }}>True positive accuracy</div>
         </div>
@@ -77,17 +84,17 @@ export default function Analytics() {
         <div className="glass-card">
           <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>Recall Rate</div>
           <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#2dd4bf', margin: '4px 0' }}>
-            {(evalMetrics.recall * 100).toFixed(1)}%
+            {formatPct(evalMetrics?.recall)}
           </div>
           <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)' }}>Collusion ring coverage</div>
         </div>
 
         <div className="glass-card">
-          <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>ROC-AUC Score</div>
+          <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>F1 Score</div>
           <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#fbbf24', margin: '4px 0' }}>
-            {evalMetrics.roc_auc.toFixed(3)}
+            {formatPct(evalMetrics?.f1_score)}
           </div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)' }}>Discriminatory power</div>
+          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)' }}>Balanced metric</div>
         </div>
       </div>
 
@@ -103,19 +110,19 @@ export default function Analytics() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.825rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Model Version</span>
-              <span style={{ fontWeight: '700', color: 'white', fontFamily: 'monospace' }}>{modelInfo?.model_version || '1.0.0-rf-synthetic'}</span>
+              <span style={{ fontWeight: '700', color: 'white', fontFamily: 'monospace' }}>{modelInfo?.model_version || 'Loading...'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Classifier Algorithm</span>
-              <span style={{ color: '#818cf8', fontWeight: '600', fontFamily: 'monospace' }}>{modelInfo?.algorithm || 'RandomForestClassifier'}</span>
+              <span style={{ color: '#818cf8', fontWeight: '600', fontFamily: 'monospace' }}>{modelInfo?.algorithm || 'Loading...'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Numerical Features Vector</span>
-              <span style={{ fontWeight: '700', color: '#2dd4bf' }}>{modelInfo?.feature_count || 22} Features</span>
+              <span style={{ fontWeight: '700', color: '#2dd4bf' }}>{modelInfo?.feature_count ?? 0} Features</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
               <span style={{ color: 'var(--text-muted)' }}>Training Timestamp</span>
-              <span style={{ color: 'var(--text-main)', fontFamily: 'monospace' }}>{modelInfo?.training_timestamp ? new Date(modelInfo.training_timestamp).toLocaleDateString() : 'Active'}</span>
+              <span style={{ color: 'var(--text-main)', fontFamily: 'monospace' }}>{modelInfo?.training_timestamp ? new Date(modelInfo.training_timestamp).toLocaleDateString() : 'N/A'}</span>
             </div>
           </div>
         </div>
@@ -130,19 +137,19 @@ export default function Analytics() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.825rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Total Network Graph Nodes</span>
-              <span style={{ fontWeight: '700', color: 'white' }}>{networkOverview?.total_nodes || 120} Nodes</span>
+              <span style={{ fontWeight: '700', color: 'white' }}>{networkOverview?.total_nodes ?? 0} Nodes</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Shared Identity Edges</span>
-              <span style={{ fontWeight: '700', color: '#fbbf24' }}>{networkOverview?.total_edges || 85} Edges</span>
+              <span style={{ fontWeight: '700', color: '#fbbf24' }}>{networkOverview?.total_edges ?? 0} Edges</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <span style={{ color: 'var(--text-muted)' }}>Detected Collusion Clusters</span>
-              <span style={{ fontWeight: '700', color: '#f43f5e' }}>{networkOverview?.total_clusters || 6} Clusters</span>
+              <span style={{ fontWeight: '700', color: '#f43f5e' }}>{(networkOverview?.high_risk_clusters ?? 0) + (networkOverview?.critical_clusters ?? 0)} Clusters</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0' }}>
               <span style={{ color: 'var(--text-muted)' }}>Risky Identity Relationships</span>
-              <span style={{ fontWeight: '700', color: '#f59e0b' }}>{networkOverview?.suspicious_relationships || 18} Risky</span>
+              <span style={{ fontWeight: '700', color: '#f59e0b' }}>{networkOverview?.suspicious_relationships ?? 0} Risky</span>
             </div>
           </div>
         </div>

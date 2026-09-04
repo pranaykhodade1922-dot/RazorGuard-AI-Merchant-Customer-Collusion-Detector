@@ -216,24 +216,29 @@ export default function Transactions({ onSelectMerchant, onSelectCustomer, onSel
                 </div>
               </div>
 
-              {/* Risk Breakdown */}
-              <RiskBreakdownCard
-                finalRiskScore={mlScoreData ? mlScoreData.final_risk_score : 70}
-                finalRiskLevel={mlScoreData ? mlScoreData.final_risk_level : 'HIGH'}
-                transactionRiskScore={mlScoreData ? mlScoreData.transaction_risk_score : 80}
-                networkRiskScore={mlScoreData ? mlScoreData.network_risk_score : 75}
-                mlRiskScore={mlScoreData ? mlScoreData.ml_risk_score : 60}
-                breakdown={mlScoreData ? mlScoreData.scoring_breakdown : []}
-              />
+              {/* Risk Breakdown & ML Explainability */}
+              {mlScoreData ? (
+                <>
+                  <RiskBreakdownCard
+                    finalRiskScore={mlScoreData.final_risk_score ?? mlScoreData.ml_risk_score}
+                    finalRiskLevel={mlScoreData.final_risk_level ?? mlScoreData.ml_risk_level ?? 'LOW'}
+                    transactionRiskScore={mlScoreData.transaction_risk_score ?? 0}
+                    networkRiskScore={mlScoreData.network_risk_score ?? 0}
+                    mlRiskScore={mlScoreData.ml_risk_score ?? 0}
+                    breakdown={mlScoreData.scoring_breakdown || []}
+                  />
 
-              {/* ML Explainability */}
-              {mlScoreData && (
-                <MLExplainabilityCard
-                  mlRiskScore={mlScoreData.ml_risk_score}
-                  modelVersion={mlScoreData.model_version}
-                  algorithm={mlScoreData.algorithm}
-                  topFeatures={mlScoreData.top_features}
-                />
+                  <MLExplainabilityCard
+                    mlRiskScore={mlScoreData.ml_risk_score}
+                    modelVersion={mlScoreData.model_version}
+                    algorithm={mlScoreData.algorithm}
+                    topFeatures={mlScoreData.top_features}
+                  />
+                </>
+              ) : (
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                  Calculating real-time ML risk score & explainability...
+                </div>
               )}
             </div>
           </div>

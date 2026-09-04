@@ -169,7 +169,7 @@ class CaseService:
                     self.firestore_store.save_customer(c.model_dump())
 
             suspicious_txs = [tx for tx in transactions if tx.merchant_id in flagged_merchant_set or tx.refund_status == "REFUNDED"]
-            for tx in suspicious_txs[:200]:
+            for tx in suspicious_txs[:20]:
                 self.firestore_store.save_transaction(tx.model_dump())
         except Exception:
             pass
