@@ -12,6 +12,16 @@ class AuthService:
     and supports local development fallback.
     """
     @staticmethod
+    def is_authorized_admin_email(email: str) -> bool:
+        if not email:
+            return False
+        email_clean = email.lower().strip()
+        initial_admin_email = os.getenv("INITIAL_ADMIN_EMAIL", "").lower().strip()
+        if initial_admin_email and email_clean == initial_admin_email:
+            return True
+        return False
+
+    @staticmethod
     def verify_id_token(token: str) -> Dict[str, Any]:
         if not token:
             raise HTTPException(
@@ -19,11 +29,11 @@ class AuthService:
                 detail={"error": "UNAUTHORIZED", "message": "Missing Bearer token in Authorization header."}
             )
 
-        # Allow local development/test bypass session tokens
+        # Allow local automated test runner bypass session tokens
         if token.startswith("dev-local-session") or token.startswith("test-token"):
             return {
                 "uid": "dev-user-001",
-                "email": "admin@razorguard.ai",
+                "email": os.getenv("INITIAL_ADMIN_EMAIL", "admin@razorguard.ai"),
                 "name": "Admin Investigator",
                 "role": "ADMIN",
                 "auth_time": 1700000000
@@ -35,12 +45,12 @@ class AuthService:
 
             decoded_token = auth.verify_id_token(token)
             email = decoded_token.get("email", "")
-            role = decoded_token.get("role") or ("ADMIN" if "admin" in email.lower() else "ANALYST")
+            role = decoded_token.get("role") or ("ADMIN" if AuthService.is_authorized_admin_email(email) else "ANALYST")
             
             return {
                 "uid": decoded_token.get("uid"),
                 "email": email,
-                "name": decoded_token.get("name") or email.split("@")[0],
+                "name": decoded_token.get("name") or (email.split("@")[0] if email else "User"),
                 "role": role,
                 "auth_time": decoded_token.get("auth_time")
             }
@@ -56,7 +66,7 @@ class AuthService:
                     payload = json.loads(base64.urlsafe_b64decode(parts[1] + padding).decode("utf-8"))
                     email = payload.get("email", "")
                     name = payload.get("name") or (email.split("@")[0] if email else "User")
-                    role = payload.get("role") or ("ADMIN" if "admin" in email.lower() else "ANALYST")
+                    role = payload.get("role") or ("ADMIN" if AuthService.is_authorized_admin_email(email) else "ANALYST")
                     return {
                         "uid": payload.get("user_id") or payload.get("sub") or payload.get("uid") or "jwt-user",
                         "email": email,
@@ -68,8 +78,6 @@ class AuthService:
             except Exception as jwt_err:
                 logger.warning(f"JWT payload extraction failed: {jwt_err}")
 
-            if "admin" in token.lower():
-                return {"uid": "local-admin", "email": "admin@razorguard.ai", "name": "Admin", "role": "ADMIN"}
             return {"uid": "local-analyst", "email": "analyst@razorguard.ai", "name": "Analyst", "role": "ANALYST"}
 
 

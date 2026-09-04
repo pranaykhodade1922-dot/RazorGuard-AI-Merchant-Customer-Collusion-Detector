@@ -38,6 +38,20 @@ export async function fetchHealth() {
   return res.json();
 }
 
+export async function verifyRoleRegistration(email, role) {
+  const res = await authFetch(`${API_BASE}/auth/register-role`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, role })
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    const msg = errorData?.message || errorData?.detail?.message || 'Unauthorized to create selected role.';
+    throw new Error(msg);
+  }
+  return res.json();
+}
+
 export async function fetchDashboardSummary() {
   const res = await authFetch(`${API_BASE}/dashboard/summary`);
   return res.json();

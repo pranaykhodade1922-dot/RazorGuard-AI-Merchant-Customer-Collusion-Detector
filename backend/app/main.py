@@ -1,7 +1,7 @@
 import os
 import time
 import logging
-from fastapi import FastAPI, HTTPException, Query, Request, Depends, UploadFile, File, Form, status
+from fastapi import FastAPI, HTTPException, Query, Request, Depends, UploadFile, File, Form, Header, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Any, Optional
@@ -126,6 +126,38 @@ def health_check():
 def get_auth_me(current_user: Dict[str, Any] = Depends(get_current_user)):
     log_audit_event(user=current_user.get("email"), action="USER_VERIFIED_SESSION", resource="/api/auth/me")
     return current_user
+
+
+@app.post("/api/auth/register-role", summary="Authorize and Verify Role Registration")
+def register_user_role(payload: Dict[str, Any], authorization: Optional[str] = Header(None)):
+    email = (payload.get("email") or "").strip()
+    requested_role = (payload.get("role") or "ANALYST").upper().strip()
+
+    if requested_role == "ADMIN":
+        from app.auth.auth_service import AuthService
+        is_authorized = AuthService.is_authorized_admin_email(email)
+        if not is_authorized and authorization:
+            try:
+                caller = get_current_user(authorization)
+                if caller.get("role") == "ADMIN":
+                    is_authorized = True
+            except Exception:
+                pass
+
+        if not is_authorized:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail={
+                    "error": "ADMIN_ROLE_UNAUTHORIZED",
+                    "message": "Unauthorized to create ADMIN role. Admin registration requires authorized INITIAL_ADMIN_EMAIL configuration or administrator approval."
+                }
+            )
+
+    return {
+        "status": "success",
+        "email": email,
+        "role": requested_role if requested_role in ["ADMIN", "ANALYST"] else "ANALYST"
+    }
 
 
 @app.get("/api/audit-logs", summary="List Security & Audit Trail Events")

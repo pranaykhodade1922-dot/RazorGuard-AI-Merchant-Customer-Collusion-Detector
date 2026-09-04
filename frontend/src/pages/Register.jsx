@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Shield, User, Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { Shield, User, Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle, ShieldAlert, UserCheck } from 'lucide-react';
+import GoogleRoleSetupModal from '../components/GoogleRoleSetupModal';
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
@@ -88,6 +89,8 @@ export default function Register({ onSwitchToLogin }) {
       padding: '24px',
       color: 'white'
     }}>
+      <GoogleRoleSetupModal />
+
       <div style={{ width: '100%', maxWidth: '480px' }}>
         {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
@@ -115,9 +118,9 @@ export default function Register({ onSwitchToLogin }) {
         {/* Register Card */}
         <div className="glass-card" style={{ padding: '28px', border: '1px solid rgba(99, 102, 241, 0.25)', boxShadow: '0 16px 48px rgba(0, 0, 0, 0.6)' }}>
           <div style={{ marginBottom: '18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ fontSize: '1.05rem', fontWeight: '700' }}>Registration Form</h2>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: '700' }}>Create your RazorGuard account</h2>
             <span style={{ fontSize: '0.7rem', color: '#6366f1', background: 'rgba(99, 102, 241, 0.15)', padding: '2px 8px', borderRadius: '12px' }}>
-              Phase 6 RBAC
+              RBAC Enabled
             </span>
           </div>
 
@@ -143,7 +146,7 @@ export default function Register({ onSwitchToLogin }) {
             {/* Full Name */}
             <div>
               <label style={{ display: 'block', fontSize: '0.775rem', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '4px' }}>
-                Full Name
+                Name
               </label>
               <div style={{ position: 'relative' }}>
                 <User size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -170,7 +173,7 @@ export default function Register({ onSwitchToLogin }) {
             {/* Email */}
             <div>
               <label style={{ display: 'block', fontSize: '0.775rem', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '4px' }}>
-                Work Email
+                Email
               </label>
               <div style={{ position: 'relative' }}>
                 <Mail size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -194,28 +197,58 @@ export default function Register({ onSwitchToLogin }) {
               </div>
             </div>
 
-            {/* Role Selection */}
+            {/* Account Role Radio Selector */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.775rem', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '4px' }}>
-                Account Role
+              <label style={{ display: 'block', fontSize: '0.775rem', fontWeight: '700', color: 'white', marginBottom: '8px' }}>
+                Create account as
               </label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                style={{
-                  width: '100%',
-                  background: '#0f172a',
-                  border: '1px solid var(--border-color)',
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 12px',
                   borderRadius: '8px',
-                  padding: '8px 12px',
-                  color: 'white',
-                  fontSize: '0.85rem',
-                  outline: 'none'
-                }}
-              >
-                <option value="ANALYST">ANALYST — Read, Investigate & View Analytics</option>
-                <option value="ADMIN">ADMIN — Full System Access, Status Updates & Dataset Uploads</option>
-              </select>
+                  background: role === 'ADMIN' ? 'rgba(99, 102, 241, 0.15)' : '#0f172a',
+                  border: `1px solid ${role === 'ADMIN' ? '#6366f1' : 'var(--border-color)'}`,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}>
+                  <input
+                    type="radio"
+                    name="accountRole"
+                    value="ADMIN"
+                    checked={role === 'ADMIN'}
+                    onChange={() => setRole('ADMIN')}
+                    style={{ accentColor: '#6366f1' }}
+                  />
+                  <ShieldAlert size={15} color="#6366f1" />
+                  <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'white' }}>Admin</span>
+                </label>
+
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 12px',
+                  borderRadius: '8px',
+                  background: role === 'ANALYST' ? 'rgba(99, 102, 241, 0.15)' : '#0f172a',
+                  border: `1px solid ${role === 'ANALYST' ? '#6366f1' : 'var(--border-color)'}`,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}>
+                  <input
+                    type="radio"
+                    name="accountRole"
+                    value="ANALYST"
+                    checked={role === 'ANALYST'}
+                    onChange={() => setRole('ANALYST')}
+                    style={{ accentColor: '#6366f1' }}
+                  />
+                  <UserCheck size={15} color="#38bdf8" />
+                  <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'white' }}>Analyst</span>
+                </label>
+              </div>
             </div>
 
             {/* Password */}
@@ -303,7 +336,7 @@ export default function Register({ onSwitchToLogin }) {
                 <span>Creating Account...</span>
               ) : (
                 <>
-                  <span>Create Account & Log In</span>
+                  <span>Create Account</span>
                   <ArrowRight size={16} />
                 </>
               )}
@@ -357,7 +390,7 @@ export default function Register({ onSwitchToLogin }) {
               onClick={onSwitchToLogin}
               style={{ background: 'transparent', border: 'none', color: '#818cf8', fontWeight: '700', cursor: 'pointer', textDecoration: 'underline' }}
             >
-              Sign In
+              Sign in
             </button>
           </div>
         </div>

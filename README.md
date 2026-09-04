@@ -419,6 +419,11 @@ RazorGuard leverages Firebase Authentication for robust user verification:
    ```bash
    cd backend
    pip install -r requirements.txt
+
+   # Optional: Run interactive CLI demo
+   python run_demo.py
+
+   # Start production REST API server
    python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
    ```
    Backend API runs at `http://127.0.0.1:8000` with interactive docs at `http://127.0.0.1:8000/docs`.

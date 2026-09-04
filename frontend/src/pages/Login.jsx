@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, AlertCircle, KeyRound, Sparkles } from 'lucide-react';
+import GoogleRoleSetupModal from '../components/GoogleRoleSetupModal';
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
@@ -74,6 +75,8 @@ export default function Login({ onSwitchToRegister }) {
       padding: '24px',
       color: 'white'
     }}>
+      <GoogleRoleSetupModal />
+
       <div style={{ width: '100%', maxWidth: '440px' }}>
         {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
@@ -101,7 +104,7 @@ export default function Login({ onSwitchToRegister }) {
         {/* Login Form Card */}
         <div className="glass-card" style={{ padding: '32px', border: '1px solid rgba(99, 102, 241, 0.25)', boxShadow: '0 16px 48px rgba(0, 0, 0, 0.6)' }}>
           <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: '700' }}>Investigator Authentication</h2>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: '700' }}>Investigator Sign In</h2>
             <span style={{ fontSize: '0.7rem', color: '#10b981', background: 'rgba(16, 185, 129, 0.15)', padding: '2px 8px', borderRadius: '12px', fontWeight: '600' }}>
               Secure Session
             </span>
@@ -129,13 +132,13 @@ export default function Login({ onSwitchToRegister }) {
             {/* Email Field */}
             <div>
               <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '6px' }}>
-                Corporate Email Address
+                Email
               </label>
               <div style={{ position: 'relative' }}>
                 <Mail size={18} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
                   type="email"
-                  placeholder="investigator@razorpay.com"
+                  placeholder="investigator@razorguard.ai"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={{
@@ -157,7 +160,7 @@ export default function Login({ onSwitchToRegister }) {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                 <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--text-muted)' }}>
-                  Security Password
+                  Password
                 </label>
               </div>
               <div style={{ position: 'relative' }}>
@@ -213,7 +216,7 @@ export default function Login({ onSwitchToRegister }) {
                 <span>Authenticating User...</span>
               ) : (
                 <>
-                  <span>Sign In to Command Center</span>
+                  <span>Sign In</span>
                   <ArrowRight size={16} />
                 </>
               )}
@@ -291,13 +294,13 @@ export default function Login({ onSwitchToRegister }) {
 
           {/* Switch to Register link */}
           <div style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            Need an investigator account?{' '}
+            Don't have an account?{' '}
             <button
               type="button"
               onClick={onSwitchToRegister}
               style={{ background: 'transparent', border: 'none', color: '#818cf8', fontWeight: '700', cursor: 'pointer', textDecoration: 'underline' }}
             >
-              Register User
+              Create one
             </button>
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from '../firebase';
+import { verifyRoleRegistration } from '../api';
 
 const AuthContext = createContext(null);
 
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authState, setAuthState] = useState('LOADING'); // 'LOADING' | 'AUTHENTICATED' | 'UNAUTHENTICATED'
   const [authError, setAuthError] = useState(null);
+  const [pendingGoogleUser, setPendingGoogleUser] = useState(null);
 
   useEffect(() => {
     // Check local fallback session first for instant offline/dev support
@@ -53,11 +55,39 @@ export function AuthProvider({ children }) {
             console.warn('Failed retrieving Firebase ID token:', e);
           }
 
-          const role = localStorage.getItem(`user_role_${firebaseUser.uid}`) || (firebaseUser.email?.toLowerCase().includes('admin') ? 'ADMIN' : 'ANALYST');
+          const storedRole = localStorage.getItem(`user_role_${firebaseUser.uid}`);
+          // If no role stored yet for this UID, don't auto-authenticate on refresh until setup completes
+          if (!storedRole && !localStorage.getItem('razorguard_auth_user')) {
+            setPendingGoogleUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+              photoURL: firebaseUser.photoURL || null,
+              token: idToken
+            });
+            setUser(null);
+            setAuthState('UNAUTHENTICATED');
+            return;
+          }
+
+          const role = storedRole || 'ROLE_NOT_CONFIGURED';
+          if (role === 'ROLE_NOT_CONFIGURED') {
+            setPendingGoogleUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName || (firebaseUser.email ? firebaseUser.email.split('@')[0] : 'User'),
+              photoURL: firebaseUser.photoURL || null,
+              token: idToken
+            });
+            setUser(null);
+            setAuthState('UNAUTHENTICATED');
+            return;
+          }
           const userObj = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+            photoURL: firebaseUser.photoURL || null,
             role: role,
             token: idToken,
             getIdToken: async (forceRefresh = false) => {
@@ -75,6 +105,7 @@ export function AuthProvider({ children }) {
             uid: userObj.uid,
             email: userObj.email,
             displayName: userObj.displayName,
+            photoURL: userObj.photoURL,
             role: userObj.role,
             token: idToken || 'dev-local-session-token'
           }));
@@ -139,12 +170,14 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const fbUser = userCredential.user;
       const idToken = await fbUser.getIdToken();
-      const role = localStorage.getItem(`user_role_${fbUser.uid}`) || (email.toLowerCase().includes('admin') ? 'ADMIN' : 'ANALYST');
+      const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
+      const role = storedRole || 'ANALYST';
       
       const userObj = {
         uid: fbUser.uid,
         email: fbUser.email,
         displayName: fbUser.displayName || email.split('@')[0],
+        photoURL: fbUser.photoURL || null,
         role: role,
         token: idToken,
         getIdToken: async () => idToken
@@ -156,6 +189,7 @@ export function AuthProvider({ children }) {
         uid: userObj.uid,
         email: userObj.email,
         displayName: userObj.displayName,
+        photoURL: userObj.photoURL,
         role: userObj.role,
         token: idToken
       }));
@@ -199,31 +233,42 @@ export function AuthProvider({ children }) {
       const idToken = await fbUser.getIdToken();
 
       const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
-      const emailLower = (fbUser.email || '').toLowerCase();
-      const role = storedRole || (emailLower.includes('admin') ? 'ADMIN' : 'ANALYST');
-      localStorage.setItem(`user_role_${fbUser.uid}`, role);
 
-      const userObj = {
+      // If user already has a saved role, complete sign in immediately
+      if (storedRole) {
+        const userObj = {
+          uid: fbUser.uid,
+          email: fbUser.email,
+          displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'User'),
+          photoURL: fbUser.photoURL || null,
+          role: storedRole,
+          token: idToken,
+          getIdToken: async () => idToken
+        };
+
+        setUser(userObj);
+        setAuthState('AUTHENTICATED');
+        localStorage.setItem('razorguard_auth_user', JSON.stringify({
+          uid: userObj.uid,
+          email: userObj.email,
+          displayName: userObj.displayName,
+          photoURL: userObj.photoURL,
+          role: userObj.role,
+          token: idToken
+        }));
+        return userObj;
+      }
+
+      // New Google User: Require explicit role selection
+      const pendingData = {
         uid: fbUser.uid,
         email: fbUser.email,
         displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'User'),
         photoURL: fbUser.photoURL || null,
-        role: role,
-        token: idToken,
-        getIdToken: async () => idToken
-      };
-
-      setUser(userObj);
-      setAuthState('AUTHENTICATED');
-      localStorage.setItem('razorguard_auth_user', JSON.stringify({
-        uid: userObj.uid,
-        email: userObj.email,
-        displayName: userObj.displayName,
-        photoURL: userObj.photoURL,
-        role: userObj.role,
         token: idToken
-      }));
-      return userObj;
+      };
+      setPendingGoogleUser(pendingData);
+      return { pendingRoleSetup: true, email: fbUser.email };
     } catch (err) {
       let friendlyMsg = err.message || 'Google authentication failed.';
       if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
@@ -240,8 +285,67 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const completeGoogleRegistration = async (selectedRole) => {
+    if (!pendingGoogleUser) {
+      throw new Error('No pending Google sign-in session found.');
+    }
+    setAuthError(null);
+
+    // Verify admin role authorization with backend if ADMIN is selected
+    if (selectedRole === 'ADMIN') {
+      try {
+        await verifyRoleRegistration(pendingGoogleUser.email, 'ADMIN');
+      } catch (err) {
+        setAuthError(err.message || 'Unauthorized to create ADMIN account.');
+        throw err;
+      }
+    }
+
+    const role = selectedRole === 'ADMIN' ? 'ADMIN' : 'ANALYST';
+    localStorage.setItem(`user_role_${pendingGoogleUser.uid}`, role);
+
+    const userObj = {
+      uid: pendingGoogleUser.uid,
+      email: pendingGoogleUser.email,
+      displayName: pendingGoogleUser.displayName,
+      photoURL: pendingGoogleUser.photoURL,
+      role: role,
+      token: pendingGoogleUser.token,
+      getIdToken: async () => pendingGoogleUser.token
+    };
+
+    setUser(userObj);
+    setAuthState('AUTHENTICATED');
+    setPendingGoogleUser(null);
+    localStorage.setItem('razorguard_auth_user', JSON.stringify({
+      uid: userObj.uid,
+      email: userObj.email,
+      displayName: userObj.displayName,
+      photoURL: userObj.photoURL,
+      role: userObj.role,
+      token: userObj.token
+    }));
+    return userObj;
+  };
+
+  const cancelGoogleRegistration = () => {
+    setPendingGoogleUser(null);
+    setAuthError(null);
+  };
+
   const register = async (name, email, password, role = 'ANALYST') => {
     setAuthError(null);
+
+    // Verify backend role authorization if ADMIN role is selected
+    if (role === 'ADMIN') {
+      try {
+        await verifyRoleRegistration(email, 'ADMIN');
+      } catch (err) {
+        setAuthError(err.message || 'Unauthorized to create ADMIN account.');
+        throw err;
+      }
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const fbUser = userCredential.user;
@@ -254,6 +358,7 @@ export function AuthProvider({ children }) {
         uid: fbUser.uid,
         email: fbUser.email,
         displayName: name,
+        photoURL: null,
         role: role,
         token: idToken,
         getIdToken: async () => idToken
@@ -265,6 +370,7 @@ export function AuthProvider({ children }) {
         uid: userObj.uid,
         email: userObj.email,
         displayName: name,
+        photoURL: null,
         role: role,
         token: idToken
       }));
@@ -275,6 +381,7 @@ export function AuthProvider({ children }) {
           uid: `local-${Date.now()}`,
           email,
           displayName: name,
+          photoURL: null,
           role: role,
           token: 'dev-local-session-token',
           getIdToken: async () => 'dev-local-session-token'
@@ -296,6 +403,7 @@ export function AuthProvider({ children }) {
       console.warn('Sign out error:', err);
     }
     setUser(null);
+    setPendingGoogleUser(null);
     setAuthState('UNAUTHENTICATED');
     localStorage.removeItem('razorguard_auth_user');
   };
@@ -312,9 +420,12 @@ export function AuthProvider({ children }) {
       user,
       authState,
       authError,
+      pendingGoogleUser,
       login,
       loginWithGoogle,
       signInWithGoogle: loginWithGoogle,
+      completeGoogleRegistration,
+      cancelGoogleRegistration,
       register,
       logout,
       getToken,
