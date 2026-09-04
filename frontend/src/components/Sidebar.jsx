@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
   const [collapsed, setCollapsed] = useState(false);
-  const { isAdmin } = useAuth();
+  const { isAdmin, isMerchant } = useAuth();
 
   const adminNavItems = [
     { id: 'dashboard', label: 'Admin Command Center', icon: LayoutDashboard },
@@ -20,6 +20,14 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'settings', label: 'System Settings', icon: Settings },
   ];
 
+  const merchantNavItems = [
+    { id: 'dashboard', label: 'Merchant Partner Portal', icon: LayoutDashboard },
+    { id: 'transactions', label: 'Transactions Log', icon: CreditCard },
+    { id: 'cases', label: 'Merchant Risk Cases', icon: ShieldAlert },
+    { id: 'alerts', label: 'Risk Notifications', icon: Bell },
+    { id: 'network', label: 'Network Connections', icon: Network },
+  ];
+
   const analystNavItems = [
     { id: 'dashboard', label: 'Investigation Workspace', icon: LayoutDashboard },
     { id: 'cases', label: 'Investigation Cases', icon: ShieldAlert },
@@ -30,7 +38,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'network', label: 'Network Graph', icon: Network },
   ];
 
-  const navItems = isAdmin ? adminNavItems : analystNavItems;
+  const navItems = isAdmin ? adminNavItems : (isMerchant ? merchantNavItems : analystNavItems);
 
   return (
     <aside style={{

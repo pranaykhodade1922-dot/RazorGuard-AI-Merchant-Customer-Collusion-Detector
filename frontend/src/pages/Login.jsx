@@ -21,6 +21,7 @@ export default function Login({ onSwitchToRegister }) {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
+  const [activePreset, setActivePreset] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,11 @@ export default function Login({ onSwitchToRegister }) {
     try {
       await login(email, password);
     } catch (err) {
-      setError(err.message || 'Invalid email or password credentials.');
+      let friendlyMsg = err.message || 'Invalid email or password credentials.';
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.message?.includes('invalid-credential')) {
+        friendlyMsg = 'Invalid email or password credentials. Please verify your credentials or register a new account.';
+      }
+      setError(friendlyMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -51,17 +56,41 @@ export default function Login({ onSwitchToRegister }) {
     }
   };
 
-  const handleQuickLogin = async (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
+  const handleQuickLogin = async (presetType) => {
     setError(null);
+    const isAdmin = presetType === 'ADMIN';
+    const envEmail = isAdmin
+      ? (import.meta.env.VITE_DEMO_ADMIN_EMAIL || '').strip?.() || import.meta.env.VITE_DEMO_ADMIN_EMAIL || ''
+      : (import.meta.env.VITE_DEMO_ANALYST_EMAIL || '').strip?.() || import.meta.env.VITE_DEMO_ANALYST_EMAIL || '';
+
+    const envPassword = isAdmin
+      ? import.meta.env.VITE_DEMO_ADMIN_PASSWORD || ''
+      : import.meta.env.VITE_DEMO_ANALYST_PASSWORD || '';
+
+    const cleanEmail = (envEmail || '').trim();
+    const cleanPassword = (envPassword || '').trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      setError(`Demo ${isAdmin ? 'Admin' : 'Analyst'} credentials are not configured in environment. Please use your registered account or configure VITE_DEMO_${isAdmin ? 'ADMIN' : 'ANALYST'}_EMAIL in .env.local.`);
+      return;
+    }
+
+    setEmail(cleanEmail);
+    setPassword(cleanPassword);
+    setActivePreset(presetType);
     setIsSubmitting(true);
+
     try {
-      await login(demoEmail, demoPassword);
+      await login(cleanEmail, cleanPassword);
     } catch (err) {
-      setError(err.message || 'Login failed.');
+      let friendlyMsg = err.message || 'Firebase demo authentication failed.';
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.message?.includes('invalid-credential')) {
+        friendlyMsg = `Firebase authentication failed for demo account (${cleanEmail}). Please verify that this demo user exists in your Firebase Console.`;
+      }
+      setError(friendlyMsg);
     } finally {
       setIsSubmitting(false);
+      setActivePreset(null);
     }
   };
 
@@ -212,7 +241,7 @@ export default function Login({ onSwitchToRegister }) {
               disabled={isSubmitting || isGoogleSubmitting}
               style={{ width: '100%', padding: '12px', fontSize: '0.9rem', justifyContent: 'center', marginTop: '4px' }}
             >
-              {isSubmitting ? (
+              {isSubmitting && !activePreset ? (
                 <span>Authenticating User...</span>
               ) : (
                 <>
@@ -273,21 +302,23 @@ export default function Login({ onSwitchToRegister }) {
               <button
                 type="button"
                 className="btn-secondary btn-sm"
-                onClick={() => handleQuickLogin('admin@razorguard.ai', 'AdminPass2026!')}
+                onClick={() => handleQuickLogin('ADMIN')}
+                disabled={isSubmitting || isGoogleSubmitting}
                 style={{ fontSize: '0.75rem', justifyContent: 'center' }}
               >
                 <ShieldCheck size={14} color="#6366f1" />
-                <span>Admin Lead</span>
+                <span>{activePreset === 'ADMIN' ? 'Authenticating...' : 'Admin Lead'}</span>
               </button>
 
               <button
                 type="button"
                 className="btn-secondary btn-sm"
-                onClick={() => handleQuickLogin('analyst@razorguard.ai', 'AnalystPass2026!')}
+                onClick={() => handleQuickLogin('ANALYST')}
+                disabled={isSubmitting || isGoogleSubmitting}
                 style={{ fontSize: '0.75rem', justifyContent: 'center' }}
               >
                 <KeyRound size={14} color="#2dd4bf" />
-                <span>Analyst Ops</span>
+                <span>{activePreset === 'ANALYST' ? 'Authenticating...' : 'Analyst Ops'}</span>
               </button>
             </div>
           </div>

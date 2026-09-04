@@ -10,7 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from '../firebase';
-import { verifyRoleRegistration } from '../api';
+import { verifyRoleRegistration, fetchCurrentUser } from '../api';
 
 const AuthContext = createContext(null);
 
@@ -55,23 +55,33 @@ export function AuthProvider({ children }) {
             console.warn('Failed retrieving Firebase ID token:', e);
           }
 
-          const storedRole = localStorage.getItem(`user_role_${firebaseUser.uid}`);
-          // If no role stored yet for this UID, don't auto-authenticate on refresh until setup completes
-          if (!storedRole && !localStorage.getItem('razorguard_auth_user')) {
-            setPendingGoogleUser({
-              uid: firebaseUser.uid,
-              email: firebaseUser.email,
-              displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0],
-              photoURL: firebaseUser.photoURL || null,
-              token: idToken
-            });
-            setUser(null);
-            setAuthState('UNAUTHENTICATED');
-            return;
+          // Temporarily save session payload to allow authFetch headers
+          localStorage.setItem('razorguard_auth_user', JSON.stringify({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            displayName: firebaseUser.displayName || (firebaseUser.email ? firebaseUser.email.split('@')[0] : 'User'),
+            photoURL: firebaseUser.photoURL || null,
+            role: 'ANALYST',
+            token: idToken || 'dev-local-session-token'
+          }));
+
+          // Query backend for server-authoritative user role
+          let role = null;
+          try {
+            const serverProfile = await fetchCurrentUser();
+            if (serverProfile && serverProfile.role) {
+              role = serverProfile.role;
+            }
+          } catch (err) {
+            console.warn('Failed fetching server profile in onAuthStateChanged:', err);
           }
 
-          const role = storedRole || 'ROLE_NOT_CONFIGURED';
-          if (role === 'ROLE_NOT_CONFIGURED') {
+          if (!role) {
+            const storedRole = localStorage.getItem(`user_role_${firebaseUser.uid}`);
+            if (storedRole) role = storedRole;
+          }
+
+          if (!role) {
             setPendingGoogleUser({
               uid: firebaseUser.uid,
               email: firebaseUser.email,
@@ -83,10 +93,13 @@ export function AuthProvider({ children }) {
             setAuthState('UNAUTHENTICATED');
             return;
           }
+
+          localStorage.setItem(`user_role_${firebaseUser.uid}`, role);
+
           const userObj = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
-            displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+            displayName: firebaseUser.displayName || (firebaseUser.email ? firebaseUser.email.split('@')[0] : 'User'),
             photoURL: firebaseUser.photoURL || null,
             role: role,
             token: idToken,
@@ -149,7 +162,11 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     setAuthError(null);
     if (!auth) {
-      const role = email.toLowerCase().includes('analyst') ? 'ANALYST' : 'ADMIN';
+      const role = email.toLowerCase().includes('merchant')
+        ? 'MERCHANT'
+        : email.toLowerCase().includes('analyst')
+        ? 'ANALYST'
+        : 'ADMIN';
       const name = email.split('@')[0].replace('.', ' ');
       const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
       const fallbackUser = {
@@ -170,13 +187,43 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const fbUser = userCredential.user;
       const idToken = await fbUser.getIdToken();
-      const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
-      const role = storedRole || 'ANALYST';
-      
+
+      // Temporarily store token so fetchCurrentUser authFetch gets Bearer token
+      localStorage.setItem('razorguard_auth_user', JSON.stringify({
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: fbUser.displayName || fbUser.email.split('@')[0],
+        photoURL: fbUser.photoURL || null,
+        role: 'ANALYST',
+        token: idToken
+      }));
+
+      // Fetch server-authoritative role from backend /api/auth/me
+      let role = null;
+      try {
+        const serverProfile = await fetchCurrentUser();
+        if (serverProfile && serverProfile.role) {
+          role = serverProfile.role;
+        }
+      } catch (err) {
+        console.warn('Backend profile fetch failed during login:', err);
+      }
+
+      if (!role) {
+        const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
+        if (storedRole) role = storedRole;
+      }
+
+      if (!role) {
+        role = 'ANALYST';
+      }
+
+      localStorage.setItem(`user_role_${fbUser.uid}`, role);
+
       const userObj = {
         uid: fbUser.uid,
         email: fbUser.email,
-        displayName: fbUser.displayName || email.split('@')[0],
+        displayName: fbUser.displayName || fbUser.email.split('@')[0],
         photoURL: fbUser.photoURL || null,
         role: role,
         token: idToken,
@@ -185,6 +232,7 @@ export function AuthProvider({ children }) {
 
       setUser(userObj);
       setAuthState('AUTHENTICATED');
+      console.log('LOGIN USER FROM SERVER:', { email: userObj.email, role: userObj.role, isAdmin: userObj.role === 'ADMIN' });
       localStorage.setItem('razorguard_auth_user', JSON.stringify({
         uid: userObj.uid,
         email: userObj.email,
@@ -197,7 +245,11 @@ export function AuthProvider({ children }) {
     } catch (err) {
       // Local fallback mode if Firebase credentials are unseeded or demo account
       if (!auth || err.code === 'auth/invalid-api-key' || err.code === 'auth/api-key-not-valid' || err.message?.includes('api-key')) {
-        const role = email.toLowerCase().includes('analyst') ? 'ANALYST' : 'ADMIN';
+        const role = email.toLowerCase().includes('merchant')
+          ? 'MERCHANT'
+          : email.toLowerCase().includes('analyst')
+          ? 'ANALYST'
+          : 'ADMIN';
         const name = email.split('@')[0].replace('.', ' ');
         const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
         const fallbackUser = {
@@ -232,16 +284,42 @@ export function AuthProvider({ children }) {
       const fbUser = userCredential.user;
       const idToken = await fbUser.getIdToken();
 
-      const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
+      // Temporarily store token so fetchCurrentUser authFetch gets Bearer token
+      localStorage.setItem('razorguard_auth_user', JSON.stringify({
+        uid: fbUser.uid,
+        email: fbUser.email,
+        displayName: fbUser.displayName || fbUser.email.split('@')[0],
+        photoURL: fbUser.photoURL || null,
+        role: 'ANALYST',
+        token: idToken
+      }));
 
-      // If user already has a saved role, complete sign in immediately
-      if (storedRole) {
+      // Query server-authoritative user profile from backend /api/auth/me
+      let role = null;
+      try {
+        const serverProfile = await fetchCurrentUser();
+        if (serverProfile && serverProfile.role) {
+          role = serverProfile.role;
+        }
+      } catch (err) {
+        console.warn('Backend profile fetch failed during Google login:', err);
+      }
+
+      if (!role) {
+        const storedRole = localStorage.getItem(`user_role_${fbUser.uid}`);
+        if (storedRole) role = storedRole;
+      }
+
+      // If user already has a saved or server role, complete sign in immediately
+      if (role) {
+        localStorage.setItem(`user_role_${fbUser.uid}`, role);
+
         const userObj = {
           uid: fbUser.uid,
           email: fbUser.email,
           displayName: fbUser.displayName || (fbUser.email ? fbUser.email.split('@')[0] : 'User'),
           photoURL: fbUser.photoURL || null,
-          role: storedRole,
+          role: role,
           token: idToken,
           getIdToken: async () => idToken
         };
@@ -259,7 +337,7 @@ export function AuthProvider({ children }) {
         return userObj;
       }
 
-      // New Google User: Require explicit role selection
+      // New Google User without configured role: Require explicit role selection
       const pendingData = {
         uid: fbUser.uid,
         email: fbUser.email,
@@ -301,7 +379,7 @@ export function AuthProvider({ children }) {
       }
     }
 
-    const role = selectedRole === 'ADMIN' ? 'ADMIN' : 'ANALYST';
+    const role = selectedRole === 'ADMIN' ? 'ADMIN' : (selectedRole === 'MERCHANT' ? 'MERCHANT' : 'ANALYST');
     localStorage.setItem(`user_role_${pendingGoogleUser.uid}`, role);
 
     const userObj = {
@@ -431,7 +509,10 @@ export function AuthProvider({ children }) {
       getToken,
       isAuthenticated: authState === 'AUTHENTICATED',
       isLoading: authState === 'LOADING',
-      isAdmin: user?.role === 'ADMIN'
+      isAdmin: user?.role === 'ADMIN',
+      isAnalyst: user?.role === 'ANALYST',
+      isMerchant: user?.role === 'MERCHANT',
+      userRole: user?.role || 'ANALYST'
     }}>
       {children}
     </AuthContext.Provider>

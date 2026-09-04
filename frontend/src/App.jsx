@@ -204,9 +204,17 @@ function MainSaaSLayout({ activeTab, setActiveTab }) {
 }
 
 function AppRouter() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { user, isAuthenticated, isLoading, isAdmin } = useAuth();
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      console.log('CURRENT USER:', user.email);
+      console.log('CURRENT ROLE:', user.role);
+      console.log('CURRENT DASHBOARD COMPONENT:', isAdmin ? 'Admin Command Center' : 'Analyst Workspace');
+    }
+  }, [isAuthenticated, user, isAdmin]);
 
   useEffect(() => {
     const handlePopState = () => {

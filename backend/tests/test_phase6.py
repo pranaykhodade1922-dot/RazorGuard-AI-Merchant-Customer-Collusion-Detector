@@ -37,3 +37,18 @@ def test_csv_ingestion_success():
     json_data = response.json()
     assert json_data["status"] == "success"
     assert json_data["records_imported"] == 1
+
+def test_admin_email_authorization_and_role_resolution():
+    from app.auth.auth_service import AuthService
+    assert AuthService.is_authorized_admin_email("admin@razorguard.ai") is True
+    assert AuthService.is_authorized_admin_email("analyst@razorguard.ai") is False
+    assert AuthService.is_authorized_admin_email("unauthorized@gmail.com") is False
+
+def test_register_role_admin_authorization():
+    res1 = client.post("/api/auth/register-role", json={"email": "admin@razorguard.ai", "role": "ADMIN"})
+    assert res1.status_code == 200
+    assert res1.json()["role"] == "ADMIN"
+
+    res2 = client.post("/api/auth/register-role", json={"email": "unauthorized@gmail.com", "role": "ADMIN"})
+    assert res2.status_code == 403
+    assert res2.json()["error"] == "ADMIN_ROLE_UNAUTHORIZED"

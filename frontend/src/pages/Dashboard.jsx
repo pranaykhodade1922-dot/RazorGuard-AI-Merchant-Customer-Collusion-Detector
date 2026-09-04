@@ -5,7 +5,7 @@ import RiskScoreBadge from '../components/RiskScoreBadge';
 import { LayoutDashboard, CreditCard, ShieldAlert, Store, Network, Bell, RefreshCw, UploadCloud, FileText, CheckCircle2, ArrowRight, Play, Search, Shield, Activity, Users } from 'lucide-react';
 
 export default function Dashboard({ summary: initialSummary, onNavigateTab, onSelectMerchant, onSelectCase }) {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isMerchant } = useAuth();
   const [summary, setSummary] = useState(initialSummary || null);
   const [merchants, setMerchants] = useState([]);
   const [cases, setCases] = useState([]);
@@ -369,7 +369,107 @@ export default function Dashboard({ summary: initialSummary, onNavigateTab, onSe
   }
 
   // =========================================================
-  // 2. ANALYST DASHBOARD VIEW (Fraud Investigation Workspace)
+  // 2. MERCHANT DASHBOARD VIEW (Merchant Partner Portal)
+  // =========================================================
+  if (isMerchant) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Store size={24} color="#2dd4bf" />
+              <span>Merchant Partner Portal</span>
+              <span style={{ fontSize: '0.725rem', background: 'rgba(45, 212, 191, 0.2)', color: '#2dd4bf', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
+                MERCHANT ROLE
+              </span>
+            </h2>
+            <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
+              Monitor transaction health, review store risk scores, and inspect active security notifications.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <button className="btn-primary btn-sm" onClick={() => onNavigateTab && onNavigateTab('transactions')}>
+              <CreditCard size={14} />
+              <span>View Transactions</span>
+            </button>
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('alerts')}>
+              <Bell size={14} color="#f59e0b" />
+              <span>Risk Notifications</span>
+            </button>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #2dd4bf' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Store Transactions</span>
+              <CreditCard size={18} color="#2dd4bf" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{totalTx.toLocaleString()}</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Processed volume</div>
+          </div>
+
+          <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #10b981' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Account Verification</span>
+              <CheckCircle2 size={18} color="#10b981" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#10b981' }}>Verified</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Active Merchant ID</div>
+          </div>
+
+          <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #f59e0b' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Risk Status</span>
+              <Activity size={18} color="#f59e0b" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f59e0b' }}>Low Risk</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Continuous AI Monitoring</div>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', marginBottom: '14px' }}>Store Transactions Log</h3>
+          <div className="saas-table-container">
+            <table className="saas-table">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Customer ID</th>
+                  <th>Amount</th>
+                  <th>Payment Status</th>
+                  <th>Refund Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.slice(0, 8).map(tx => (
+                  <tr key={tx.transaction_id}>
+                    <td style={{ fontFamily: 'monospace', fontWeight: '700', color: 'white' }}>{tx.transaction_id}</td>
+                    <td style={{ fontFamily: 'monospace', color: 'var(--text-muted)' }}>{tx.customer_id}</td>
+                    <td style={{ fontWeight: '700', color: 'white' }}>₹{Number(tx.amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                    <td>
+                      <span style={{ color: tx.payment_status === 'SUCCESS' ? '#10b981' : '#f43f5e', fontWeight: '700', fontSize: '0.75rem' }}>
+                        {tx.payment_status || 'SUCCESS'}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ color: tx.refund_status === 'REFUNDED' ? '#f43f5e' : 'var(--text-muted)', fontWeight: '700', fontSize: '0.75rem' }}>
+                        {tx.refund_status || 'NONE'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================
+  // 3. ANALYST DASHBOARD VIEW (Fraud Investigation Workspace)
   // =========================================================
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

@@ -1,6 +1,10 @@
 import os
 import time
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException, Query, Request, Depends, UploadFile, File, Form, Header, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
