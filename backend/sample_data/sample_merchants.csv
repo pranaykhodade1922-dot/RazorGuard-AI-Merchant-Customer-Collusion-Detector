@@ -1,0 +1,5 @@
+merchant_id,merchant_name,category,payout_upi,payout_bank_account,registered_device_id,registered_ip,address,city
+M001,Apex Tech Electronics,electronics,apextech@okicici,HDFC0001234,DEV_M_001,192.168.1.100,12 MG Road,Mumbai
+M002,Vanguard Retailers,retail,vanguard@oksbi,ICIC0005678,DEV_M_002,192.168.1.101,45 Brigade Road,Bengaluru
+M003,Starlight Digital,digital,starlight@okaxis,AXIS0009012,DEV_M_003,192.168.1.102,88 Park Street,Kolkata
+M004,Zenith Gaming Supplies,gaming,zenith@okicici,HDFC0003456,DEV_M_004,192.168.1.103,101 Connaught Place,Delhi

@@ -1,5 +1,9 @@
-from fastapi import FastAPI, HTTPException, Query, Request, status
+import os
+import time
+import logging
+from fastapi import FastAPI, HTTPException, Query, Request, Depends, UploadFile, File, Form, status
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Any, Optional
 
 from app.models.schemas import (
@@ -28,11 +32,29 @@ from app.models.schemas import (
     FeatureExplanation, ScoringWeightItem
 )
 
+# Phase 6 Auth, Rate Limiter & CSV Ingestion Services
+from app.auth.auth_service import get_current_user, require_admin
+from app.services.rate_limiter import detection_rate_limiter, ml_rate_limiter
+from app.services.csv_ingestion_service import CSVIngestionService
+
+logger = logging.getLogger("razorguard.main")
 
 app = FastAPI(
-    title="RazorGuard AI — Merchant Risk Engine & ML Risk Intelligence API",
-    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, network intelligence graph analysis, ML risk intelligence, case management, and Cloud Firestore persistence.",
-    version="4.0.0"
+    title="RazorGuard AI — Enterprise Fraud & Collusion Intelligence API",
+    description="Explainable fraud investigation backend detecting merchant-customer collusion rings, network intelligence graph analysis, ML risk intelligence, case management, Firebase authentication, and Cloud Firestore persistence.",
+    version="6.0.0"
+)
+
+# Hardened CORS origins configuration
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000")
+allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Global state for dataset objects in memory
@@ -50,6 +72,22 @@ network_service = NetworkService(store=case_service.store)
 firestore_store = FirestoreStore()
 ml_service = MLRiskService()
 final_scorer = FinalRiskScorer()
+
+
+def log_audit_event(user: str, action: str, resource: str, metadata: dict = None):
+    try:
+        event_id = f"LOG-{int(time.time()*1000)}"
+        event_data = {
+            "id": event_id,
+            "user": user or "system",
+            "action": action,
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "resource": resource,
+            "metadata": metadata or {}
+        }
+        firestore_store.create_document("audit_logs", event_id, event_data)
+    except Exception as e:
+        logger.warning(f"Audit log store error: {e}")
 
 
 @app.exception_handler(HTTPException)
@@ -78,6 +116,72 @@ def health_check():
         "engine": "RazorGuard AI — Merchant Risk & Collusion Intelligence",
         "firebase": firebase_status
     }
+
+
+# ==========================================
+# PHASE 6 AUTHENTICATION & INGESTION ENDPOINTS
+# ==========================================
+
+@app.get("/api/auth/me", summary="Get Authenticated User Profile")
+def get_auth_me(current_user: Dict[str, Any] = Depends(get_current_user)):
+    log_audit_event(user=current_user.get("email"), action="USER_VERIFIED_SESSION", resource="/api/auth/me")
+    return current_user
+
+
+@app.get("/api/audit-logs", summary="List Security & Audit Trail Events")
+def get_audit_logs(
+    limit: Optional[int] = Query(50, description="Limit audit event log count"),
+    current_user: Dict[str, Any] = Depends(require_admin)
+):
+    logs = firestore_store.list_documents("audit_logs", limit=limit)
+    return sorted(logs, key=lambda x: x.get("timestamp", ""), reverse=True)
+
+
+@app.post("/api/ingest/csv", summary="Upload and Ingest CSV Dataset")
+async def ingest_csv(
+    file: UploadFile = File(...),
+    dataset_type: str = Form(...),
+    current_user: Dict[str, Any] = Depends(require_admin)
+):
+    contents = await file.read()
+    csv_text = contents.decode("utf-8")
+    try:
+        result = CSVIngestionService.process_csv(dataset_type, csv_text)
+        records = result["records"]
+        
+        if dataset_type == "merchants":
+            STATE["merchants"].extend(records)
+            for m in records:
+                firestore_store.save_merchant(m.model_dump())
+        elif dataset_type == "customers":
+            STATE["customers"].extend(records)
+            for c in records:
+                firestore_store.save_customer(c.model_dump())
+        elif dataset_type == "transactions":
+            STATE["transactions"].extend(records)
+            for tx in records:
+                firestore_store.save_transaction(tx.model_dump())
+
+        log_audit_event(
+            user=current_user.get("email"),
+            action="CSV_DATASET_IMPORTED",
+            resource=f"dataset:{dataset_type}",
+            metadata={"total_lines": result["total_records"], "valid_records": result["valid_records"]}
+        )
+
+        return {
+            "status": "success",
+            "dataset_type": dataset_type,
+            "records_imported": len(records),
+            "valid_records": result["valid_records"],
+            "invalid_records": result["invalid_records"]
+        }
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "INVALID_CSV_DATASET", "message": str(ve)}
+        )
+
 
 
 
@@ -165,7 +269,9 @@ def run_detection():
 
 
 @app.post("/api/detection/run", response_model=DetectionRunResponse, summary="Run Full Detection & Network Analysis")
-def run_full_detection():
+def run_full_detection(request: Request):
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    detection_rate_limiter.check_rate_limit(client_ip, "/api/detection/run")
     with DETECTION_LOCK:
         if not STATE["merchants"] or not STATE["customers"] or not STATE["transactions"]:
             generate_dataset(seed=SEED)
@@ -565,7 +671,9 @@ def get_network_relationships():
 # ==========================================
 
 @app.post("/api/ml/score", response_model=MLScoreResponse, summary="Compute ML & Final Risk Intelligence Score")
-def compute_ml_score(payload: MLScoreRequest):
+def compute_ml_score(request: Request, payload: MLScoreRequest):
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    ml_rate_limiter.check_rate_limit(client_ip, "/api/ml/score")
     if not STATE["merchants"]:
         generate_dataset(seed=SEED)
 

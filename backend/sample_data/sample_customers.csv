@@ -1,0 +1,11 @@
+customer_id,customer_name,upi_id,device_id,ip_address,address,city
+C001,Rahul Sharma,rahul@upi,DEV001,192.168.1.10,123 Link Road,Mumbai
+C002,Priya Patel,priya@upi,DEV001,192.168.1.10,123 Link Road,Mumbai
+C003,Amit Kumar,amit@upi,DEV001,192.168.1.10,124 Link Road,Mumbai
+C004,Sneha Gupta,sneha@upi,DEV002,192.168.1.20,55 Church Street,Bengaluru
+C005,Vikram Singh,vikram@upi,DEV003,192.168.1.21,88 Residency Road,Bengaluru
+C006,Ananya Roy,ananya@upi,DEV004,192.168.1.30,12 Salt Lake,Kolkata
+C007,Rohan Verma,rohan@upi,DEV004,192.168.1.30,14 Salt Lake,Kolkata
+C008,Kavita Nair,kavita@upi,DEV004,192.168.1.30,15 Salt Lake,Kolkata
+C009,Siddharth Jain,siddharth@upi,DEV005,192.168.1.40,99 Ring Road,Delhi
+C010,Neha Mehra,neha@upi,DEV006,192.168.1.41,102 Outer Ring,Delhi

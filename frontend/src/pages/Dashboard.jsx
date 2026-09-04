@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDashboardSummary, fetchCases, fetchMerchants, fetchAlerts, fetchNetworkOverview, fetchTransactions } from '../api';
+import { fetchDashboardSummary, fetchCases, fetchMerchants, fetchAlerts, fetchNetworkOverview, fetchTransactions, fetchAuditLogs } from '../api';
+import { useAuth } from '../context/AuthContext';
 import RiskScoreBadge from '../components/RiskScoreBadge';
-import { LayoutDashboard, CreditCard, ShieldAlert, Store, Network, Bell, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, CreditCard, ShieldAlert, Store, Network, Bell, RefreshCw, UploadCloud, FileText, CheckCircle2, ArrowRight, Play, Search, Shield, Activity, Users } from 'lucide-react';
 
 export default function Dashboard({ summary: initialSummary, onNavigateTab, onSelectMerchant, onSelectCase }) {
+  const { user, isAdmin } = useAuth();
   const [summary, setSummary] = useState(initialSummary || null);
   const [merchants, setMerchants] = useState([]);
   const [cases, setCases] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [networkOverview, setNetworkOverview] = useState(null);
+  const [auditLogs, setAuditLogs] = useState([]);
   const [timeRange, setTimeRange] = useState('24h');
   const [isLoading, setIsLoading] = useState(true);
 
   const loadDashboardData = async () => {
     setIsLoading(true);
     try {
-      const [sumRes, mRes, cRes, aRes, nRes, txRes] = await Promise.all([
+      const promises = [
         fetchDashboardSummary().catch(() => null),
         fetchMerchants().catch(() => []),
         fetchCases().catch(() => []),
         fetchAlerts().catch(() => []),
         fetchNetworkOverview().catch(() => null),
         fetchTransactions(100).catch(() => [])
-      ]);
-      if (sumRes) setSummary(sumRes);
-      setMerchants(mRes || []);
-      setCases(cRes || []);
-      setAlerts(aRes || []);
-      setNetworkOverview(nRes);
-      setTransactions(txRes || []);
+      ];
+
+      if (isAdmin) {
+        promises.push(fetchAuditLogs(10).catch(() => []));
+      }
+
+      const results = await Promise.all(promises);
+      if (results[0]) setSummary(results[0]);
+      setMerchants(results[1] || []);
+      setCases(results[2] || []);
+      setAlerts(results[3] || []);
+      setNetworkOverview(results[4]);
+      setTransactions(results[5] || []);
+      if (isAdmin && results[6]) {
+        setAuditLogs(results[6] || []);
+      }
     } catch (err) {
       console.error('Failed loading dashboard:', err);
     } finally {
@@ -39,7 +51,7 @@ export default function Dashboard({ summary: initialSummary, onNavigateTab, onSe
 
   useEffect(() => {
     loadDashboardData();
-  }, []);
+  }, [isAdmin]);
 
   // Compute real metrics from backend API responses
   const totalTx = summary?.total_transactions_analyzed ?? summary?.total_transactions ?? (summary?.transactions_count || transactions.length);
@@ -135,249 +147,430 @@ export default function Dashboard({ summary: initialSummary, onNavigateTab, onSe
 
   const trendData = computeTrendPaths();
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Top Banner Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <div>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <LayoutDashboard size={24} color="#6366f1" />
-            <span>Fraud Intelligence Command Center</span>
-          </h2>
-          <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-            Real-time merchant collusion monitoring, ML risk scores, and active fraud ring alerts.
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button className="btn-secondary btn-sm" onClick={loadDashboardData}>
-            <RefreshCw size={14} />
-            <span>Refresh Dashboard</span>
-          </button>
-        </div>
+  if (isLoading) {
+    return (
+      <div style={{ padding: '60px 24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+        <RefreshCw size={28} color="#6366f1" style={{ animation: 'spin 1s linear infinite', marginBottom: '12px' }} />
+        <div style={{ fontSize: '1rem', fontWeight: '700', color: 'white' }}>Loading Enterprise Dashboard Data...</div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '4px' }}>Syncing backend datasets, risk scores, and audit streams.</div>
       </div>
+    );
+  }
 
-      {/* KPI Metrics Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Total Transactions</span>
-            <CreditCard size={18} color="#6366f1" />
+  // =========================================================
+  // 1. ADMIN DASHBOARD VIEW (Platform & System Management)
+  // =========================================================
+  if (isAdmin) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* Admin Header & Quick Action Bar */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+          <div>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <LayoutDashboard size={24} color="#6366f1" />
+              <span>Admin Command Center</span>
+              <span style={{ fontSize: '0.725rem', background: 'rgba(99, 102, 241, 0.2)', color: '#818cf8', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
+                ADMIN ROLE
+              </span>
+            </h2>
+            <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
+              System-wide fraud exposure, data ingestion pipeline, system health, and audit trail stream.
+            </p>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{totalTx.toLocaleString()}</div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Backend Analyzed</div>
+
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <button className="btn-primary btn-sm" onClick={() => onNavigateTab && onNavigateTab('ingest')}>
+              <UploadCloud size={14} />
+              <span>Upload CSV Dataset</span>
+            </button>
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('audit')}>
+              <FileText size={14} color="#818cf8" />
+              <span>Audit Trail Logs</span>
+            </button>
+            <button className="btn-secondary btn-sm" onClick={loadDashboardData}>
+              <RefreshCw size={14} />
+              <span>Refresh System Data</span>
+            </button>
+          </div>
         </div>
 
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Critical Cases</span>
-            <ShieldAlert size={18} color="#f43f5e" />
-          </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f43f5e' }}>{criticalCases}</div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Immediate review required</div>
-        </div>
-
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Suspicious Merchants</span>
-            <Store size={18} color="#f59e0b" />
-          </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f59e0b' }}>{suspiciousMerchants}</div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Risk Score ≥ 60</div>
-        </div>
-
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Collusion Clusters</span>
-            <Network size={18} color="#818cf8" />
-          </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#818cf8' }}>{networkClusters}</div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Graph rings detected</div>
-        </div>
-
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Active Alerts</span>
-            <Bell size={18} color="#2dd4bf" />
-          </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#2dd4bf' }}>{activeAlertsCount}</div>
-          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>High/Critical events</div>
-        </div>
-      </div>
-
-      {/* Middle Row: Trend Chart & Risk Distribution */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
-        {/* Dynamic Time-Series Risk Trend Visualization */}
-        <div className="glass-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>Transaction & Fraud Risk Volume Trend</h3>
-            <div style={{ display: 'flex', gap: '4px', background: '#0f172a', padding: '2px', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
-              {['24h', '7d', '30d'].map(range => (
-                <button
-                  key={range}
-                  onClick={() => setTimeRange(range)}
-                  style={{
-                    background: timeRange === range ? '#6366f1' : 'transparent',
-                    color: timeRange === range ? 'white' : 'var(--text-muted)',
-                    border: 'none',
-                    padding: '3px 10px',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '600',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {range}
-                </button>
-              ))}
+        {/* Admin KPI Metrics Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+          <div className="glass-card" style={{ padding: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Total Transactions</span>
+              <CreditCard size={18} color="#6366f1" />
             </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: 'white' }}>{totalTx.toLocaleString()}</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>System Analyzed</div>
           </div>
 
-          {/* Dynamic SVG Data Trend Chart from real API backend endpoints */}
-          <div style={{ width: '100%', height: '200px', background: '#090d16', borderRadius: '8px', padding: '16px', position: 'relative', border: '1px solid var(--border-subtle)' }}>
-            <svg width="100%" height="100%" viewBox="0 0 500 150" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="gradientTx" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#6366f1" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0.0" />
-                </linearGradient>
-                <linearGradient id="gradientRisk" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.0" />
-                </linearGradient>
-              </defs>
-              {/* Total Volume Line & Fill derived from real backend data */}
-              <path d={trendData.txAreaPath} fill="url(#gradientTx)" />
-              <path d={trendData.txPath} fill="none" stroke="#6366f1" strokeWidth="2.5" />
-              {/* High Risk Volume Line & Fill derived from real backend data */}
-              <path d={trendData.riskAreaPath} fill="url(#gradientRisk)" />
-              <path d={trendData.riskPath} fill="none" stroke="#f43f5e" strokeWidth="2.5" strokeDasharray="4 2" />
-            </svg>
+          <div className="glass-card" style={{ padding: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Merchants Directory</span>
+              <Store size={18} color="#2dd4bf" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#2dd4bf' }}>{merchants.length}</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Registered merchants</div>
+          </div>
 
-            <div style={{ display: 'flex', gap: '20px', position: 'absolute', bottom: '8px', right: '16px', fontSize: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '10px', height: '3px', background: '#6366f1', borderRadius: '2px' }} />
-                <span style={{ color: 'var(--text-muted)' }}>Total Volume</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '10px', height: '3px', background: '#f43f5e', borderRadius: '2px' }} />
-                <span style={{ color: 'var(--text-muted)' }}>High-Risk Collusion Events</span>
+          <div className="glass-card" style={{ padding: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Customer Profiles</span>
+              <Users size={18} color="#818cf8" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#818cf8' }}>{summary?.customers_count || 10}</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Active identities</div>
+          </div>
+
+          <div className="glass-card" style={{ padding: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>System Risk Cases</span>
+              <ShieldAlert size={18} color="#f43f5e" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f43f5e' }}>{cases.length}</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>{criticalCases} critical rings</div>
+          </div>
+        </div>
+
+        {/* Admin Middle Row: Trend Chart & Recent Audit Logs */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+          {/* Trend Chart */}
+          <div className="glass-card" style={{ padding: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>System Transaction & Risk Volume Trend</h3>
+              <div style={{ display: 'flex', gap: '4px', background: '#0f172a', padding: '2px', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
+                {['24h', '7d', '30d'].map(range => (
+                  <button
+                    key={range}
+                    onClick={() => setTimeRange(range)}
+                    style={{
+                      background: timeRange === range ? '#6366f1' : 'transparent',
+                      color: timeRange === range ? 'white' : 'var(--text-muted)',
+                      border: 'none',
+                      padding: '3px 10px',
+                      borderRadius: '4px',
+                      fontSize: '0.75rem',
+                      fontWeight: '600',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {range}
+                  </button>
+                ))}
               </div>
             </div>
+
+            <div style={{ width: '100%', height: '200px', background: '#090d16', borderRadius: '8px', padding: '16px', position: 'relative', border: '1px solid var(--border-subtle)' }}>
+              <svg width="100%" height="100%" viewBox="0 0 500 150" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gradientTx" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#6366f1" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#6366f1" stopOpacity="0.0" />
+                  </linearGradient>
+                  <linearGradient id="gradientRisk" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+                <path d={trendData.txAreaPath} fill="url(#gradientTx)" />
+                <path d={trendData.txPath} fill="none" stroke="#6366f1" strokeWidth="2.5" />
+                <path d={trendData.riskAreaPath} fill="url(#gradientRisk)" />
+                <path d={trendData.riskPath} fill="none" stroke="#f43f5e" strokeWidth="2.5" strokeDasharray="4 2" />
+              </svg>
+
+              <div style={{ display: 'flex', gap: '20px', position: 'absolute', bottom: '8px', right: '16px', fontSize: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ width: '10px', height: '3px', background: '#6366f1', borderRadius: '2px' }} />
+                  <span style={{ color: 'var(--text-muted)' }}>Total Volume</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ width: '10px', height: '3px', background: '#f43f5e', borderRadius: '2px' }} />
+                  <span style={{ color: 'var(--text-muted)' }}>Collusion Risk Volume</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Audit Logs Preview for Admin */}
+          <div className="glass-card" style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <FileText size={16} color="#818cf8" />
+                  <span>Security Audit Stream</span>
+                </h3>
+                <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('audit')}>All Logs</button>
+              </div>
+
+              {auditLogs.length === 0 ? (
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', textAlign: 'center', padding: '20px' }}>
+                  No recent audit logs. System actions automatically log here.
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {auditLogs.slice(0, 4).map((log, i) => (
+                    <div key={i} style={{ padding: '8px 10px', background: 'var(--bg-subtle)', borderRadius: '6px', border: '1px solid var(--border-subtle)', fontSize: '0.775rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', color: 'white', fontWeight: '700' }}>
+                        <span>{log.user || 'system'}</span>
+                        <span style={{ fontSize: '0.675rem', color: 'var(--text-dim)' }}>{log.timestamp ? new Date(log.timestamp).toLocaleTimeString() : 'Recent'}</span>
+                      </div>
+                      <div style={{ color: '#818cf8', marginTop: '2px', fontWeight: '600' }}>{log.action}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('audit')} style={{ marginTop: '14px', width: '100%', justifyContent: 'center' }}>
+              <span>View Full Compliance Audit Log</span>
+              <ArrowRight size={14} />
+            </button>
           </div>
         </div>
 
-        {/* Risk Distribution Breakdown */}
-        <div className="glass-card" style={{ padding: '20px' }}>
-          <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', marginBottom: '16px' }}>Risk Level Distribution</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div style={{ padding: '10px 12px', background: 'rgba(244, 63, 94, 0.12)', borderRadius: '6px', border: '1px solid rgba(244, 63, 94, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#f43f5e' }}>CRITICAL (80-100)</span>
-              <span style={{ fontWeight: '800', color: 'white' }}>{distCritical}</span>
-            </div>
-            <div style={{ padding: '10px 12px', background: 'rgba(245, 158, 11, 0.12)', borderRadius: '6px', border: '1px solid rgba(245, 158, 11, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#f59e0b' }}>HIGH (60-79)</span>
-              <span style={{ fontWeight: '800', color: 'white' }}>{distHigh}</span>
-            </div>
-            <div style={{ padding: '10px 12px', background: 'rgba(234, 179, 8, 0.12)', borderRadius: '6px', border: '1px solid rgba(234, 179, 8, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#eab308' }}>MEDIUM (30-59)</span>
-              <span style={{ fontWeight: '800', color: 'white' }}>{distMedium}</span>
-            </div>
-            <div style={{ padding: '10px 12px', background: 'rgba(16, 185, 129, 0.12)', borderRadius: '6px', border: '1px solid rgba(16, 185, 129, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#10b981' }}>LOW (0-29)</span>
-              <span style={{ fontWeight: '800', color: 'white' }}>{distLow}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Row: Top Risky Merchants & Recent Cases */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-        {/* Top Risky Merchants Table */}
+        {/* Admin Bottom Row: Top Risky Merchants */}
         <div className="glass-card" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>Top Risky Merchants</h3>
-            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('merchants')}>View All</button>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>System Risk Merchant Registry</h3>
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('merchants')}>View All Directory</button>
           </div>
 
           <div className="saas-table-container">
             <table className="saas-table">
               <thead>
                 <tr>
-                  <th>Merchant</th>
+                  <th>Merchant Name</th>
+                  <th>Category</th>
+                  <th>Payout UPI</th>
+                  <th>Registered Device</th>
                   <th>Risk Score</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {isLoading ? (
-                  <tr>
-                    <td colSpan="3" style={{ textAlign: 'center', padding: '16px', color: 'var(--text-muted)' }}>
-                      Loading merchant risk data...
+                {topRiskyMerchants.map(m => (
+                  <tr key={m.merchant_id} className="clickable-row" onClick={() => onSelectMerchant && onSelectMerchant(m.merchant_id)}>
+                    <td style={{ fontWeight: '700', color: 'white' }}>
+                      {m.merchant_name || m.merchant_id}
+                      <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontFamily: 'monospace' }}>{m.merchant_id}</div>
                     </td>
+                    <td style={{ textTransform: 'capitalize' }}>{m.category || 'General'}</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{m.payout_upi || 'N/A'}</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>{m.registered_device_id || 'DEV_M'}</td>
+                    <td><RiskScoreBadge score={m.risk_score} /></td>
                   </tr>
-                ) : topRiskyMerchants.length === 0 ? (
-                  <tr>
-                    <td colSpan="3" style={{ textAlign: 'center', padding: '16px', color: 'var(--text-muted)' }}>
-                      No high-risk merchants detected.
-                    </td>
-                  </tr>
-                ) : (
-                  topRiskyMerchants.map(m => {
-                    const name = m.merchant_name || m.name || m.merchant_id;
-                    return (
-                      <tr key={m.merchant_id} className="clickable-row" onClick={() => onSelectMerchant && onSelectMerchant(m.merchant_id)}>
-                        <td style={{ fontWeight: '700', color: 'white' }}>
-                          {name}
-                          <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontFamily: 'monospace' }}>{m.merchant_id}</div>
-                        </td>
-                        <td><RiskScoreBadge score={m.risk_score} /></td>
-                        <td>
-                          <button className="btn-secondary btn-sm" onClick={(e) => { e.stopPropagation(); if (onSelectMerchant) onSelectMerchant(m.merchant_id); }}>
-                            Investigate
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
+                ))}
               </tbody>
             </table>
           </div>
         </div>
+      </div>
+    );
+  }
 
-        {/* Critical Investigation Cases */}
+  // =========================================================
+  // 2. ANALYST DASHBOARD VIEW (Fraud Investigation Workspace)
+  // =========================================================
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {/* Analyst Header & Priority Action Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <ShieldAlert size={24} color="#f43f5e" />
+            <span>Fraud Investigation Workspace</span>
+            <span style={{ fontSize: '0.725rem', background: 'rgba(45, 212, 191, 0.2)', color: '#2dd4bf', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
+              ANALYST ROLE
+            </span>
+          </h2>
+          <p style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
+            Investigate suspicious collusion rings, review priority risk alerts, and inspect high-density relationship graphs.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <button className="btn-primary btn-sm" onClick={() => onNavigateTab && onNavigateTab('cases')}>
+            <ShieldAlert size={14} />
+            <span>Open Cases Queue</span>
+          </button>
+          <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('alerts')}>
+            <Bell size={14} color="#f59e0b" />
+            <span>Priority Alerts Feed</span>
+          </button>
+          <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('network')}>
+            <Network size={14} color="#818cf8" />
+            <span>Explore Graph</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Analyst KPI Workload Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+        <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #f43f5e' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Critical Collusion Rings</span>
+            <ShieldAlert size={18} color="#f43f5e" />
+          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f43f5e' }}>{criticalCases}</div>
+          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Immediate investigator review</div>
+        </div>
+
+        <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #f59e0b' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Active Priority Alerts</span>
+            <Bell size={18} color="#f59e0b" />
+          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f59e0b' }}>{activeAlertsCount}</div>
+          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Unresolved alerts</div>
+        </div>
+
+        <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #818cf8' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>High-Risk Merchants</span>
+            <Store size={18} color="#818cf8" />
+          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#818cf8' }}>{suspiciousMerchants}</div>
+          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Score ≥ 60</div>
+        </div>
+
+        <div className="glass-card" style={{ padding: '16px', borderLeft: '4px solid #2dd4bf' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '0.775rem', color: 'var(--text-muted)', fontWeight: '600' }}>Network Graph Clusters</span>
+            <Network size={18} color="#2dd4bf" />
+          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#2dd4bf' }}>{networkClusters}</div>
+          <div style={{ fontSize: '0.725rem', color: 'var(--text-dim)', marginTop: '4px' }}>Detected ring clusters</div>
+        </div>
+      </div>
+
+      {/* Analyst Middle Row: Active Investigation Queue & High-Risk Merchants */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: '20px' }}>
+        {/* Active Investigation Queue */}
         <div className="glass-card" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>Active Investigation Cases</h3>
-            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('cases')}>Open Cases</button>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <ShieldAlert size={16} color="#f43f5e" />
+              <span>Active Investigation Queue</span>
+            </h3>
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('cases')}>View All Cases</button>
+          </div>
+
+          {cases.length === 0 ? (
+            <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+              No active cases in queue.
+            </div>
+          ) : (
+            <div className="saas-table-container">
+              <table className="saas-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Merchant</th>
+                    <th>Risk Level</th>
+                    <th>Risk Score</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cases.slice(0, 6).map(c => (
+                    <tr key={c.case_id} className="clickable-row" onClick={() => onSelectCase && onSelectCase(c.case_id)}>
+                      <td style={{ fontFamily: 'monospace', fontWeight: '700', color: 'white' }}>{c.case_id}</td>
+                      <td>
+                        <div style={{ fontWeight: '600', color: 'white' }}>{c.merchant_name || c.merchant_id}</div>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontFamily: 'monospace' }}>{c.merchant_id}</div>
+                      </td>
+                      <td>
+                        <span className={`badge badge-${(c.risk_level || 'HIGH').toLowerCase()}`}>
+                          {c.risk_level}
+                        </span>
+                      </td>
+                      <td><RiskScoreBadge score={c.risk_score} /></td>
+                      <td>
+                        <button className="btn-primary btn-sm" onClick={(e) => { e.stopPropagation(); if (onSelectCase) onSelectCase(c.case_id); }}>
+                          Investigate
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        {/* High Risk Merchant Hotspots */}
+        <div className="glass-card" style={{ padding: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+            <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Store size={16} color="#f59e0b" />
+              <span>Suspicious Merchants</span>
+            </h3>
+            <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('merchants')}>Directory</button>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {isLoading ? (
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', padding: '16px' }}>Loading cases...</div>
-            ) : cases.length === 0 ? (
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontStyle: 'italic', padding: '16px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: '6px' }}>
-                No active investigation cases.
-              </div>
-            ) : (
-              cases.slice(0, 4).map(c => (
-                <div
-                  key={c.case_id}
-                  onClick={() => onSelectCase && onSelectCase(c.case_id)}
-                  style={{ padding: '12px', background: 'var(--bg-subtle)', borderRadius: '6px', cursor: 'pointer', border: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                >
-                  <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'white' }}>{c.case_id}: {c.merchant_name || c.merchant_id}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      Status: <strong style={{ color: '#818cf8' }}>{c.status}</strong>
-                    </div>
+            {topRiskyMerchants.slice(0, 5).map(m => (
+              <div
+                key={m.merchant_id}
+                onClick={() => onSelectMerchant && onSelectMerchant(m.merchant_id)}
+                style={{ padding: '12px', background: 'var(--bg-subtle)', borderRadius: '8px', border: '1px solid var(--border-subtle)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
+                <div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'white' }}>{m.merchant_name || m.merchant_id}</div>
+                  <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                    ID: {m.merchant_id} | Device: {m.registered_device_id || 'DEV_M'}
                   </div>
-                  <RiskScoreBadge score={c.risk_score} level={c.risk_level} size="sm" />
                 </div>
-              ))
-            )}
+                <RiskScoreBadge score={m.risk_score} size="sm" />
+              </div>
+            ))}
           </div>
+        </div>
+      </div>
+
+      {/* Analyst Bottom Row: High Risk Transactions Stream */}
+      <div className="glass-card" style={{ padding: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+          <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <CreditCard size={16} color="#6366f1" />
+            <span>Recent High-Risk Transactions Stream</span>
+          </h3>
+          <button className="btn-secondary btn-sm" onClick={() => onNavigateTab && onNavigateTab('transactions')}>View All Log</button>
+        </div>
+
+        <div className="saas-table-container">
+          <table className="saas-table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Merchant</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Payment Status</th>
+                <th>Refund Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.slice(0, 6).map(tx => (
+                <tr key={tx.transaction_id}>
+                  <td style={{ fontFamily: 'monospace', fontWeight: '700', color: 'white' }}>{tx.transaction_id}</td>
+                  <td style={{ fontFamily: 'monospace', color: 'var(--text-muted)' }}>{tx.merchant_id}</td>
+                  <td style={{ fontFamily: 'monospace', color: 'var(--text-muted)' }}>{tx.customer_id}</td>
+                  <td style={{ fontWeight: '700', color: 'white' }}>₹{Number(tx.amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                  <td>
+                    <span style={{ color: tx.payment_status === 'SUCCESS' ? '#10b981' : '#f43f5e', fontWeight: '700', fontSize: '0.75rem' }}>
+                      {tx.payment_status || 'SUCCESS'}
+                    </span>
+                  </td>
+                  <td>
+                    <span style={{ color: tx.refund_status === 'REFUNDED' ? '#f43f5e' : 'var(--text-muted)', fontWeight: '700', fontSize: '0.75rem' }}>
+                      {tx.refund_status || 'NONE'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -12,13 +12,20 @@ import RiskCases from './pages/RiskCases';
 import Alerts from './pages/Alerts';
 import Analytics from './pages/Analytics';
 import SystemSettings from './pages/Settings';
+import DataIngestion from './pages/DataIngestion';
+import AuditLogs from './pages/AuditLogs';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-import { fetchHealth, fetchDashboardSummary, runFullDetection, generateDataset } from './api';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+import { fetchHealth, fetchDashboardSummary, runFullDetection } from './api';
+import { Shield, RefreshCw } from 'lucide-react';
+
+function MainSaaSLayout({ activeTab, setActiveTab }) {
   const [summary, setSummary] = useState(null);
-  const [engineStatus, setEngineStatus] = useState('Phase 4 Active');
+  const [engineStatus, setEngineStatus] = useState('Phase 6 Active');
   const [isRunning, setIsRunning] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -41,7 +48,6 @@ export default function App() {
     if (customerParam) setSelectedCustomerId(customerParam);
   }, []);
 
-  // Update URL query string on state change
   const navigateToTab = (tab, extraParams = {}) => {
     setActiveTab(tab);
     const params = new URLSearchParams();
@@ -72,7 +78,7 @@ export default function App() {
 
   useEffect(() => {
     fetchHealth()
-      .then(res => setEngineStatus(res.engine || 'RazorGuard Active'))
+      .then(res => setEngineStatus(res.engine || 'RazorGuard Phase 6 Active'))
       .catch(() => setEngineStatus('Offline'));
     loadSummary();
   }, []);
@@ -106,7 +112,6 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-dark)', color: 'var(--text-main)', display: 'flex', flexDirection: 'column' }}>
-      {/* Top Navbar */}
       <Navbar
         onRunDetection={handleRunDetection}
         isRunning={isRunning}
@@ -114,7 +119,6 @@ export default function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
       />
 
-      {/* Main SaaS Layout */}
       <div style={{ display: 'flex', flex: 1, minHeight: 'calc(100vh - 64px)' }}>
         <Sidebar activeTab={activeTab} setActiveTab={(tab) => navigateToTab(tab)} />
 
@@ -143,9 +147,7 @@ export default function App() {
           )}
 
           {activeTab === 'customers' && (
-            <Customers
-              initialCustomerId={selectedCustomerId}
-            />
+            <Customers initialCustomerId={selectedCustomerId} />
           )}
 
           {activeTab === 'network' && (
@@ -172,11 +174,26 @@ export default function App() {
 
           {activeTab === 'analytics' && <Analytics />}
 
-          {activeTab === 'settings' && <SystemSettings />}
+          {activeTab === 'ingest' && (
+            <ProtectedRoute requireAdmin={true}>
+              <DataIngestion onCompleteDetection={() => loadSummary()} />
+            </ProtectedRoute>
+          )}
+
+          {activeTab === 'audit' && (
+            <ProtectedRoute requireAdmin={true}>
+              <AuditLogs />
+            </ProtectedRoute>
+          )}
+
+          {activeTab === 'settings' && (
+            <ProtectedRoute requireAdmin={true}>
+              <SystemSettings />
+            </ProtectedRoute>
+          )}
         </main>
       </div>
 
-      {/* Global Command Search Modal */}
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -185,3 +202,88 @@ export default function App() {
     </div>
   );
 }
+
+function AppRouter() {
+  const { isAuthenticated, isLoading } = useAuth();
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigate = (path) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+  };
+
+  // 1. Loading state spinner
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: '#070a12',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        gap: '16px'
+      }}>
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 8px 24px rgba(99, 102, 241, 0.4)'
+        }}>
+          <Shield size={30} color="white" />
+        </div>
+        <div style={{ fontSize: '1.2rem', fontWeight: '800' }}>
+          RazorGuard <span style={{ color: '#6366f1' }}>AI</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94a3b8', fontSize: '0.85rem' }}>
+          <RefreshCw size={16} style={{ animation: 'spin 1s linear infinite' }} />
+          <span>Verifying Security Session...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Unauthenticated: Render Register or Login view
+  if (!isAuthenticated) {
+    if (currentPath === '/register') {
+      return <Register onSwitchToLogin={() => navigate('/login')} />;
+    }
+    return <Login onSwitchToRegister={() => navigate('/register')} />;
+  }
+
+  // 3. Authenticated: If on /login or /register, redirect path to /dashboard
+  if (currentPath === '/login' || currentPath === '/register') {
+    window.history.replaceState({}, '', '/dashboard');
+  }
+
+  // 4. Authenticated: Render protected SaaS Layout
+  return (
+    <ProtectedRoute>
+      <MainSaaSLayout activeTab={activeTab} setActiveTab={setActiveTab} />
+    </ProtectedRoute>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
+}
+
+

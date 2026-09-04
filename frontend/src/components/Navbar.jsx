@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Play, RefreshCw, Search, Bell, Activity } from 'lucide-react';
+import { Shield, Play, RefreshCw, Search, Bell, Activity, LogOut, User } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpenSearch }) {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const { user, logout, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -14,6 +17,8 @@ export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpen
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onOpenSearch]);
+
+  const initials = user?.displayName ? user.displayName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'IR';
 
   return (
     <header style={{
@@ -113,15 +118,41 @@ export default function Navbar({ onRunDetection, isRunning, engineStatus, onOpen
           )}
         </div>
 
-        {/* User Profile Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingLeft: '12px', borderLeft: '1px solid var(--border-color)' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #2dd4bf)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.85rem', color: 'white' }}>
-            IR
+        {/* User Profile Pill & Dropdown */}
+        <div style={{ position: 'relative' }}>
+          <div
+            onClick={() => setProfileOpen(!profileOpen)}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingLeft: '12px', borderLeft: '1px solid var(--border-color)', cursor: 'pointer' }}
+          >
+            <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #2dd4bf)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.85rem', color: 'white' }}>
+              {initials}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '0.825rem', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {user?.displayName || 'Investigator'}
+                <span style={{ fontSize: '0.65rem', background: isAdmin ? 'rgba(99, 102, 241, 0.2)' : 'rgba(45, 212, 191, 0.2)', color: isAdmin ? '#818cf8' : '#2dd4bf', padding: '1px 5px', borderRadius: '4px' }}>
+                  {user?.role || 'ANALYST'}
+                </span>
+              </span>
+              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{user?.email || 'Razorpay Fraud Ops'}</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.825rem', fontWeight: '700', color: 'white' }}>Investigator Lead</span>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Razorpay Fraud Ops</span>
-          </div>
+
+          {profileOpen && (
+            <div className="glass-panel" style={{ position: 'absolute', right: 0, top: '48px', width: '220px', padding: '12px', zIndex: 110, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '6px', marginBottom: '4px' }}>
+                Signed in as <strong style={{ color: 'white' }}>{user?.displayName}</strong>
+              </div>
+              <button
+                className="btn-secondary btn-sm"
+                onClick={() => { setProfileOpen(false); logout(); }}
+                style={{ width: '100%', justifyContent: 'flex-start', color: '#f43f5e' }}
+              >
+                <LogOut size={14} color="#f43f5e" />
+                <span>Log Out Session</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

@@ -1,20 +1,36 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, CreditCard, Store, Users, Network, ShieldAlert, Bell, BarChart3, Settings, Shield, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { LayoutDashboard, CreditCard, Store, Users, Network, ShieldAlert, Bell, BarChart3, Settings, Shield, ChevronLeft, ChevronRight, Sparkles, UploadCloud, FileText } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
   const [collapsed, setCollapsed] = useState(false);
+  const { isAdmin } = useAuth();
 
-  const navItems = [
-    { id: 'dashboard', label: 'Overview', icon: LayoutDashboard },
-    { id: 'transactions', label: 'Transactions', icon: CreditCard },
-    { id: 'merchants', label: 'Merchants', icon: Store },
-    { id: 'customers', label: 'Customers', icon: Users },
+  const adminNavItems = [
+    { id: 'dashboard', label: 'Admin Command Center', icon: LayoutDashboard },
+    { id: 'transactions', label: 'Transactions Registry', icon: CreditCard },
+    { id: 'merchants', label: 'Merchants Directory', icon: Store },
+    { id: 'customers', label: 'Customer Profiles', icon: Users },
     { id: 'network', label: 'Network Intelligence', icon: Network },
-    { id: 'cases', label: 'Cases Workspace', icon: ShieldAlert },
-    { id: 'alerts', label: 'Active Alerts', icon: Bell },
-    { id: 'analytics', label: 'Fraud Analytics', icon: BarChart3 },
+    { id: 'cases', label: 'Risk Cases', icon: ShieldAlert },
+    { id: 'alerts', label: 'System Alerts', icon: Bell },
+    { id: 'analytics', label: 'Platform Analytics', icon: BarChart3 },
+    { id: 'ingest', label: 'CSV Data Upload', icon: UploadCloud },
+    { id: 'audit', label: 'Audit Trail Logs', icon: FileText },
     { id: 'settings', label: 'System Settings', icon: Settings },
   ];
+
+  const analystNavItems = [
+    { id: 'dashboard', label: 'Investigation Workspace', icon: LayoutDashboard },
+    { id: 'cases', label: 'Investigation Cases', icon: ShieldAlert },
+    { id: 'alerts', label: 'Priority Alerts', icon: Bell },
+    { id: 'transactions', label: 'Transactions Log', icon: CreditCard },
+    { id: 'merchants', label: 'Suspicious Merchants', icon: Store },
+    { id: 'customers', label: 'Customer Risk Profiles', icon: Users },
+    { id: 'network', label: 'Network Graph', icon: Network },
+  ];
+
+  const navItems = isAdmin ? adminNavItems : analystNavItems;
 
   return (
     <aside style={{
@@ -68,7 +84,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       </div>
 
       {/* Navigation Links */}
-      <nav style={{ padding: '16px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <nav style={{ padding: '16px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: '4px', overflowY: 'auto' }}>
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
