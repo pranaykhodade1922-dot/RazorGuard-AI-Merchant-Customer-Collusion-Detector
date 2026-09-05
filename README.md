@@ -17,8 +17,7 @@ By moving beyond single-transaction checks to multi-entity relationship graph to
 
 ## 🎥 Pitch Video & Links
 
-- **Pitch Video**: Coming soon / Not currently deployed
-- **Live Demo**: Not currently deployed
+- **Pitch Video**: [Drive Link Of the Pitch](https://drive.google.com/file/d/13bJdDy9DbjfaFZBmCoNYtSnzJ6wvGDMU/view?usp=drive_link)
 - **GitHub Repository**: [RazorGuard AI Repository](https://github.com/pranaykhodade1922-dot/RazorGuard-AI-Merchant-Customer-Collusion-Detector)
 - **Interactive API Documentation**: `http://127.0.0.1:8000/docs` (when backend is running)
 
